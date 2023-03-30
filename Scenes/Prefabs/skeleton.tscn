@@ -51,8 +51,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Skeleton" type="AnimatedSprite2D"]
+[node name="Root" type="Node2D"]
 scale = Vector2(2, 2)
+script = ExtResource("2_lea7c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_udy6y")
 animation = &"move"
-script = ExtResource("2_lea7c")
