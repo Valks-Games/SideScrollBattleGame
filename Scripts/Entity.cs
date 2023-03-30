@@ -64,6 +64,11 @@ public abstract partial class Entity : Node2D
         Update();
     }
 
+    private void OnHit()
+    {
+        GD.Print("Hit!");
+    }
+
     private AnimatedSprite2D AnimatedSprite { get; set; }
     private AnimationPlayer AnimationPlayer { get; set; }
     private State State { get; set; }
