@@ -1,5 +1,5 @@
-# Template
-Template to be used for all starting projects.
+# Side Scroll Game
+A side scroll game that is taking inspiration from "The Battle Cats" game.
 
 ## Setup
 1. Download and install [latest Godot 4 C# release](https://godotengine.org/) *(note that [.NET SDK 6.0](https://dotnet.microsoft.com/en-us/download) and [.NET Framework 4.7.2](https://www.google.com/search?q=.net+framework+4.7.2) are required for Godot C#)*
