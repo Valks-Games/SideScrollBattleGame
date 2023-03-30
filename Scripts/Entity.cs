@@ -27,12 +27,8 @@ public abstract partial class Entity : AnimatedSprite2D
     public override void _PhysicsProcess(double delta)
     {
         if (!FoundEnemy)
-        {
-            if (MyTeam == Team.Left)
-                Position += new Vector2(1, 0);
-            else
-                Position -= new Vector2(1, 0);
-        }
+            Position += MyTeam == Team.Left ? 
+                new Vector2(1, 0) : new Vector2(-1, 0);
         
         Update();
     }
@@ -66,10 +62,7 @@ public abstract partial class Entity : AnimatedSprite2D
         var detectionPos = 0f;
         var offset = spriteSize.X / 2 + detectionWidth / 2;
 
-        if (MyTeam == Team.Left)
-            detectionPos += offset;
-        else
-            detectionPos -= offset;
+        detectionPos = MyTeam == Team.Left ? offset : -offset;
 
         var area = new Area2D();
         var collisionShape = new CollisionShape2D
