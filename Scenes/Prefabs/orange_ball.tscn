@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpdvv23bacd0t"]
+[gd_scene load_steps=11 format=3 uid="uid://dpdvv23bacd0t"]
 
 [ext_resource type="Texture2D" uid="uid://cmrr3tmcrn50j" path="res://Sprites/Entities/orange_ball.png" id="1_784dg"]
 [ext_resource type="Script" path="res://Scripts/RollingBall.cs" id="2_u6ory"]
@@ -65,18 +65,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fhjrp"]
-size = Vector2(16, 50)
-
 [node name="Orange Ball" type="AnimatedSprite2D"]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_0x72b")
 animation = &"move"
 script = ExtResource("2_u6ory")
-
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_fhjrp")
