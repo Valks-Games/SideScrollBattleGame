@@ -1,6 +1,81 @@
-[gd_scene load_steps=2 format=3 uid="uid://rl003cr36nv6"]
+[gd_scene load_steps=8 format=3 uid="uid://rl003cr36nv6"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_2vvsp"]
+[ext_resource type="Script" path="res://Scripts/CameraController.cs" id="2_chwf1"]
+[ext_resource type="Script" path="res://Scripts/GameMaster.cs" id="2_l2b0k"]
+[ext_resource type="Texture2D" uid="uid://q80kt62wvbpp" path="res://Sprites/icon.svg" id="2_w7cbu"]
+[ext_resource type="Texture2D" uid="uid://cah7r4wbb17kc" path="res://Sprites/Parallax/Tlayer1.png" id="4_xxpco"]
+[ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="5_y5gcn"]
+[ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="6_1frsa"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_2vvsp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(500, -100)
+zoom = Vector2(1.5, 1.5)
+limit_left = -100
+limit_bottom = 200
+editor_draw_limits = true
+script = ExtResource("2_chwf1")
+
+[node name="Game Master" type="Node2D" parent="."]
+script = ExtResource("2_l2b0k")
+
+[node name="Player Units" type="Node2D" parent="Game Master"]
+
+[node name="Enemy Units" type="Node2D" parent="Game Master"]
+
+[node name="Grass" type="Sprite2D" parent="Game Master"]
+z_index = -1
+position = Vector2(500, 85.5)
+scale = Vector2(20, 2.33594)
+texture = ExtResource("2_w7cbu")
+
+[node name="Player Base" type="Sprite2D" parent="Game Master"]
+position = Vector2(0, -64)
+texture = ExtResource("2_w7cbu")
+
+[node name="Label" type="Label" parent="Game Master/Player Base"]
+offset_left = -39.7838
+offset_top = -91.8494
+offset_right = 48.2162
+offset_bottom = -65.8494
+text = "1000 / 1000"
+
+[node name="Enemy Base" type="Sprite2D" parent="Game Master"]
+position = Vector2(1000, -64)
+texture = ExtResource("2_w7cbu")
+
+[node name="Label" type="Label" parent="Game Master/Enemy Base"]
+offset_left = -39.7838
+offset_top = -91.8494
+offset_right = 48.2162
+offset_bottom = -65.8494
+text = "1000 / 1000"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+scale = Vector2(4, 4)
+motion_mirroring = Vector2(240, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("4_xxpco")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+scale = Vector2(4, 4)
+motion_mirroring = Vector2(240, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("5_y5gcn")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+position = Vector2(800, -100)
+motion_mirroring = Vector2(1200, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("6_1frsa")
+region_rect = Rect2(0, 0, 1200, 160)
