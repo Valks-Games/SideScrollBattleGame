@@ -1,15 +1,16 @@
 namespace SideScrollGame;
 
-public partial class RollingBall : AnimatedSprite2D
+public partial class RollingBall : Entity
 {
-    public override void _Ready()
+    public override Team MyTeam { get => Team.Left; }
+
+    public override void Init()
     {
-        Play("roll");
-        Frame = GD.RandRange(0, SpriteFrames.GetFrameCount("roll"));
+        base.Init();
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void Update()
     {
-        Position += new Vector2(1, 0);  
+        base.Update();
     }
 }

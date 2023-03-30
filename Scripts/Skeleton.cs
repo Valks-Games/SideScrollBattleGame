@@ -1,15 +1,16 @@
 namespace SideScrollGame;
 
-public partial class Skeleton : AnimatedSprite2D
+public partial class Skeleton : Entity
 {
-    public override void _Ready()
+    public override Team MyTeam { get => Team.Right; }
+
+    public override void Init()
     {
-        Play("walk");
-        Frame = GD.RandRange(0, SpriteFrames.GetFrameCount("walk"));
+        base.Init();
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void Update()
     {
-        Position -= new Vector2(1, 0);
+        base.Update();
     }
 }
