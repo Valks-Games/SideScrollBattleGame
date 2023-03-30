@@ -18,10 +18,12 @@ public partial class CameraController : Camera2D
 
     public override void _PhysicsProcess(double delta)
     {
-        HandlePanning();
+        var cameraWidth = GetViewportRect().Size.X / Zoom.X;
+        var camLeftPos = Position.X - (cameraWidth / 2);
+        var camRightPos = Position.X + (cameraWidth / 2);
 
-        // Lerp to the target zoom for a smooth effect
-        Zoom = Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
+        HandlePanning(camLeftPos, camRightPos);
+        HandleZoom(camLeftPos, camRightPos);
     }
 
     public override void _Input(InputEvent @event)
@@ -30,31 +32,53 @@ public partial class CameraController : Camera2D
             InputEventMouseButton(mouseEvent);
     }
 
-    private void HandlePanning()
+    private void HandlePanning(float camLeftPos, float camRightPos)
     {
-        var cameraWidth = GetViewportRect().Size.X / Zoom.X;
-
         if (Input.IsActionPressed("move_left"))
         {
             // Prevent the camera from going too far left
-            if (Position.X - (cameraWidth / 2) > LimitLeft)
+            if (camLeftPos > LimitLeft)
                 Position -= new Vector2(HorizontalPanSpeed, 0);
         }
 
         if (Input.IsActionPressed("move_right"))
         {
             // Prevent the camera from going too far right
-            if (Position.X + (cameraWidth / 2) < LimitRight)
+            if (camRightPos < LimitRight)
                 Position += new Vector2(HorizontalPanSpeed, 0);
+        }
+    }
+
+    private void HandleZoom(float camLeftPos, float camRightPos)
+    {
+        // Lerp to the target zoom for a smooth effect
+        Zoom = Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
+
+        if (camLeftPos < LimitLeft)
+        {
+            // Travelled this many pixels too far
+            var gapDifference = Mathf.Abs(camLeftPos - LimitLeft);
+
+            // Correct position
+            Position += new Vector2(gapDifference, 0);
+        }
+
+        if (camRightPos > LimitRight)
+        {
+            // Travelled this many pixels too far
+            var gapDifference = Mathf.Abs(camRightPos - LimitRight);
+
+            // Correct position
+            Position -= new Vector2(gapDifference, 0);
         }
     }
 
     private void InputEventMouseButton(InputEventMouseButton @event)
     {
-        HandleZoom(@event);
+        InputZoom(@event);
     }
 
-    private void HandleZoom(InputEventMouseButton @event)
+    private void InputZoom(InputEventMouseButton @event)
     {
         // Not sure why or if this is required
         if (!@event.IsPressed())
