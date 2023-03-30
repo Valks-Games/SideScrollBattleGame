@@ -3,7 +3,7 @@
     <TargetFramework>net7.0</TargetFramework>
 	<LangVersion>11</LangVersion>
     <EnableDynamicLoading>true</EnableDynamicLoading>
-	<DefineConstants>SIDE_SCROLL_GAME</DefineConstants>
+	<RootNamespace>SideScrollGame</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
 	<PackageReference Include="ENet-CSharp" Version="2.4.8" />
