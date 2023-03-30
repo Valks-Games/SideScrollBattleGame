@@ -1,6 +1,6 @@
 ﻿namespace SideScrollGame;
 
-public abstract partial class Entity : AnimatedSprite2D
+public abstract partial class Entity : Node2D
 {
     public abstract Team MyTeam { get; }
 
@@ -9,30 +9,51 @@ public abstract partial class Entity : AnimatedSprite2D
 
     public override void _Ready()
     {
+        AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
         // Set the other team
         OtherTeam = MyTeam == Team.Left ? Team.Right : Team.Left;
 
         // Play the 'move' animation set at a random starting frame
-        if (SpriteFrames.HasAnimation(AnimMoveName))
-            this.PlayRandom(AnimMoveName);
+        if (AnimatedSprite.SpriteFrames.HasAnimation(AnimMoveName))
+            AnimatedSprite.PlayRandom(AnimMoveName);
 
         // Create the Area2D for this sprite. All other areas will try to detect this area
-        var spriteSize = this.GetSize(AnimMoveName);
+        var spriteSize = AnimatedSprite.GetSize(AnimMoveName);
         CreateBodyArea(spriteSize);
         CreateDetectionArea(spriteSize);
+
+        State = State.Moving;
 
         Init();
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!FoundEnemy)
-            Position += MyTeam == Team.Left ? 
-                new Vector2(1, 0) : new Vector2(-1, 0);
+        if (State == State.Moving)
+        {
+            if (!FoundEnemy)
+                Position += MyTeam == Team.Left ?
+                    new Vector2(1, 0) : new Vector2(-1, 0);
+            else
+            {
+                State = State.Attack;
+            }
+        }
+        else if (State == State.Attack)
+        {
+            // attack
+        }
+        else if (State == State.Cooldown)
+        {
+
+        }
         
         Update();
     }
 
+    private AnimatedSprite2D AnimatedSprite { get; set; }
+    private State State { get; set; }
     private Team OtherTeam { get; set; }
     private string AnimIdleName { get; } = "idle";
     private string AnimMoveName { get; } = "move";
@@ -78,7 +99,7 @@ public abstract partial class Entity : AnimatedSprite2D
         {
             if (otherArea.IsInGroup(OtherTeam.ToString()))
             {
-                Play(AnimIdleName);
+                AnimatedSprite.Play(AnimIdleName);
                 FoundEnemy = true;
             }
         };
@@ -86,6 +107,13 @@ public abstract partial class Entity : AnimatedSprite2D
         area.AddChild(collisionShape);
         AddChild(area);
     }
+}
+
+public enum State
+{
+    Moving,
+    Attack,
+    Cooldown
 }
 
 public enum Team
