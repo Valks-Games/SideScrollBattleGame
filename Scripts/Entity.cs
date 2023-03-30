@@ -12,8 +12,19 @@ public abstract partial class Entity : Node2D
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
 
-        // Set the other team
-        OtherTeam = MyTeam == Team.Left ? Team.Right : Team.Left;
+        if (MyTeam == Team.Left)
+        {
+            OtherTeam = Team.Right;
+
+            // All sprites face the right side by default
+        }
+        else
+        {
+            OtherTeam = Team.Left;
+
+            // Flip the root node to face the left side
+            Scale = new Vector2(Scale.X * -1, Scale.Y);
+        }
 
         // Play the 'move' animation set at a random starting frame
         if (AnimatedSprite.SpriteFrames.HasAnimation(AnimMoveName))
@@ -82,10 +93,7 @@ public abstract partial class Entity : Node2D
         var detectionWidth = 10;
         var detectionHeight = 100;
 
-        var detectionPos = 0f;
-        var offset = spriteSize.X / 2 + detectionWidth / 2;
-
-        detectionPos = MyTeam == Team.Left ? offset : -offset;
+        var detectionPos = spriteSize.X / 2 + detectionWidth / 2;
 
         var area = new Area2D();
         var collisionShape = new CollisionShape2D
