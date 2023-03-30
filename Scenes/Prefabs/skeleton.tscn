@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dked3f5i4o8mg"]
+[gd_scene load_steps=11 format=3 uid="uid://dked3f5i4o8mg"]
 
 [ext_resource type="Texture2D" uid="uid://b88ypvix8g336" path="res://Sprites/Entities/skeleton.png" id="1_ndhta"]
 [ext_resource type="Script" path="res://Scripts/Skeleton.cs" id="2_lea7c"]
@@ -51,6 +51,26 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_5rrlj"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(20, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gsxgq"]
+_data = {
+"attack": SubResource("Animation_5rrlj")
+}
+
 [node name="Root" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("2_lea7c")
@@ -58,3 +78,8 @@ script = ExtResource("2_lea7c")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_udy6y")
 animation = &"move"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_gsxgq")
+}

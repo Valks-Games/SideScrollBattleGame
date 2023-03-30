@@ -10,6 +10,7 @@ public abstract partial class Entity : Node2D
     public override void _Ready()
     {
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
 
         // Set the other team
         OtherTeam = MyTeam == Team.Left ? Team.Right : Team.Left;
@@ -42,7 +43,7 @@ public abstract partial class Entity : Node2D
         }
         else if (State == State.Attack)
         {
-            // attack
+            AnimationPlayer.Play("attack");
         }
         else if (State == State.Cooldown)
         {
@@ -53,6 +54,7 @@ public abstract partial class Entity : Node2D
     }
 
     private AnimatedSprite2D AnimatedSprite { get; set; }
+    private AnimationPlayer AnimationPlayer { get; set; }
     private State State { get; set; }
     private Team OtherTeam { get; set; }
     private string AnimIdleName { get; } = "idle";
