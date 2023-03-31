@@ -97,7 +97,10 @@ public partial class Entity : Node2D
                 break;
             case State.Find:
                 FoundEnemy = false;
+
+                // this looks ugly to me
                 State = State.Moving;
+
                 foreach (var area in DetectionArea.GetOverlappingAreas())
                 {
                     if (!area.IsInGroup(MyTeam.ToString()))
