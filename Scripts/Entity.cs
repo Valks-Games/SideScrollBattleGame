@@ -116,7 +116,7 @@ public partial class Entity : Node2D
             HealthBar.Hide();
     }
 
-    private void OnHit()
+    private void Attack()
     {
         foreach (var entity in DetectedEnemies)
         {
