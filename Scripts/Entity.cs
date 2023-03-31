@@ -65,16 +65,10 @@ public partial class Entity : Node2D
             AnimatedSprite.PlayRandom("move");
 
         // Create the Area2D for this sprite. All other areas will try to detect this area
-        var spriteSize = AnimatedSprite.GetSize("move");
-        CreateBodyArea(spriteSize);
-        CreateDetectionArea(spriteSize);
-
-        // Generate health bar
-        HealthBar = Prefabs.HealthBar.Instantiate<Control>();
-        HealthProgessBar = HealthBar.GetNode<TextureProgressBar>("TextureProgressBar");
-        HealthProgessBar.Value = Health;
-        HealthBar.Position = new Vector2(-15, -10);
-        AddChild(HealthBar);
+        SpriteSize = AnimatedSprite.GetSize("move");
+        CreateBodyArea();
+        CreateDetectionArea();
+        CreateHealthBar();
 
         State = State.Moving;
 
@@ -123,7 +117,6 @@ public partial class Entity : Node2D
 
     {
 
-        HealthProgessBar.Value = Health;
     }
 
     private void OnHit()
@@ -143,13 +136,13 @@ public partial class Entity : Node2D
     private AnimationPlayer AnimationPlayer { get; set; }
     private GTimer TimerAttackCooldown { get; set; }
     private Area2D DetectionArea { get; set; }
-    private TextureProgressBar HealthProgessBar { get; set; }
-    private Control HealthBar { get; set; }
+    private TextureProgressBar HealthBar { get; set; }
+    private Vector2 SpriteSize { get; set; }
     private State State { get; set; }
     private Team OtherTeam { get; set; }
     private bool FoundEnemy { get; set; }
 
-    private void CreateBodyArea(Vector2 spriteSize)
+    private void CreateBodyArea()
     {
         var area = new Area2D();
         area.AddToGroup(MyTeam.ToString());
@@ -157,7 +150,7 @@ public partial class Entity : Node2D
         {
             Shape = new RectangleShape2D
             {
-                Size = spriteSize
+                Size = SpriteSize
             }
         };
 
@@ -165,11 +158,11 @@ public partial class Entity : Node2D
         AddChild(area);
     }
 
-    private void CreateDetectionArea(Vector2 spriteSize)
+    private void CreateDetectionArea()
     {
         var detectionHeight = 100;
 
-        var detectionPos = spriteSize.X / 2 + DetectionRange / 2;
+        var detectionPos = SpriteSize.X / 2 + DetectionRange / 2;
 
         DetectionArea = new Area2D();
         var collisionShape = new CollisionShape2D
@@ -195,6 +188,7 @@ public partial class Entity : Node2D
     }
 
     public override void _Input(InputEvent @event)
+    private void CreateHealthBar()
     {
         if(Input.IsActionJustPressed("jump"))
         {
@@ -204,9 +198,12 @@ public partial class Entity : Node2D
         {
             HealthBar.Visible = false;
         }
+        HealthBar = Prefabs.HealthBar.Instantiate<TextureProgressBar>();
         HealthBar.MaxValue = MaxHealth;
         HealthBar.Value = MaxHealth;
         HealthBar.Position = new Vector2(-HealthBar.Size.X / 2, -SpriteSize.Y / 2 - 3);
+        HealthBar.Hide();
+        AddChild(HealthBar);
     }
 }
 
