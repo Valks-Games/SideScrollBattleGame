@@ -135,6 +135,8 @@ public partial class Entity : Node2D
             {
                 var otherEntity = area.GetParent<Entity>();
                 otherEntity.CurHealth -= AttackPower;
+
+                // break to do a single-attack instead of multi-attack
                 break;
             }
         }
