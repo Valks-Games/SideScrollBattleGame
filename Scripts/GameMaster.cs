@@ -21,7 +21,8 @@ public partial class GameMaster : Node
         for (int i = 0; i < 1; i++)
         {
             await Task.Delay(500);
-            var unit = Prefabs.OrangeBall.Instantiate<RollingBall>();
+            var unit = Prefabs.OrangeBall.Instantiate<Entity>();
+            unit.MyTeam = Team.Left;
 
             var randomY = GD.RandRange(0, maxRandomY);
 
@@ -35,7 +36,8 @@ public partial class GameMaster : Node
         for (int i = 0; i < 1; i++)
         {
             await Task.Delay(500);
-            var unit = Prefabs.Skeleton.Instantiate<Skeleton>();
+            var unit = Prefabs.Skeleton.Instantiate<Entity>();
+            unit.MyTeam = Team.Right;
 
             var randomY = GD.RandRange(0, maxRandomY);
 

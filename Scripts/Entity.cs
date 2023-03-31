@@ -1,8 +1,8 @@
 ﻿namespace SideScrollGame;
 
-public abstract partial class Entity : Node2D
+public partial class Entity : Node2D
 {
-    public abstract Team MyTeam { get; }
+    public Team MyTeam { get; set; } = Team.Left;
 
     public virtual void Init() { }
     public virtual void Update() { }
