@@ -82,8 +82,8 @@ public partial class Entity : Node2D
             case State.Moving:
                 if (!FoundEnemy)
                 {
-                    if( AnimatedSprite.Animation != "move" )
-                        AnimatedSprite.Play("move");
+                    AnimatedSprite.Play("move");
+
                     Position += MyTeam == Team.Left ?
                         new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
                 }
