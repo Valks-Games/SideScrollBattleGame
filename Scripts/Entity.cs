@@ -116,6 +116,7 @@ public partial class Entity : Node2D
             HealthBar.Hide();
     }
 
+    // This function is called from within the AnimationPlayer track
     private void Attack()
     {
         foreach (var entity in DetectedEnemies)
