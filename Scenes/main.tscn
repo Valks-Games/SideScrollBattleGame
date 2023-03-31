@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rl003cr36nv6"]
+[gd_scene load_steps=12 format=3 uid="uid://rl003cr36nv6"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_2vvsp"]
 [ext_resource type="Script" path="res://Scripts/CameraController.cs" id="2_chwf1"]
@@ -8,16 +8,21 @@
 [ext_resource type="Texture2D" uid="uid://6au08f86p30p" path="res://Sprites/tower_round.svg" id="5_si1wv"]
 [ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="5_y5gcn"]
 [ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="6_1frsa"]
+[ext_resource type="Texture2D" uid="uid://jgtd8ke2r6nw" path="res://Sprites/Entities/skeleton_icon.png" id="9_j011r"]
+[ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="9_nnec7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btq23"]
+bg_color = Color(0, 0.6, 0.54902, 0.286275)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_2vvsp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(600, -100)
+position = Vector2(600, -75)
 zoom = Vector2(2, 2)
 limit_left = -100
 limit_right = 1100
-limit_bottom = 200
+limit_bottom = 300
 editor_draw_limits = true
 script = ExtResource("2_chwf1")
 
@@ -87,3 +92,73 @@ motion_mirroring = Vector2(1920, 0)
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer3"]
 texture = ExtResource("6_1frsa")
 region_rect = Rect2(0, 0, 1200, 160)
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Button" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+icon = ExtResource("9_nnec7")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+text = "50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_btq23")
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Button" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+icon = ExtResource("9_j011r")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/PanelContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_btq23")
+step = 1.0
+fill_mode = 3
+show_percentage = false
