@@ -100,6 +100,7 @@ _data = {
 [node name="Root" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_cfavd")
+MaxHealth = 25.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_udy6y")
