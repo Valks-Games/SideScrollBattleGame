@@ -11,14 +11,14 @@ public abstract partial class Entity : Node2D
     {
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
-        TimerCooldown = new GTimer(this, () => State = State.Find, 1000);
+        TimerAttackCooldown = new GTimer(this, () => State = State.Find, 1000);
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
             if (anim == State.Attack.ToString().ToLower())
             {
                 State = State.Cooldown;
-                TimerCooldown.Start();
+                TimerAttackCooldown.Start();
             }
         };
 
@@ -92,7 +92,7 @@ public abstract partial class Entity : Node2D
 
     private AnimatedSprite2D AnimatedSprite { get; set; }
     private AnimationPlayer AnimationPlayer { get; set; }
-    private GTimer TimerCooldown { get; set; }
+    private GTimer TimerAttackCooldown { get; set; }
     private Area2D DetectionArea { get; set; }
     private State State { get; set; }
     private Team OtherTeam { get; set; }
