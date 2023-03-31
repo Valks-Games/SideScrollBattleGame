@@ -2,16 +2,28 @@
 
 public partial class Entity : Node2D
 {
-    [Export] public int    Health                 { get; set; } = 100;
+    [Export] public double MaxHealth              { get; set; } = 100;
     [Export] public float  MoveSpeed              { get; set; } = 1;
+    [Export] public int    AttackPower            { get; set; } = 10;
     [Export] public float  DetectionRange         { get; set; } = 10;
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
     [Export] public string AnimationAttackType    { get; set; } = "attack";
 
     public Team MyTeam { get; set; } = Team.Left;
+    public double CurHealth 
+    { 
+        get => HealthBar.Value;
+        set 
+        {
+            if (value <= 0)
+            {
+                QueueFree();
+                return;
+            }
 
-    public virtual void Init() { }
-    public virtual void Update() { }
+            HealthBar.Value = value;
+        }
+    }
 
     public override void _Ready()
     {
@@ -50,13 +62,12 @@ public partial class Entity : Node2D
             AnimatedSprite.PlayRandom("move");
 
         // Create the Area2D for this sprite. All other areas will try to detect this area
-        var spriteSize = AnimatedSprite.GetSize("move");
-        CreateBodyArea(spriteSize);
-        CreateDetectionArea(spriteSize);
+        SpriteSize = AnimatedSprite.GetSize("move");
+        CreateBodyArea();
+        CreateDetectionArea();
+        CreateHealthBar();
 
         State = State.Moving;
-
-        Init();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -65,8 +76,12 @@ public partial class Entity : Node2D
         {
             case State.Moving:
                 if (!FoundEnemy)
+                {
+                    AnimatedSprite.Play("move");
+
                     Position += MyTeam == Team.Left ?
                         new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
+                }
                 else
                 {
                     State = State.Attack;
@@ -77,37 +92,52 @@ public partial class Entity : Node2D
                 break;
             case State.Find:
                 FoundEnemy = false;
-                foreach (var area in DetectionArea.GetOverlappingAreas())
+
+                // this looks ugly to me
+                State = State.Moving;
+
+                if (DetectedEnemies.Count > 0)
                 {
-                    if (!area.IsInGroup(MyTeam.ToString()))
-                    {
-                        FoundEnemy = true;
-                        State = State.Attack;
-                        break;
-                    }
+                    FoundEnemy = true;
+                    State = State.Attack;
                 }
                 break;
             default:
                 break;
         }
-
-        Update();
     }
 
-    private void OnHit()
+    public override void _Input(InputEvent @event)
     {
-        GD.Print("Hit!");
+        if (Input.IsActionJustPressed("view_health"))
+            HealthBar.Show();
+
+        if (Input.IsActionJustReleased("view_health"))
+            HealthBar.Hide();
     }
 
-    private AnimatedSprite2D AnimatedSprite { get; set; }
-    private AnimationPlayer AnimationPlayer { get; set; }
-    private GTimer TimerAttackCooldown { get; set; }
-    private Area2D DetectionArea { get; set; }
-    private State State { get; set; }
-    private Team OtherTeam { get; set; }
-    private bool FoundEnemy { get; set; }
+    // This function is called from within the AnimationPlayer track
+    private void Attack()
+    {
+        foreach (var entity in DetectedEnemies)
+        {
+            entity.CurHealth -= AttackPower;
+            break;
+        }
+    }
 
-    private void CreateBodyArea(Vector2 spriteSize)
+    private AnimatedSprite2D   AnimatedSprite      { get; set; }
+    private AnimationPlayer    AnimationPlayer     { get; set; }
+    private GTimer             TimerAttackCooldown { get; set; }
+    private Area2D             DetectionArea       { get; set; }
+    private TextureProgressBar HealthBar           { get; set; }
+    private Vector2            SpriteSize          { get; set; }
+    private State              State               { get; set; }
+    private Team               OtherTeam           { get; set; }
+    private bool               FoundEnemy          { get; set; }
+    private List<Entity>       DetectedEnemies     { get; set; } = new();
+
+    private void CreateBodyArea()
     {
         var area = new Area2D();
         area.AddToGroup(MyTeam.ToString());
@@ -115,7 +145,7 @@ public partial class Entity : Node2D
         {
             Shape = new RectangleShape2D
             {
-                Size = spriteSize
+                Size = SpriteSize
             }
         };
 
@@ -123,11 +153,11 @@ public partial class Entity : Node2D
         AddChild(area);
     }
 
-    private void CreateDetectionArea(Vector2 spriteSize)
+    private void CreateDetectionArea()
     {
         var detectionHeight = 100;
 
-        var detectionPos = spriteSize.X / 2 + DetectionRange / 2;
+        var detectionPos = SpriteSize.X / 2 + DetectionRange / 2;
 
         DetectionArea = new Area2D();
         var collisionShape = new CollisionShape2D
@@ -143,13 +173,32 @@ public partial class Entity : Node2D
         {
             if (otherArea.IsInGroup(OtherTeam.ToString()))
             {
+                DetectedEnemies.Add(otherArea.GetParent<Entity>());
                 AnimatedSprite.Play("idle");
                 FoundEnemy = true;
             }
         };
 
+        DetectionArea.AreaExited += (otherArea) =>
+        {
+            if (otherArea.IsInGroup(OtherTeam.ToString()))
+            {
+                DetectedEnemies.Remove(otherArea.GetParent<Entity>());
+            }
+        };
+
         DetectionArea.AddChild(collisionShape);
         AddChild(DetectionArea);
+    }
+
+    private void CreateHealthBar()
+    {
+        HealthBar = Prefabs.HealthBar.Instantiate<TextureProgressBar>();
+        HealthBar.MaxValue = MaxHealth;
+        HealthBar.Value = MaxHealth;
+        HealthBar.Position = new Vector2(-HealthBar.Size.X / 2, -SpriteSize.Y / 2 - 3);
+        HealthBar.Hide();
+        AddChild(HealthBar);
     }
 }
 

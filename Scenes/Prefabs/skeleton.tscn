@@ -77,6 +77,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0, 0.0, 0.349066, 0.0, 0.0]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Attack"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gsxgq"]
 _data = {
@@ -86,6 +100,7 @@ _data = {
 [node name="Root" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_cfavd")
+MaxHealth = 25.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_udy6y")
