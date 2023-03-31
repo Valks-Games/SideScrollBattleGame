@@ -131,7 +131,7 @@ public partial class Entity : Node2D
     {
         foreach (var area in DetectionArea.GetOverlappingAreas())
         {
-            if(area.IsInGroup(OtherTeam.ToString()))
+            if (area.IsInGroup(OtherTeam.ToString()))
             {
                 var otherEntity = area.GetParent<Entity>();
                 otherEntity.CurHealth -= AttackPower;
@@ -142,15 +142,15 @@ public partial class Entity : Node2D
         }
     }
 
-    private AnimatedSprite2D AnimatedSprite { get; set; }
-    private AnimationPlayer AnimationPlayer { get; set; }
-    private GTimer TimerAttackCooldown { get; set; }
-    private Area2D DetectionArea { get; set; }
-    private TextureProgressBar HealthBar { get; set; }
-    private Vector2 SpriteSize { get; set; }
-    private State State { get; set; }
-    private Team OtherTeam { get; set; }
-    private bool FoundEnemy { get; set; }
+    private AnimatedSprite2D   AnimatedSprite      { get; set; }
+    private AnimationPlayer    AnimationPlayer     { get; set; }
+    private GTimer             TimerAttackCooldown { get; set; }
+    private Area2D             DetectionArea       { get; set; }
+    private TextureProgressBar HealthBar           { get; set; }
+    private Vector2            SpriteSize          { get; set; }
+    private State              State               { get; set; }
+    private Team               OtherTeam           { get; set; }
+    private bool               FoundEnemy          { get; set; }
 
     private void CreateBodyArea()
     {
