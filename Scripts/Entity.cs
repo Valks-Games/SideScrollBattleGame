@@ -2,6 +2,12 @@
 
 public partial class Entity : Node2D
 {
+    [Export] public int    Health                 { get; set; } = 100;
+    [Export] public float  MoveSpeed              { get; set; } = 1;
+    [Export] public float  DetectionRange         { get; set; } = 10;
+    [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
+    [Export] public string AnimationAttackType    { get; set; } = "attack";
+
     public Team MyTeam { get; set; } = Team.Left;
 
     public virtual void Init() { }
@@ -18,7 +24,7 @@ public partial class Entity : Node2D
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
-            if (anim == "attack")
+            if (anim == AnimationAttackType)
             {
                 State = State.Cooldown;
                 TimerAttackCooldown.Start();
@@ -60,14 +66,14 @@ public partial class Entity : Node2D
             case State.Moving:
                 if (!FoundEnemy)
                     Position += MyTeam == Team.Left ?
-                        new Vector2(1, 0) : new Vector2(-1, 0);
+                        new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
                 else
                 {
                     State = State.Attack;
                 }
                 break;
             case State.Attack:
-                AnimationPlayer.Play("attack");
+                AnimationPlayer.Play(AnimationAttackType);
                 break;
             case State.Find:
                 FoundEnemy = false;
@@ -100,7 +106,6 @@ public partial class Entity : Node2D
     private State State { get; set; }
     private Team OtherTeam { get; set; }
     private bool FoundEnemy { get; set; }
-    private int AttackCooldownDuration { get; } = 1000; // in ms
 
     private void CreateBodyArea(Vector2 spriteSize)
     {
@@ -120,10 +125,9 @@ public partial class Entity : Node2D
 
     private void CreateDetectionArea(Vector2 spriteSize)
     {
-        var detectionWidth = 10;
         var detectionHeight = 100;
 
-        var detectionPos = spriteSize.X / 2 + detectionWidth / 2;
+        var detectionPos = spriteSize.X / 2 + DetectionRange / 2;
 
         DetectionArea = new Area2D();
         var collisionShape = new CollisionShape2D
@@ -131,7 +135,7 @@ public partial class Entity : Node2D
             Position = new Vector2(detectionPos, 0),
             Shape = new RectangleShape2D
             {
-                Size = new Vector2(detectionWidth, detectionHeight)
+                Size = new Vector2(DetectionRange, detectionHeight)
             }
         };
 
