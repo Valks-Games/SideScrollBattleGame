@@ -15,11 +15,11 @@ public abstract partial class Entity : Node2D
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
-          if(anim == State.Attack.ToString().ToLower())
-          {
-            State = State.Cooldown;
-            TimerCooldown.Start();
-          }
+            if (anim == State.Attack.ToString().ToLower())
+            {
+                State = State.Cooldown;
+                TimerCooldown.Start();
+            }
         };
 
         if (MyTeam == Team.Left)
@@ -54,34 +54,34 @@ public abstract partial class Entity : Node2D
     {
         switch (State)
         {
-          case State.Moving:
-            if (!FoundEnemy)
-                Position += MyTeam == Team.Left ?
-                    new Vector2(1, 0) : new Vector2(-1, 0);
-            else
-            {
-                State = State.Attack;
-            }
-            break;
-          case State.Attack:
-            AnimationPlayer.Play("attack");
-            break;
-          case State.Find:
-            FoundEnemy = false;
-            for (int i = 0; i < DetectionArea.GetOverlappingAreas().Count(); i++)
-            {
-              if(!DetectionArea.GetOverlappingAreas()[i].IsInGroup(MyTeam.ToString()))
-              {
-                FoundEnemy = true;
-                State = State.Moving;
+            case State.Moving:
+                if (!FoundEnemy)
+                    Position += MyTeam == Team.Left ?
+                        new Vector2(1, 0) : new Vector2(-1, 0);
+                else
+                {
+                    State = State.Attack;
+                }
                 break;
-              }
-            }
-            break;
-          default:
-            break;
+            case State.Attack:
+                AnimationPlayer.Play("attack");
+                break;
+            case State.Find:
+                FoundEnemy = false;
+                for (int i = 0; i < DetectionArea.GetOverlappingAreas().Count(); i++)
+                {
+                    if (!DetectionArea.GetOverlappingAreas()[i].IsInGroup(MyTeam.ToString()))
+                    {
+                        FoundEnemy = true;
+                        State = State.Moving;
+                        break;
+                    }
+                }
+                break;
+            default:
+                break;
         }
-        
+
         Update();
     }
 
