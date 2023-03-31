@@ -206,6 +206,7 @@ public partial class Entity : Node2D
         }
         HealthBar.MaxValue = MaxHealth;
         HealthBar.Value = MaxHealth;
+        HealthBar.Position = new Vector2(-HealthBar.Size.X / 2, -SpriteSize.Y / 2 - 3);
     }
 }
 
