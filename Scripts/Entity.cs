@@ -10,6 +10,20 @@ public partial class Entity : Node2D
     [Export] public string AnimationAttackType    { get; set; } = "attack";
 
     public Team MyTeam { get; set; } = Team.Left;
+    public double CurHealth 
+    { 
+        get => HealthBar.Value;
+        set 
+        {
+            if (value <= 0)
+            {
+                QueueFree();
+                return;
+            }
+
+            HealthBar.Value = value;
+        }
+    }
 
     public virtual void Init() { }
     public virtual void Update() { }
@@ -104,17 +118,10 @@ public partial class Entity : Node2D
                 break;
         }
 
-        UpdateHealth();
-
         Update();
     }
 
-    public void UpdateHealth()
     {
-        if(Health == 0)
-        {
-          QueueFree();
-        }
 
         HealthProgessBar.Value = Health;
     }
@@ -123,10 +130,11 @@ public partial class Entity : Node2D
     {
         foreach (var area in DetectionArea.GetOverlappingAreas())
         {
-            if(!area.IsInGroup(MyTeam.ToString()))
+            if(area.IsInGroup(OtherTeam.ToString()))
             {
                 var otherEntity = area.GetParent<Entity>();
-                otherEntity.Health -= AttackPower;
+                otherEntity.CurHealth -= AttackPower;
+                break;
             }
         }
     }
