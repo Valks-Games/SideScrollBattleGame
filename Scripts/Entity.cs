@@ -11,7 +11,10 @@ public abstract partial class Entity : Node2D
     {
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
-        TimerAttackCooldown = new GTimer(this, () => State = State.Find, 1000);
+        TimerAttackCooldown = new GTimer(
+            this, 
+            () => State = State.Find, 
+            AttackCooldownDuration);
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
@@ -97,6 +100,7 @@ public abstract partial class Entity : Node2D
     private State State { get; set; }
     private Team OtherTeam { get; set; }
     private bool FoundEnemy { get; set; }
+    private int AttackCooldownDuration { get; } = 1000; // in ms
 
     private void CreateBodyArea(Vector2 spriteSize)
     {
