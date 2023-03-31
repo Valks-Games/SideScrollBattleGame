@@ -11,6 +11,16 @@ public abstract partial class Entity : Node2D
     {
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
+        TimerCooldown = new GTimer(this, () => State = State.Find, 1000);
+
+        AnimationPlayer.AnimationFinished += (anim) =>
+        {
+          if(anim == State.Attack.ToString().ToLower())
+          {
+            State = State.Cooldown;
+            TimerCooldown.Start();
+          }
+        };
 
         if (MyTeam == Team.Left)
         {
@@ -42,8 +52,9 @@ public abstract partial class Entity : Node2D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (State == State.Moving)
+        switch (State)
         {
+          case State.Moving:
             if (!FoundEnemy)
                 Position += MyTeam == Team.Left ?
                     new Vector2(1, 0) : new Vector2(-1, 0);
@@ -51,14 +62,24 @@ public abstract partial class Entity : Node2D
             {
                 State = State.Attack;
             }
-        }
-        else if (State == State.Attack)
-        {
+            break;
+          case State.Attack:
             AnimationPlayer.Play("attack");
-        }
-        else if (State == State.Cooldown)
-        {
-
+            break;
+          case State.Find:
+            FoundEnemy = false;
+            for (int i = 0; i < DetectionArea.GetOverlappingAreas().Count(); i++)
+            {
+              if(!DetectionArea.GetOverlappingAreas()[i].IsInGroup(MyTeam.ToString()))
+              {
+                FoundEnemy = true;
+                State = State.Moving;
+                break;
+              }
+            }
+            break;
+          default:
+            break;
         }
         
         Update();
@@ -71,6 +92,8 @@ public abstract partial class Entity : Node2D
 
     private AnimatedSprite2D AnimatedSprite { get; set; }
     private AnimationPlayer AnimationPlayer { get; set; }
+    private GTimer TimerCooldown { get; set; }
+    private Area2D DetectionArea { get; set; }
     private State State { get; set; }
     private Team OtherTeam { get; set; }
     private string AnimIdleName { get; } = "idle";
@@ -100,7 +123,7 @@ public abstract partial class Entity : Node2D
 
         var detectionPos = spriteSize.X / 2 + detectionWidth / 2;
 
-        var area = new Area2D();
+        DetectionArea = new Area2D();
         var collisionShape = new CollisionShape2D
         {
             Position = new Vector2(detectionPos, 0),
@@ -110,7 +133,7 @@ public abstract partial class Entity : Node2D
             }
         };
 
-        area.AreaEntered += (otherArea) =>
+        DetectionArea.AreaEntered += (otherArea) =>
         {
             if (otherArea.IsInGroup(OtherTeam.ToString()))
             {
@@ -119,8 +142,8 @@ public abstract partial class Entity : Node2D
             }
         };
 
-        area.AddChild(collisionShape);
-        AddChild(area);
+        DetectionArea.AddChild(collisionShape);
+        AddChild(DetectionArea);
     }
 }
 
@@ -128,7 +151,8 @@ public enum State
 {
     Moving,
     Attack,
-    Cooldown
+    Cooldown,
+    Find
 }
 
 public enum Team
