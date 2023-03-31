@@ -1,6 +1,6 @@
 ﻿namespace SideScrollGame;
 
-public partial class Entity : Node2D
+public partial class Entity : Node2D, IDamageable
 {
     [Export] public Team   Team                   { get; set; } = Team.Left;
     [Export] public double MaxHealth              { get; set; } = 100;
@@ -9,6 +9,8 @@ public partial class Entity : Node2D
     [Export] public float  DetectionRange         { get; set; } = 10;
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
     [Export] public string AnimationAttackType    { get; set; } = "attack";
+
+    public bool Destroyed => GodotObject.IsInstanceValid(this);
 
     public double CurHealth 
     { 
@@ -27,6 +29,7 @@ public partial class Entity : Node2D
 
     public override void _Ready()
     {
+        AddToGroup(Team.ToString());
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
         TimerAttackCooldown = new GTimer(
@@ -43,7 +46,7 @@ public partial class Entity : Node2D
             }
         };
 
-        if (MyTeam == Team.Left)
+        if (Team == Team.Left)
         {
             OtherTeam = Team.Right;
 
@@ -79,7 +82,7 @@ public partial class Entity : Node2D
                 {
                     AnimatedSprite.Play("move");
 
-                    Position += MyTeam == Team.Left ?
+                    Position += Team == Team.Left ?
                         new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
                 }
                 else
@@ -96,6 +99,7 @@ public partial class Entity : Node2D
                 // this looks ugly to me
                 State = State.Moving;
 
+                ValidateDetectedEnemies();
                 if (DetectedEnemies.Count > 0)
                 {
                     FoundEnemy = true;
@@ -119,10 +123,23 @@ public partial class Entity : Node2D
     // This function is called from within the AnimationPlayer track
     private void Attack()
     {
+        ValidateDetectedEnemies();
         foreach (var entity in DetectedEnemies)
         {
             entity.CurHealth -= AttackPower;
             break;
+        }
+    }
+
+    private void ValidateDetectedEnemies()
+    {
+        for (int i = 0; i < DetectedEnemies.Count; i++)
+        {
+            if (!DetectedEnemies[i].Destroyed)
+            {
+                DetectedEnemies.RemoveAt(i);
+                continue;
+            }
         }
     }
 
@@ -135,12 +152,11 @@ public partial class Entity : Node2D
     private State              State               { get; set; }
     private Team               OtherTeam           { get; set; }
     private bool               FoundEnemy          { get; set; }
-    private List<Entity>       DetectedEnemies     { get; set; } = new();
+    private List<IDamageable>  DetectedEnemies     { get; set; } = new();
 
     private void CreateBodyArea()
     {
         var area = new Area2D();
-        area.AddToGroup(MyTeam.ToString());
         var collisionShape = new CollisionShape2D
         {
             Shape = new RectangleShape2D
@@ -171,9 +187,12 @@ public partial class Entity : Node2D
 
         DetectionArea.AreaEntered += (otherArea) =>
         {
-            if (otherArea.IsInGroup(OtherTeam.ToString()))
+            var parent = otherArea.GetParent();
+
+            if (parent.IsInGroup(OtherTeam.ToString()) 
+                && parent is IDamageable damageable)
             {
-                DetectedEnemies.Add(otherArea.GetParent<Entity>());
+                DetectedEnemies.Add(damageable);
                 AnimatedSprite.Play("idle");
                 FoundEnemy = true;
             }
