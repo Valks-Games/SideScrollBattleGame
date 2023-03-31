@@ -115,8 +115,13 @@ public partial class Entity : Node2D
         Update();
     }
 
+    public override void _Input(InputEvent @event)
     {
+        if (Input.IsActionJustPressed("view_health"))
+            HealthBar.Show();
 
+        if (Input.IsActionJustReleased("view_health"))
+            HealthBar.Hide();
     }
 
     private void OnHit()
@@ -187,17 +192,8 @@ public partial class Entity : Node2D
         AddChild(DetectionArea);
     }
 
-    public override void _Input(InputEvent @event)
     private void CreateHealthBar()
     {
-        if(Input.IsActionJustPressed("jump"))
-        {
-            HealthBar.Visible = true;
-        }
-        else if (Input.IsActionJustReleased("jump"))
-        {
-            HealthBar.Visible = false;
-        }
         HealthBar = Prefabs.HealthBar.Instantiate<TextureProgressBar>();
         HealthBar.MaxValue = MaxHealth;
         HealthBar.Value = MaxHealth;
