@@ -96,14 +96,10 @@ public partial class Entity : Node2D
                 // this looks ugly to me
                 State = State.Moving;
 
-                foreach (var area in DetectionArea.GetOverlappingAreas())
+                if (DetectedEnemies.Count > 0)
                 {
-                    if (!area.IsInGroup(MyTeam.ToString()))
-                    {
-                        FoundEnemy = true;
-                        State = State.Attack;
-                        break;
-                    }
+                    FoundEnemy = true;
+                    State = State.Attack;
                 }
                 break;
             default:
@@ -122,16 +118,10 @@ public partial class Entity : Node2D
 
     private void OnHit()
     {
-        foreach (var area in DetectionArea.GetOverlappingAreas())
+        foreach (var entity in DetectedEnemies)
         {
-            if (area.IsInGroup(OtherTeam.ToString()))
-            {
-                var otherEntity = area.GetParent<Entity>();
-                otherEntity.CurHealth -= AttackPower;
-
-                // break to do a single-attack instead of multi-attack
-                break;
-            }
+            entity.CurHealth -= AttackPower;
+            break;
         }
     }
 
@@ -144,6 +134,7 @@ public partial class Entity : Node2D
     private State              State               { get; set; }
     private Team               OtherTeam           { get; set; }
     private bool               FoundEnemy          { get; set; }
+    private List<Entity>       DetectedEnemies     { get; set; } = new();
 
     private void CreateBodyArea()
     {
@@ -181,8 +172,17 @@ public partial class Entity : Node2D
         {
             if (otherArea.IsInGroup(OtherTeam.ToString()))
             {
+                DetectedEnemies.Add(otherArea.GetParent<Entity>());
                 AnimatedSprite.Play("idle");
                 FoundEnemy = true;
+            }
+        };
+
+        DetectionArea.AreaExited += (otherArea) =>
+        {
+            if (otherArea.IsInGroup(OtherTeam.ToString()))
+            {
+                DetectedEnemies.Remove(otherArea.GetParent<Entity>());
             }
         };
 
