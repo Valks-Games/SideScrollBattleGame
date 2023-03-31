@@ -14,7 +14,11 @@ public partial class Base : Sprite2D, IDamageable
         {
             if (value <= 0)
             {
-                QueueFree();
+                // base destroyed!
+
+                // animate base forever
+                HBox.Hide();
+                SetPhysicsProcess(true);
                 return;
             }
 
@@ -24,12 +28,13 @@ public partial class Base : Sprite2D, IDamageable
         }
     }
 
-    private GTimer AnimateTimer      { get; set; }
-    private Label  LabelMaxHealth    { get; set; }
-    private Label  LabelCurHealth    { get; set; }
-    private int    AnimateTime       { get; } = 300;
-    private int    AnimateAmplitudeX { get; } = 1;
-    private int    AnimateAmplitudeY { get; } = 1;
+    private GTimer        AnimateTimer      { get; set; }
+    private HBoxContainer HBox              { get; set; }
+    private Label         LabelMaxHealth    { get; set; }
+    private Label         LabelCurHealth    { get; set; }
+    private int           AnimateTime       { get; } = 300;
+    private int           AnimateAmplitudeX { get; } = 1;
+    private int           AnimateAmplitudeY { get; } = 1;
 
     public override void _Ready()
     {
@@ -37,10 +42,10 @@ public partial class Base : Sprite2D, IDamageable
         AnimateTimer = new GTimer(this, () => SetPhysicsProcess(false), AnimateTime);
         AddToGroup(Team.ToString());
 
-        var hbox = GetNode<HBoxContainer>("HBox");
+        HBox = GetNode<HBoxContainer>("HBox");
 
-        LabelMaxHealth = hbox.GetNode<Label>("MaxHealth");
-        LabelCurHealth = hbox.GetNode<Label>("CurHealth");
+        LabelMaxHealth = HBox.GetNode<Label>("MaxHealth");
+        LabelCurHealth = HBox.GetNode<Label>("CurHealth");
 
         LabelMaxHealth.Text = MaxHealth + "";
         LabelCurHealth.Text = MaxHealth + "";

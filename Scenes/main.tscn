@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://8fupxd0vf1d5" path="res://Scenes/Prefabs/base.tscn" id="5_8usp5"]
 [ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="5_y5gcn"]
 [ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="6_1frsa"]
-[ext_resource type="Texture2D" path="res://Sprites/Entities/skeleton_icon.png" id="9_j011r"]
-[ext_resource type="Texture2D" path="res://Sprites/Entities/orange_ball_icon.png" id="9_nnec7"]
+[ext_resource type="Texture2D" uid="uid://jgtd8ke2r6nw" path="res://Sprites/Entities/skeleton_icon.png" id="9_j011r"]
+[ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="9_nnec7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btq23"]
 bg_color = Color(0, 0.6, 0.54902, 0.286275)
