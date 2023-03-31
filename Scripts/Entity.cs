@@ -2,7 +2,7 @@
 
 public partial class Entity : Node2D
 {
-    [Export] public int    Health                 { get; set; } = 100;
+    [Export] public double MaxHealth              { get; set; } = 100;
     [Export] public float  MoveSpeed              { get; set; } = 1;
     [Export] public int    AttackPower            { get; set; } = 10;
     [Export] public float  DetectionRange         { get; set; } = 10;
