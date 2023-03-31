@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/GameMaster.cs" id="2_l2b0k"]
 [ext_resource type="Texture2D" uid="uid://q80kt62wvbpp" path="res://Sprites/icon.svg" id="2_w7cbu"]
 [ext_resource type="Texture2D" uid="uid://cah7r4wbb17kc" path="res://Sprites/Parallax/Tlayer1.png" id="4_xxpco"]
-[ext_resource type="Texture2D" uid="uid://6au08f86p30p" path="res://Sprites/tower_round.svg" id="5_si1wv"]
+[ext_resource type="PackedScene" uid="uid://8fupxd0vf1d5" path="res://Scenes/Prefabs/base.tscn" id="5_8usp5"]
 [ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="5_y5gcn"]
 [ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="6_1frsa"]
 [ext_resource type="Texture2D" path="res://Sprites/Entities/skeleton_icon.png" id="9_j011r"]
@@ -40,30 +40,14 @@ position = Vector2(500, 85.5)
 scale = Vector2(20, 2.33594)
 texture = ExtResource("2_w7cbu")
 
-[node name="Player Base" type="Sprite2D" parent="Game Master"]
-self_modulate = Color(0.843137, 0.843137, 0.843137, 1)
-position = Vector2(0, -64)
-texture = ExtResource("5_si1wv")
+[node name="Player Base" parent="Game Master" instance=ExtResource("5_8usp5")]
+MaxHealth = 20.0
 
-[node name="Label" type="Label" parent="Game Master/Player Base"]
-offset_left = -39.7838
-offset_top = -91.8494
-offset_right = 48.2162
-offset_bottom = -65.8494
-text = "1000 / 1000"
-
-[node name="Enemy Base" type="Sprite2D" parent="Game Master"]
-self_modulate = Color(0.443137, 0.443137, 0.443137, 1)
+[node name="Enemy Base" parent="Game Master" instance=ExtResource("5_8usp5")]
+self_modulate = Color(0.286275, 0.286275, 0.286275, 1)
 position = Vector2(1000, -64)
-texture = ExtResource("5_si1wv")
-flip_h = true
-
-[node name="Label" type="Label" parent="Game Master/Enemy Base"]
-offset_left = -39.7838
-offset_top = -91.8494
-offset_right = 48.2162
-offset_bottom = -65.8494
-text = "1000 / 1000"
+Team = 1
+MaxHealth = 20.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
