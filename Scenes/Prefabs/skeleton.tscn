@@ -88,10 +88,8 @@ scale = Vector2(2, 2)
 script = ExtResource("1_cfavd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-rotation = -0.116355
 sprite_frames = SubResource("SpriteFrames_udy6y")
 animation = &"move"
-offset = Vector2(10, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
