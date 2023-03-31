@@ -22,7 +22,7 @@ public partial class GameMaster : Node
         {
             await Task.Delay(500);
             var unit = Prefabs.OrangeBall.Instantiate<Entity>();
-            unit.MyTeam = Team.Left;
+            unit.Team = Team.Left;
 
             var randomY = GD.RandRange(0, maxRandomY);
 
@@ -37,7 +37,7 @@ public partial class GameMaster : Node
         {
             await Task.Delay(500);
             var unit = Prefabs.Skeleton.Instantiate<Entity>();
-            unit.MyTeam = Team.Right;
+            unit.Team = Team.Right;
 
             var randomY = GD.RandRange(0, maxRandomY);
 

@@ -2,6 +2,7 @@
 
 public partial class Entity : Node2D
 {
+    [Export] public Team   Team                   { get; set; } = Team.Left;
     [Export] public double MaxHealth              { get; set; } = 100;
     [Export] public float  MoveSpeed              { get; set; } = 1;
     [Export] public int    AttackPower            { get; set; } = 10;
@@ -9,7 +10,6 @@ public partial class Entity : Node2D
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
     [Export] public string AnimationAttackType    { get; set; } = "attack";
 
-    public Team MyTeam { get; set; } = Team.Left;
     public double CurHealth 
     { 
         get => HealthBar.Value;
