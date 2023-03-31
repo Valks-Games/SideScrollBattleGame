@@ -42,7 +42,7 @@ public partial class Entity : Node2D, IDamageable
             if (anim == AnimationAttackType)
             {
                 State = State.Cooldown;
-                TimerAttackCooldown.Start();
+                TimerAttackCooldown.StartMs();
             }
         };
 

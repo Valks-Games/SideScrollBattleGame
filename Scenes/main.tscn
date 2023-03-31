@@ -47,7 +47,7 @@ MaxHealth = 20.0
 self_modulate = Color(0.286275, 0.286275, 0.286275, 1)
 position = Vector2(1000, -64)
 Team = 1
-MaxHealth = 20.0
+MaxHealth = 30.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
