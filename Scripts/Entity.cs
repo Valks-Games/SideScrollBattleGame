@@ -204,6 +204,8 @@ public partial class Entity : Node2D
         {
             HealthBar.Visible = false;
         }
+        HealthBar.MaxValue = MaxHealth;
+        HealthBar.Value = MaxHealth;
     }
 }
 
