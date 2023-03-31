@@ -97,7 +97,7 @@ _data = {
 "attack": SubResource("Animation_5rrlj")
 }
 
-[node name="Root" type="Node2D"]
+[node name="Skeleton" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_cfavd")
 MaxHealth = 25.0

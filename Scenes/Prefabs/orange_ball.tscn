@@ -125,7 +125,7 @@ _data = {
 "attack": SubResource("Animation_ibao2")
 }
 
-[node name="Root" type="Node2D"]
+[node name="Orange Ball" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_55dco")
 MaxHealth = 50.0
