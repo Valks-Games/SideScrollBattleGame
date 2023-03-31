@@ -73,7 +73,7 @@ public abstract partial class Entity : Node2D
                     if (!area.IsInGroup(MyTeam.ToString()))
                     {
                         FoundEnemy = true;
-                        State = State.Moving;
+                        State = State.Attack;
                         break;
                     }
                 }
