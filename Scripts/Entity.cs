@@ -4,6 +4,7 @@ public partial class Entity : Node2D
 {
     [Export] public int    Health                 { get; set; } = 100;
     [Export] public float  MoveSpeed              { get; set; } = 1;
+    [Export] public int    AttackPower            { get; set; } = 10;
     [Export] public float  DetectionRange         { get; set; } = 10;
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
     [Export] public string AnimationAttackType    { get; set; } = "attack";
@@ -54,6 +55,13 @@ public partial class Entity : Node2D
         CreateBodyArea(spriteSize);
         CreateDetectionArea(spriteSize);
 
+        // Generate health bar
+        HealthBar = Prefabs.HealthBar.Instantiate<Control>();
+        HealthProgessBar = HealthBar.GetNode<TextureProgressBar>("TextureProgressBar");
+        HealthProgessBar.Value = Health;
+        HealthBar.Position = new Vector2(-15, -10);
+        AddChild(HealthBar);
+
         State = State.Moving;
 
         Init();
@@ -65,8 +73,12 @@ public partial class Entity : Node2D
         {
             case State.Moving:
                 if (!FoundEnemy)
+                {
+                    if( AnimatedSprite.Animation != "move" )
+                        AnimatedSprite.Play("move");
                     Position += MyTeam == Team.Left ?
                         new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
+                }
                 else
                 {
                     State = State.Attack;
@@ -77,6 +89,7 @@ public partial class Entity : Node2D
                 break;
             case State.Find:
                 FoundEnemy = false;
+                State = State.Moving;
                 foreach (var area in DetectionArea.GetOverlappingAreas())
                 {
                     if (!area.IsInGroup(MyTeam.ToString()))
@@ -91,18 +104,39 @@ public partial class Entity : Node2D
                 break;
         }
 
+        UpdateHealth();
+
         Update();
+    }
+
+    public void UpdateHealth()
+    {
+        if(Health == 0)
+        {
+          QueueFree();
+        }
+
+        HealthProgessBar.Value = Health;
     }
 
     private void OnHit()
     {
-        GD.Print("Hit!");
+        foreach (var area in DetectionArea.GetOverlappingAreas())
+        {
+            if(!area.IsInGroup(MyTeam.ToString()))
+            {
+                var otherEntity = area.GetParent<Entity>();
+                otherEntity.Health -= AttackPower;
+            }
+        }
     }
 
     private AnimatedSprite2D AnimatedSprite { get; set; }
     private AnimationPlayer AnimationPlayer { get; set; }
     private GTimer TimerAttackCooldown { get; set; }
     private Area2D DetectionArea { get; set; }
+    private TextureProgressBar HealthProgessBar { get; set; }
+    private Control HealthBar { get; set; }
     private State State { get; set; }
     private Team OtherTeam { get; set; }
     private bool FoundEnemy { get; set; }
@@ -150,6 +184,18 @@ public partial class Entity : Node2D
 
         DetectionArea.AddChild(collisionShape);
         AddChild(DetectionArea);
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if(Input.IsActionJustPressed("jump"))
+        {
+            HealthBar.Visible = true;
+        }
+        else if (Input.IsActionJustReleased("jump"))
+        {
+            HealthBar.Visible = false;
+        }
     }
 }
 

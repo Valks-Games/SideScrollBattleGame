@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b20rhls7uywyt"]
+
+[ext_resource type="Texture2D" uid="uid://cs8jeukukaubj" path="res://Sprites/Life Bars/1.png" id="2_80mwt"]
+
+[node name="HealthBar" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 2.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 2.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("2_80mwt")
