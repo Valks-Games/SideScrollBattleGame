@@ -15,7 +15,7 @@ public abstract partial class Entity : Node2D
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
-            if (anim == State.Attack.ToString().ToLower())
+            if (anim == "attack")
             {
                 State = State.Cooldown;
                 TimerAttackCooldown.Start();
@@ -37,11 +37,11 @@ public abstract partial class Entity : Node2D
         }
 
         // Play the 'move' animation set at a random starting frame
-        if (AnimatedSprite.SpriteFrames.HasAnimation(AnimMoveName))
-            AnimatedSprite.PlayRandom(AnimMoveName);
+        if (AnimatedSprite.SpriteFrames.HasAnimation("move"))
+            AnimatedSprite.PlayRandom("move");
 
         // Create the Area2D for this sprite. All other areas will try to detect this area
-        var spriteSize = AnimatedSprite.GetSize(AnimMoveName);
+        var spriteSize = AnimatedSprite.GetSize("move");
         CreateBodyArea(spriteSize);
         CreateDetectionArea(spriteSize);
 
@@ -96,8 +96,6 @@ public abstract partial class Entity : Node2D
     private Area2D DetectionArea { get; set; }
     private State State { get; set; }
     private Team OtherTeam { get; set; }
-    private string AnimIdleName { get; } = "idle";
-    private string AnimMoveName { get; } = "move";
     private bool FoundEnemy { get; set; }
 
     private void CreateBodyArea(Vector2 spriteSize)
@@ -137,7 +135,7 @@ public abstract partial class Entity : Node2D
         {
             if (otherArea.IsInGroup(OtherTeam.ToString()))
             {
-                AnimatedSprite.Play(AnimIdleName);
+                AnimatedSprite.Play("idle");
                 FoundEnemy = true;
             }
         };
