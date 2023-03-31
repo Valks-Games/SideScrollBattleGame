@@ -25,9 +25,6 @@ public partial class Entity : Node2D
         }
     }
 
-    public virtual void Init() { }
-    public virtual void Update() { }
-
     public override void _Ready()
     {
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -71,8 +68,6 @@ public partial class Entity : Node2D
         CreateHealthBar();
 
         State = State.Moving;
-
-        Init();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -114,8 +109,6 @@ public partial class Entity : Node2D
             default:
                 break;
         }
-
-        Update();
     }
 
     public override void _Input(InputEvent @event)
