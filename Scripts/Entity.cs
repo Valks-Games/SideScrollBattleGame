@@ -10,6 +10,17 @@ public partial class Entity : Node2D, IDamageable
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
+    public AnimatedSprite2D                     AnimatedSprite      { get; set; }
+    public AnimationPlayer                      AnimationPlayer     { get; set; }
+    public GTimer                               TimerAttackCooldown { get; set; }
+    public Area2D                               DetectionArea       { get; set; }
+    public TextureProgressBar                   HealthBar           { get; set; }
+    public Vector2                              SpriteSize          { get; set; }
+    public StateType                            CurrentState        { get; set; }
+    public Dictionary<StateType, State<Entity>> States              { get; set; } = new();
+    public Team                                 OtherTeam           { get; set; }
+    public bool                                 FoundEnemy          { get; set; }
+    public List<IDamageable>                    DetectedEnemies     { get; set; } = new();
 
     public double CurHealth 
     { 
@@ -33,14 +44,14 @@ public partial class Entity : Node2D, IDamageable
         AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
         TimerAttackCooldown = new GTimer(
             this, 
-            () => State = State.Find, 
+            () => GD.Print("todo: switch to find state"), 
             AttackCooldownDuration);
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
             if (anim == "attack")
             {
-                State = State.Cooldown;
+                GD.Print("todo: switch to cooldown state");
                 TimerAttackCooldown.StartMs();
             }
         };
@@ -69,45 +80,19 @@ public partial class Entity : Node2D, IDamageable
         CreateDetectionArea();
         CreateHealthBar();
 
-        State = State.Moving;
+        States[StateType.Attack]   = new StateAttack(this);
+        States[StateType.Cooldown] = new StateCooldown(this);
+        States[StateType.Find]     = new StateFind(this);
+        States[StateType.Move]     = new StateMove(this);
+
+        CurrentState = StateType.Move;
+
+        States[CurrentState].EnterState();
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        switch (State)
-        {
-            case State.Moving:
-                if (!FoundEnemy)
-                {
-                    AnimatedSprite.InstantPlay("move");
-
-                    Position += Team == Team.Left ?
-                        new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
-                }
-                else
-                {
-                    State = State.Attack;
-                }
-                break;
-            case State.Attack:
-                AnimationPlayer.Play("attack");
-                break;
-            case State.Find:
-                FoundEnemy = false;
-
-                // this looks ugly to me
-                State = State.Moving;
-
-                ValidateDetectedEnemies();
-                if (DetectedEnemies.Count > 0)
-                {
-                    FoundEnemy = true;
-                    State = State.Attack;
-                }
-                break;
-            default:
-                break;
-        }
+        States[CurrentState].Update();
     }
 
     public override void _Input(InputEvent @event)
@@ -117,6 +102,18 @@ public partial class Entity : Node2D, IDamageable
 
         if (Input.IsActionJustReleased("view_health"))
             HealthBar.Hide();
+    }
+
+    public void ValidateDetectedEnemies()
+    {
+        for (int i = 0; i < DetectedEnemies.Count; i++)
+        {
+            if (!DetectedEnemies[i].Destroyed)
+            {
+                DetectedEnemies.RemoveAt(i);
+                continue;
+            }
+        }
     }
 
     // This function is called from within the AnimationPlayer track
@@ -129,29 +126,6 @@ public partial class Entity : Node2D, IDamageable
             break;
         }
     }
-
-    private void ValidateDetectedEnemies()
-    {
-        for (int i = 0; i < DetectedEnemies.Count; i++)
-        {
-            if (!DetectedEnemies[i].Destroyed)
-            {
-                DetectedEnemies.RemoveAt(i);
-                continue;
-            }
-        }
-    }
-
-    private AnimatedSprite2D   AnimatedSprite      { get; set; }
-    private AnimationPlayer    AnimationPlayer     { get; set; }
-    private GTimer             TimerAttackCooldown { get; set; }
-    private Area2D             DetectionArea       { get; set; }
-    private TextureProgressBar HealthBar           { get; set; }
-    private Vector2            SpriteSize          { get; set; }
-    private State              State               { get; set; }
-    private Team               OtherTeam           { get; set; }
-    private bool               FoundEnemy          { get; set; }
-    private List<IDamageable>  DetectedEnemies     { get; set; } = new();
 
     private void CreateBodyArea()
     {
@@ -218,14 +192,6 @@ public partial class Entity : Node2D, IDamageable
         HealthBar.Hide();
         AddChild(HealthBar);
     }
-}
-
-public enum State
-{
-    Moving,
-    Attack,
-    Cooldown,
-    Find
 }
 
 public enum Team

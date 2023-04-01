@@ -18,7 +18,7 @@ public partial class GameMaster : Node
         var maxRandomY = 25;
 
         // player units
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 0; i++)
         {
             await Task.Delay(500);
             var unit = Prefabs.OrangeBall.Instantiate<Entity>();
@@ -33,7 +33,7 @@ public partial class GameMaster : Node
         }
 
         // enemy units
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 0; i++)
         {
             await Task.Delay(500);
             var unit = Prefabs.Skeleton.Instantiate<Entity>();
