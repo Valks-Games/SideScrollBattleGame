@@ -62,7 +62,7 @@ public partial class Entity : Node2D, IDamageable
 
         // Play the 'move' animation set at a random starting frame
         if (AnimatedSprite.SpriteFrames.HasAnimation("move"))
-            AnimatedSprite.PlayRandom("move");
+            AnimatedSprite.InstantPlay("move");
 
         // Create the Area2D for this sprite. All other areas will try to detect this area
         SpriteSize = AnimatedSprite.GetSize("move");
@@ -80,7 +80,7 @@ public partial class Entity : Node2D, IDamageable
             case State.Moving:
                 if (!FoundEnemy)
                 {
-                    AnimatedSprite.Play("move");
+                    AnimatedSprite.InstantPlay("move");
 
                     Position += Team == Team.Left ?
                         new Vector2(MoveSpeed, 0) : new Vector2(-MoveSpeed, 0);
@@ -193,7 +193,7 @@ public partial class Entity : Node2D, IDamageable
                 && parent is IDamageable damageable)
             {
                 DetectedEnemies.Add(damageable);
-                AnimatedSprite.Play("idle");
+                AnimatedSprite.InstantPlay("idle");
                 FoundEnemy = true;
             }
         };
