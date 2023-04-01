@@ -8,7 +8,6 @@ public partial class Entity : Node2D, IDamageable
     [Export] public int    AttackPower            { get; set; } = 10;
     [Export] public float  DetectionRange         { get; set; } = 10;
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
-    [Export] public string AnimationAttackType    { get; set; } = "attack";
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
 
@@ -39,7 +38,7 @@ public partial class Entity : Node2D, IDamageable
 
         AnimationPlayer.AnimationFinished += (anim) =>
         {
-            if (anim == AnimationAttackType)
+            if (anim == "attack")
             {
                 State = State.Cooldown;
                 TimerAttackCooldown.StartMs();
@@ -91,7 +90,7 @@ public partial class Entity : Node2D, IDamageable
                 }
                 break;
             case State.Attack:
-                AnimationPlayer.Play(AnimationAttackType);
+                AnimationPlayer.Play("attack");
                 break;
             case State.Find:
                 FoundEnemy = false;
