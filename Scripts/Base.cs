@@ -25,15 +25,11 @@ public partial class Base : Sprite2D, IDamageable
                 return;
 
             if (Team == Team.Left)
-                LabelMatchResult = new Label {
-                    Text = "Defeat..."
-                };
+                LabelMatchResult = new GLabel("Defeat...");
             else
-                LabelMatchResult = new Label {
-                    Text = "Victory!"
-                };
+                LabelMatchResult = new GLabel("Victory!");
 
-            LabelMatchResult.AddThemeFontSizeOverride("font_size", 120);
+            LabelMatchResult.SetFontSize(120);
 
             // Add the label to the center of the screen
             Main.CanvasLayer.AddChild(LabelMatchResult);
@@ -67,7 +63,7 @@ public partial class Base : Sprite2D, IDamageable
     private HBoxContainer HBox              { get; set; }
     private Label         LabelMaxHealth    { get; set; }
     private Label         LabelCurHealth    { get; set; }
-    private Label         LabelMatchResult  { get; set; }
+    private GLabel        LabelMatchResult  { get; set; }
     private int           AnimateTime       { get; } = 300;
     private int           AnimateAmplitudeX { get; } = 1;
     private int           AnimateAmplitudeY { get; } = 1;
