@@ -15,14 +15,8 @@ public partial class Base : Sprite2D, IDamageable
             if (value <= 0)
             {
                 // base destroyed!
-
-
-                if (LabelMatchResult != null)
-                {
-                    // match end
-                    // skip the rest
+                if (BaseDestroyed)
                     return;
-                }
 
                 switch (Team)
                 {
@@ -77,6 +71,7 @@ public partial class Base : Sprite2D, IDamageable
                 // animate base forever
                 HBox.Hide();
                 SetPhysicsProcess(true);
+                BaseDestroyed = true;
                 return;
             }
 
@@ -94,6 +89,7 @@ public partial class Base : Sprite2D, IDamageable
     private int           AnimateTime       { get; } = 300;
     private int           AnimateAmplitudeX { get; } = 1;
     private int           AnimateAmplitudeY { get; } = 1;
+    private bool          BaseDestroyed     { get; set; }
 
     public override void _Ready()
     {
