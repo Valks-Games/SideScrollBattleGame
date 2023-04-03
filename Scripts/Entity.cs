@@ -10,17 +10,16 @@ public partial class Entity : Node2D, IDamageable
     [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
-    public AnimatedSprite2D                     AnimatedSprite      { get; set; }
-    public AnimationPlayer                      AnimationPlayer     { get; set; }
-    public GTimer                               TimerAttackCooldown { get; set; }
-    public Area2D                               DetectionArea       { get; set; }
-    public TextureProgressBar                   HealthBar           { get; set; }
-    public Vector2                              SpriteSize          { get; set; }
-    public StateType                            CurrentState        { get; set; }
-    public Dictionary<StateType, State<Entity>> States              { get; set; } = new();
-    public Team                                 OtherTeam           { get; set; }
-    public bool                                 FoundEnemy          { get; set; }
-    public List<IDamageable>                    DetectedEnemies     { get; set; } = new();
+    public Dictionary<StateType, State<Entity>> States { get; set; } = new();
+    public AnimatedSprite2D   AnimatedSprite      { get; set; }
+    public Area2D             DetectionArea       { get; set; }
+    public TextureProgressBar HealthBar           { get; set; }
+    public Vector2            SpriteSize          { get; set; }
+    public StateType          CurrentState        { get; set; }
+    public Team               OtherTeam           { get; set; }
+    public bool               FoundEnemy          { get; set; }
+    public List<IDamageable>  DetectedEnemies     { get; set; } = new();
+    public Tween              AttackTween         { get; set; }
 
     public double CurHealth 
     { 
