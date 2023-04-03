@@ -11,6 +11,16 @@ public class StateMove : State<Entity>
 
     public override void Update()
     {
+        Entity.FoundEnemy = false;
+
+        // this is being done every frame -- very ugly
+        Entity.ValidateDetectedEnemies();
+        if (Entity.DetectedEnemies.Count > 0)
+        {
+            Entity.FoundEnemy = true;
+            SwitchState(StateType.Attack);
+        }
+
         if (!Entity.FoundEnemy)
         {
             Entity.AnimatedSprite.InstantPlay("move");

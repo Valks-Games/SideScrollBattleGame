@@ -1,5 +1,6 @@
 ﻿namespace SideScrollGame;
 
+// unused script - maybe delete?
 public class StateFind : State<Entity>
 {
     public StateFind(Entity entity) : base(entity) { }

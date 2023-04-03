@@ -28,6 +28,7 @@ public partial class Entity : Node2D, IDamageable
         {
             if (value <= 0)
             {
+                AttackTween?.Kill();
                 QueueFree();
                 return;
             }
@@ -40,26 +41,10 @@ public partial class Entity : Node2D, IDamageable
     {
         AddToGroup(Team.ToString());
         AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        AnimationPlayer = AnimatedSprite.GetNode<AnimationPlayer>("AnimationPlayer");
-        TimerAttackCooldown = new GTimer(
-            this, 
-            () => GD.Print("todo: switch to find state"), 
-            AttackCooldownDuration);
-
-        AnimationPlayer.AnimationFinished += (anim) =>
-        {
-            if (anim == "attack")
-            {
-                GD.Print("todo: switch to cooldown state");
-                TimerAttackCooldown.StartMs();
-            }
-        };
 
         if (Team == Team.Left)
         {
             OtherTeam = Team.Right;
-
-            // All sprites face the right side by default
         }
         else
         {
@@ -69,6 +54,7 @@ public partial class Entity : Node2D, IDamageable
             Scale = new Vector2(Scale.X * -1, Scale.Y);
         }
 
+        // Assuming every entity will have an animation called "move"
         // Play the 'move' animation set at a random starting frame
         if (AnimatedSprite.SpriteFrames.HasAnimation("move"))
             AnimatedSprite.InstantPlay("move");
@@ -115,8 +101,7 @@ public partial class Entity : Node2D, IDamageable
         }
     }
 
-    // This function is called from within the AnimationPlayer track
-    private void Attack()
+    public void Attack()
     {
         ValidateDetectedEnemies();
         foreach (var entity in DetectedEnemies)
@@ -165,6 +150,7 @@ public partial class Entity : Node2D, IDamageable
                 && parent is IDamageable damageable)
             {
                 DetectedEnemies.Add(damageable);
+                // Assuming every entity will have an animation called "idle"
                 AnimatedSprite.InstantPlay("idle");
                 FoundEnemy = true;
             }
