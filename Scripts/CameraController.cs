@@ -23,7 +23,7 @@ public partial class CameraController : Camera2D
         var camRightPos = Position.X + (cameraWidth / 2);
 
         Panning(camLeftPos, camRightPos);
-        Zoom();
+        Zooming();
         Boundaries(camLeftPos, camRightPos);
     }
 
@@ -50,10 +50,10 @@ public partial class CameraController : Camera2D
         }
     }
 
-    private void Zoom()
+    private void Zooming()
     {
         // Lerp to the target zoom for a smooth effect
-        base.Zoom = base.Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
+        Zoom = Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
     }
 
     private void Boundaries(float camLeftPos, float camRightPos)
