@@ -34,8 +34,8 @@ script = ExtResource("2_l2b0k")
 [node name="Player Units" type="Node2D" parent="Game Master"]
 
 [node name="Orange Ball" parent="Game Master/Player Units" instance=ExtResource("4_rbux8")]
-position = Vector2(492, -30)
-AttackPower = 25
+position = Vector2(548, -29)
+AttackPower = 50
 
 [node name="Enemy Units" type="Node2D" parent="Game Master"]
 
@@ -60,6 +60,18 @@ Team = 1
 MaxHealth = 30.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -29.5
+offset_right = 29.5
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 42
+text = "Victory!"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 

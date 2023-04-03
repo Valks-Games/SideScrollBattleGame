@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dked3f5i4o8mg"]
 
-[ext_resource type="Script" path="res://Scripts/Entity.cs" id="1_cfavd"]
 [ext_resource type="Texture2D" uid="uid://b88ypvix8g336" path="res://Sprites/Entities/skeleton.png" id="1_ndhta"]
+[ext_resource type="Script" path="res://Scripts/Entity/Entity.cs" id="1_rgxdo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n4c08"]
 atlas = ExtResource("1_ndhta")
@@ -99,8 +99,7 @@ _data = {
 
 [node name="Skeleton" type="Node2D"]
 scale = Vector2(2, 2)
-script = ExtResource("1_cfavd")
-MaxHealth = 25.0
+script = ExtResource("1_rgxdo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_udy6y")

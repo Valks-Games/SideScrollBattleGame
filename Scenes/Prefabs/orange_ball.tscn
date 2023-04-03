@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dpdvv23bacd0t"]
 
-[ext_resource type="Script" path="res://Scripts/Entity.cs" id="1_55dco"]
 [ext_resource type="Texture2D" uid="uid://cmrr3tmcrn50j" path="res://Sprites/Entities/orange_ball.png" id="1_784dg"]
+[ext_resource type="Script" path="res://Scripts/Entity/Entity.cs" id="1_redgl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n64wm"]
 atlas = ExtResource("1_784dg")
@@ -127,8 +127,7 @@ _data = {
 
 [node name="Orange Ball" type="Node2D"]
 scale = Vector2(2, 2)
-script = ExtResource("1_55dco")
-MaxHealth = 50.0
+script = ExtResource("1_redgl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0x72b")
