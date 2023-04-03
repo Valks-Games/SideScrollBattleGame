@@ -48,9 +48,9 @@ public partial class Base : Sprite2D, IDamageable
                 // adjust label size to big enough
                 LabelMatchResult.AddThemeFontSizeOverride("font_size", 120);
 
-                // put the label at center top of the screen.
+                // put the label at center of the screen.
                 Main.CanvasLayer.AddChild(LabelMatchResult);
-                LabelMatchResult.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.CenterTop);
+                LabelMatchResult.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.Center);
 
                 // copy the original label posiition
                 var originalPos = LabelMatchResult.Position;
