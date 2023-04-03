@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SideScrollGame;
+﻿namespace SideScrollGame;
 
 public static class Units
 {
@@ -50,13 +48,15 @@ public static class Units
     private static Entity OrangeBall() => new Entity 
     {
         Scale = Vector2.One * 2,
-        SpriteFrames = GD.Load<SpriteFrames>("res://SpriteFrames/orange_ball.tres")
+        SpriteFrames = GD.Load<SpriteFrames>("res://SpriteFrames/orange_ball.tres"),
+        AttackType = Attack.Spinning,
     };
 
     private static Entity Skeleton() => new Entity 
     {
         Scale = Vector2.One * 2,
-        SpriteFrames = GD.Load<SpriteFrames>("res://SpriteFrames/skeleton.tres")    
+        SpriteFrames = GD.Load<SpriteFrames>("res://SpriteFrames/skeleton.tres"),
+        AttackType = Attack.Sword,
     };
 }
 

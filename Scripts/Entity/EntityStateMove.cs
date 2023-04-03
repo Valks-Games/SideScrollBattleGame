@@ -6,7 +6,7 @@ public class EntityStateMove : EntityState<Entity>
 
     public override void EnterState()
     {
-        Entity.AnimatedSprite.InstantPlay("move", 1);
+        Entity.AnimatedSprite.InstantPlay("move");
     }
 
     public override void Update()
