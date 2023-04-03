@@ -12,72 +12,54 @@ public partial class Base : Sprite2D, IDamageable
         get => double.Parse(LabelCurHealth.Text);
         set
         {
-            if (value <= 0)
+            if (value > 0)
             {
-                // base destroyed!
-                if (BaseDestroyed)
-                    return;
-
-                switch (Team)
-                {
-                    case Team.Left:
-                        // player lose
-                        LabelMatchResult = new Label {
-                            Text = "Defeat..."
-                        };
-                        break;
-                    
-                    case Team.Right:
-                        // enemy lose
-                        LabelMatchResult = new Label {
-                            Text = "Victory!"
-                        };
-                        break;
-                    
-                    default:
-                        GD.PrintErr("Team text error");
-                        break;
-                }
-
-                // adjust label size to big enough
-                LabelMatchResult.AddThemeFontSizeOverride("font_size", 120);
-
-                // put the label at center of the screen.
-                Main.CanvasLayer.AddChild(LabelMatchResult);
-                LabelMatchResult.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.Center);
-
-                // copy the original label posiition
-                var originalPos = LabelMatchResult.Position;
-
-                // move the label position to offscreen
-                switch (Team)
-                {
-                    case Team.Left:
-                        // top offscreen
-                        LabelMatchResult.Position = new Vector2(originalPos.X, -800);
-                        break;
-                    
-                    case Team.Right:
-                        // left offscreen
-                        LabelMatchResult.Position = new Vector2(-800, originalPos.Y);
-                        break;
-                }
-
-                // tween the offscreen label to its original posiition
-                var tween = LabelMatchResult.CreateTween();
-                tween.TweenProperty(LabelMatchResult, "position", originalPos, 1.0f);
-                
-
-                // animate base forever
-                HBox.Hide();
                 SetPhysicsProcess(true);
-                BaseDestroyed = true;
+                AnimateTimer.StartMs(AnimateTime);
+                LabelCurHealth.Text = value + "";
                 return;
             }
 
+            // Base destroyed!
+            if (BaseDestroyed)
+                return;
+
+            if (Team == Team.Left)
+                LabelMatchResult = new Label {
+                    Text = "Defeat..."
+                };
+            else
+                LabelMatchResult = new Label {
+                    Text = "Victory!"
+                };
+
+            LabelMatchResult.AddThemeFontSizeOverride("font_size", 120);
+
+            // Add the label to the center of the screen
+            Main.CanvasLayer.AddChild(LabelMatchResult);
+            LabelMatchResult.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.Center);
+
+            // Keep track of center position
+            var originalPos = LabelMatchResult.Position;
+
+            // Set position to be offscreen
+            var winWidth = DisplayServer.WindowGetSize().X;
+
+            LabelMatchResult.Position = new Vector2(
+                (Team == Team.Left ? 1 : -1) * winWidth / 2, 
+                originalPos.Y);
+
+            // Tween the offscreen label to its original posiition
+            // Tween Transitions Cheat Sheet: https://www.reddit.com/r/godot/comments/dgh9vd/transitiontype_cheat_sheet_tween_interpolation_oc/
+            var tween = LabelMatchResult.CreateTween();
+            tween.TweenProperty(LabelMatchResult, "position", originalPos, 1.0f)
+                .SetTrans(Tween.TransitionType.Quint)
+                .SetEase(Tween.EaseType.Out);
+
+            // Animate the base forever
+            HBox.Hide();
             SetPhysicsProcess(true);
-            AnimateTimer.StartMs(AnimateTime);
-            LabelCurHealth.Text = value + "";
+            BaseDestroyed = true;
         }
     }
 
