@@ -14,9 +14,11 @@ namespace SideScrollGame;
 
 public partial class Main : Node
 {
+	public static CanvasLayer CanvasLayer { get; set; }
+
 	public override void _Ready()
 	{
-		
+		CanvasLayer = GetNode<CanvasLayer>("CanvasLayer");
 	}
 
 	public override void _PhysicsProcess(double delta)
