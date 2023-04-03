@@ -2,7 +2,8 @@
 
 public enum Attack
 {
-    Spinning
+    Spinning,
+    Sword
 }
 
 public class EntityStateAttack : EntityState<Entity>
@@ -18,6 +19,9 @@ public class EntityStateAttack : EntityState<Entity>
         {
             case Attack.Spinning:
                 Attacks.Spinning(Entity, () => SwitchState(EntityStateType.Cooldown));
+                break;
+            case Attack.Sword:
+                Attacks.Sword(Entity, () => SwitchState(EntityStateType.Cooldown));
                 break;
         }
     }
