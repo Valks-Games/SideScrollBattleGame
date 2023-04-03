@@ -18,7 +18,7 @@ public class StateCooldown : State<Entity>
 
                 SwitchState(StateType.Move);
             }, 
-            entity.AttackCooldownDuration);
+            entity.AttackSpeed);
     }
 
     public override void EnterState()

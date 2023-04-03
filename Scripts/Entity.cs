@@ -2,13 +2,13 @@
 
 public partial class Entity : Node2D, IDamageable
 {
-    [Export] public Team   Team                   { get; set; } = Team.Left;
-    [Export] public double MaxHealth              { get; set; } = 100;
-    [Export] public float  MoveSpeed              { get; set; } = 1;
-    [Export] public Attack AttackType             { get; set; }
-    [Export] public int    AttackPower            { get; set; } = 10;
-    [Export] public float  DetectionRange         { get; set; } = 10;
-    [Export] public int    AttackCooldownDuration { get; set; } = 1000; // in ms
+    [Export] public Team   Team           { get; set; } = Team.Left;
+    [Export] public double MaxHealth      { get; set; } = 100;
+    [Export] public float  MoveSpeed      { get; set; } = 1;
+    [Export] public Attack AttackType     { get; set; }
+    [Export] public int    AttackPower    { get; set; } = 10;
+    [Export] public int    AttackSpeed    { get; set; } = 1000; // in ms
+    [Export] public float  DetectionRange { get; set; } = 10;
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
     public Dictionary<StateType, State<Entity>> States { get; set; } = new();
