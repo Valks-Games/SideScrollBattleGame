@@ -23,7 +23,7 @@ public class EntityStateCooldown : EntityState<Entity>
 
     public override void EnterState()
     {
-        Timer.StartMs(1);
+        Timer.StartMs();
     }
 
     public override void Update()
