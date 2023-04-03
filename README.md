@@ -4,7 +4,7 @@ A side scroll game that is taking inspiration from "The Battle Cats" game.
 https://user-images.githubusercontent.com/6277739/229210589-5d68ec9e-629d-435f-bcd0-d1881ab3a5ab.mp4
 
 ## Setup
-1. Download and install [latest Godot 4 C# release](https://godotengine.org/) *(note that [.NET SDK 6.0](https://dotnet.microsoft.com/en-us/download) and [.NET Framework 4.7.2](https://www.google.com/search?q=.net+framework+4.7.2) are required for Godot C#)*
+1. Download and install [latest Godot 4 C# release](https://godotengine.org/)
 2. Clone this repository with all its submodules
 ```
 git clone --recursive https://github.com/valkyrienyanko/SideScrollBattleGame
