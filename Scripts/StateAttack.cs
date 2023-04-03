@@ -6,7 +6,7 @@ public class StateAttack : State<Entity>
 
     public override void EnterState()
     {
-        Entity.AttackTween = Entity.GetTree().CreateTween();
+        Entity.AttackTween = Entity.CreateTween();
         var rot = Mathf.Pi * 2;
 
         Entity.AttackTween.TweenProperty(Entity.AnimatedSprite, "rotation", rot, 0.5);
