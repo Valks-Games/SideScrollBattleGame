@@ -6,6 +6,7 @@ public class StateAttack : State<Entity>
 
     public override void EnterState()
     {
+        Entity.Attacking = true;
         Entity.AnimatedSprite.Play("idle");
         Attacks.Spinning(Entity, () => SwitchState(StateType.Cooldown));
     }
@@ -17,6 +18,6 @@ public class StateAttack : State<Entity>
 
     public override void ExitState()
     {
-        
+        Entity.Attacking = false;
     }
 }

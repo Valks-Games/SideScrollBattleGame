@@ -8,7 +8,17 @@ public class StateCooldown : State<Entity>
     {
         Timer = new GTimer(
             entity, 
-            () => SwitchState(StateType.Move), 
+            () =>
+            {
+                Entity.ValidateDetectedEnemies();
+                if (Entity.DetectedEnemies.Count > 0)
+                {
+                    SwitchState(StateType.Attack);
+                    return;
+                }
+
+                SwitchState(StateType.Move);
+            }, 
             entity.AttackCooldownDuration);
     }
 

@@ -17,9 +17,9 @@ public partial class Entity : Node2D, IDamageable
     public Vector2            SpriteSize          { get; set; }
     public StateType          CurrentState        { get; set; }
     public Team               OtherTeam           { get; set; }
-    public bool               FoundEnemy          { get; set; }
     public List<IDamageable>  DetectedEnemies     { get; set; } = new();
     public Tween              AttackTween         { get; set; }
+    public bool               Attacking           { get; set; }
 
     public double CurHealth 
     { 
@@ -149,7 +149,9 @@ public partial class Entity : Node2D, IDamageable
                 && parent is IDamageable damageable)
             {
                 DetectedEnemies.Add(damageable);
-                FoundEnemy = true;
+
+                if (!Attacking)
+                    States[CurrentState].SwitchState(StateType.Attack);
             }
         };
 

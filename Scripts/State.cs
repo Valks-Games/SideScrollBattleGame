@@ -10,7 +10,7 @@ public abstract class State<T> where T : Entity
     public abstract void ExitState();
     public abstract void Update();
 
-    protected void SwitchState(StateType newState)
+    public void SwitchState(StateType newState)
     {
         Entity.States[Entity.CurrentState].ExitState();
         Entity.CurrentState = newState;
