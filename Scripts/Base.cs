@@ -16,6 +16,53 @@ public partial class Base : Sprite2D, IDamageable
             {
                 // base destroyed!
 
+
+                if (LabelMatchResult != null)
+                {
+                    // match end
+                    // skip the rest
+                    return;
+                }
+
+                switch (Team)
+                {
+                    case Team.Left:
+                        // player lose
+                        LabelMatchResult = new Label {
+                            Text = "Defeat..."
+                        };
+                        break;
+                    
+                    case Team.Right:
+                        // enemy lose
+                        LabelMatchResult = new Label {
+                            Text = "Victory!"
+                        };
+                        break;
+                    
+                    default:
+                        GD.PrintErr("Team text error");
+                        break;
+                }
+
+                // adjust label size to big enough
+                LabelMatchResult.AddThemeFontSizeOverride("font_size", 120);
+
+                // put the label at center top of the screen.
+                Main.CanvasLayer.AddChild(LabelMatchResult);
+                LabelMatchResult.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.CenterTop);
+
+                // copy the original label posiition
+                var originalPos = LabelMatchResult.Position;
+
+                // move the label position to offscreen
+                LabelMatchResult.Position = new Vector2(-800, originalPos.Y);
+
+                // tween the offscreen label to the original label posiition
+                var tween = LabelMatchResult.CreateTween();
+                tween.TweenProperty(LabelMatchResult, "position", originalPos, 1.0f);
+                
+
                 // animate base forever
                 HBox.Hide();
                 SetPhysicsProcess(true);
@@ -32,6 +79,7 @@ public partial class Base : Sprite2D, IDamageable
     private HBoxContainer HBox              { get; set; }
     private Label         LabelMaxHealth    { get; set; }
     private Label         LabelCurHealth    { get; set; }
+    private Label         LabelMatchResult  { get; set; }
     private int           AnimateTime       { get; } = 300;
     private int           AnimateAmplitudeX { get; } = 1;
     private int           AnimateAmplitudeY { get; } = 1;
