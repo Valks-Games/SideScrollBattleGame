@@ -2,13 +2,14 @@
 
 public partial class Entity : Node2D, IDamageable
 {
-    [Export] public Team   Team           { get; set; } = Team.Left;
-    [Export] public double MaxHealth      { get; set; } = 100;
-    [Export] public float  MoveSpeed      { get; set; } = 1;
-    [Export] public Attack AttackType     { get; set; }
-    [Export] public int    AttackPower    { get; set; } = 10;
-    [Export] public int    AttackSpeed    { get; set; } = 1000; // in ms
-    [Export] public float  DetectionRange { get; set; } = 10;
+    [Export] public Team         Team           { get; set; } = Team.Left;
+    [Export] public double       MaxHealth      { get; set; } = 100;
+    [Export] public float        MoveSpeed      { get; set; } = 1;
+    [Export] public Attack       AttackType     { get; set; }
+    [Export] public int          AttackPower    { get; set; } = 10;
+    [Export] public int          AttackSpeed    { get; set; } = 1000; // in ms
+    [Export] public float        DetectionRange { get; set; } = 10;
+    [Export] public SpriteFrames SpriteFrames   { get; set; }
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
     public Dictionary<EntityStateType, EntityState<Entity>> States { get; set; } = new();
@@ -42,7 +43,12 @@ public partial class Entity : Node2D, IDamageable
     public override void _Ready()
     {
         AddToGroup(Team.ToString());
-        AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
+        AnimatedSprite = new AnimatedSprite2D
+        {
+            SpriteFrames = SpriteFrames
+        };
+        AddChild(AnimatedSprite);
 
         if (Team == Team.Left)
         {
