@@ -10,7 +10,7 @@ public abstract class EntityState<T> where T : Entity
     public abstract void ExitState();
     public abstract void Update();
 
-    public void SwitchState(StateType newState)
+    public void SwitchState(EntityStateType newState)
     {
         Entity.States[Entity.CurrentState].ExitState();
         Entity.CurrentState = newState;
@@ -18,7 +18,7 @@ public abstract class EntityState<T> where T : Entity
     }
 }
 
-public enum StateType
+public enum EntityStateType
 {
     Attack,
     Cooldown,

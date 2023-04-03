@@ -17,7 +17,7 @@ public class EntityStateAttack : EntityState<Entity>
         switch (Entity.AttackType)
         {
             case Attack.Spinning:
-                Attacks.Spinning(Entity, () => SwitchState(StateType.Cooldown));
+                Attacks.Spinning(Entity, () => SwitchState(EntityStateType.Cooldown));
                 break;
         }
     }

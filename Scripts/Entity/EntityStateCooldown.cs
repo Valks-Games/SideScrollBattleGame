@@ -12,11 +12,11 @@ public class EntityStateCooldown : EntityState<Entity>
             {
                 if (Entity.GetEnemyCount() > 0)
                 {
-                    SwitchState(StateType.Attack);
+                    SwitchState(EntityStateType.Attack);
                     return;
                 }
 
-                SwitchState(StateType.Move);
+                SwitchState(EntityStateType.Move);
             }, 
             entity.AttackSpeed);
     }

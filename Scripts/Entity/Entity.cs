@@ -11,12 +11,12 @@ public partial class Entity : Node2D, IDamageable
     [Export] public float  DetectionRange { get; set; } = 10;
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
-    public Dictionary<StateType, EntityState<Entity>> States { get; set; } = new();
+    public Dictionary<EntityStateType, EntityState<Entity>> States { get; set; } = new();
     public AnimatedSprite2D   AnimatedSprite      { get; set; }
     public Area2D             DetectionArea       { get; set; }
     public TextureProgressBar HealthBar           { get; set; }
     public Vector2            SpriteSize          { get; set; }
-    public StateType          CurrentState        { get; set; }
+    public EntityStateType    CurrentState        { get; set; }
     public Team               OtherTeam           { get; set; }
     public Tween              AttackTween         { get; set; }
     public bool               Attacking           { get; set; }
@@ -67,11 +67,11 @@ public partial class Entity : Node2D, IDamageable
         CreateDetectionArea();
         CreateHealthBar();
 
-        States[StateType.Attack]   = new EntityStateAttack(this);
-        States[StateType.Cooldown] = new EntityStateCooldown(this);
-        States[StateType.Move]     = new EntityStateMove(this);
+        States[EntityStateType.Attack]   = new EntityStateAttack(this);
+        States[EntityStateType.Cooldown] = new EntityStateCooldown(this);
+        States[EntityStateType.Move]     = new EntityStateMove(this);
 
-        CurrentState = StateType.Move;
+        CurrentState = EntityStateType.Move;
 
         States[CurrentState].EnterState();
     }
@@ -159,7 +159,7 @@ public partial class Entity : Node2D, IDamageable
                 DetectedEnemies.Add(damageable);
 
                 if (!Attacking)
-                    States[CurrentState].SwitchState(StateType.Attack);
+                    States[CurrentState].SwitchState(EntityStateType.Attack);
             }
         };
 
