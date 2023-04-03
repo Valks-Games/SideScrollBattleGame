@@ -23,7 +23,8 @@ public partial class CameraController : Camera2D
         var camRightPos = Position.X + (cameraWidth / 2);
 
         HandlePanning(camLeftPos, camRightPos);
-        HandleZoom(camLeftPos, camRightPos);
+        HandleZoom();
+        HandleBoundaries(camLeftPos, camRightPos);
     }
 
     public override void _Input(InputEvent @event)
@@ -49,11 +50,14 @@ public partial class CameraController : Camera2D
         }
     }
 
-    private void HandleZoom(float camLeftPos, float camRightPos)
+    private void HandleZoom()
     {
         // Lerp to the target zoom for a smooth effect
         Zoom = Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
+    }
 
+    private void HandleBoundaries(float camLeftPos, float camRightPos)
+    {
         if (camLeftPos < LimitLeft)
         {
             // Travelled this many pixels too far
