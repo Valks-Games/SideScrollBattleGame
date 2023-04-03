@@ -17,9 +17,10 @@ public partial class Entity : Node2D, IDamageable
     public Vector2            SpriteSize          { get; set; }
     public StateType          CurrentState        { get; set; }
     public Team               OtherTeam           { get; set; }
-    public List<IDamageable>  DetectedEnemies     { get; set; } = new();
     public Tween              AttackTween         { get; set; }
     public bool               Attacking           { get; set; }
+
+    private List<IDamageable> DetectedEnemies { get; set; } = new();
 
     public double CurHealth 
     { 
@@ -88,16 +89,10 @@ public partial class Entity : Node2D, IDamageable
             HealthBar.Hide();
     }
 
-    public void ValidateDetectedEnemies()
+    public int GetEnemyCount()
     {
-        for (int i = 0; i < DetectedEnemies.Count; i++)
-        {
-            if (!DetectedEnemies[i].Destroyed)
-            {
-                DetectedEnemies.RemoveAt(i);
-                continue;
-            }
-        }
+        ValidateDetectedEnemies();
+        return DetectedEnemies.Count;
     }
 
     public void Attack()
@@ -107,6 +102,18 @@ public partial class Entity : Node2D, IDamageable
         {
             entity.CurHealth -= AttackPower;
             break;
+        }
+    }
+
+    private void ValidateDetectedEnemies()
+    {
+        for (int i = 0; i < DetectedEnemies.Count; i++)
+        {
+            if (!DetectedEnemies[i].Destroyed)
+            {
+                DetectedEnemies.RemoveAt(i);
+                continue;
+            }
         }
     }
 

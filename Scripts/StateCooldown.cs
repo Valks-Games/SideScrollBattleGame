@@ -10,8 +10,7 @@ public class StateCooldown : State<Entity>
             entity, 
             () =>
             {
-                Entity.ValidateDetectedEnemies();
-                if (Entity.DetectedEnemies.Count > 0)
+                if (Entity.GetEnemyCount() > 0)
                 {
                     SwitchState(StateType.Attack);
                     return;
