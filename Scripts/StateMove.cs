@@ -16,10 +16,7 @@ public class StateMove : State<Entity>
         // this is being done every frame -- very ugly
         Entity.ValidateDetectedEnemies();
         if (Entity.DetectedEnemies.Count > 0)
-        {
             Entity.FoundEnemy = true;
-            SwitchState(StateType.Attack);
-        }
 
         if (!Entity.FoundEnemy)
         {
