@@ -22,6 +22,5 @@ public enum StateType
 {
     Attack,
     Cooldown,
-    Find,
     Move
 }

@@ -67,7 +67,6 @@ public partial class Entity : Node2D, IDamageable
 
         States[StateType.Attack]   = new StateAttack(this);
         States[StateType.Cooldown] = new StateCooldown(this);
-        States[StateType.Find]     = new StateFind(this);
         States[StateType.Move]     = new StateMove(this);
 
         CurrentState = StateType.Move;
