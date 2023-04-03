@@ -13,18 +13,18 @@ public partial class CameraController : Camera2D
     public override void _Ready()
     {
         // Set the initial target zoom value on game start
-        TargetZoom = Zoom.X;
+        TargetZoom = base.Zoom.X;
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        var cameraWidth = GetViewportRect().Size.X / Zoom.X;
+        var cameraWidth = GetViewportRect().Size.X / base.Zoom.X;
         var camLeftPos = Position.X - (cameraWidth / 2);
         var camRightPos = Position.X + (cameraWidth / 2);
 
-        HandlePanning(camLeftPos, camRightPos);
-        HandleZoom();
-        HandleBoundaries(camLeftPos, camRightPos);
+        Panning(camLeftPos, camRightPos);
+        Zoom();
+        Boundaries(camLeftPos, camRightPos);
     }
 
     public override void _Input(InputEvent @event)
@@ -33,7 +33,7 @@ public partial class CameraController : Camera2D
             InputEventMouseButton(mouseEvent);
     }
 
-    private void HandlePanning(float camLeftPos, float camRightPos)
+    private void Panning(float camLeftPos, float camRightPos)
     {
         if (Input.IsActionPressed("move_left"))
         {
@@ -50,13 +50,13 @@ public partial class CameraController : Camera2D
         }
     }
 
-    private void HandleZoom()
+    private void Zoom()
     {
         // Lerp to the target zoom for a smooth effect
-        Zoom = Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
+        base.Zoom = base.Zoom.Lerp(new Vector2(TargetZoom, TargetZoom), SmoothFactor);
     }
 
-    private void HandleBoundaries(float camLeftPos, float camRightPos)
+    private void Boundaries(float camLeftPos, float camRightPos)
     {
         if (camLeftPos < LimitLeft)
         {
