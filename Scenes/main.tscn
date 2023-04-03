@@ -34,7 +34,8 @@ script = ExtResource("2_l2b0k")
 [node name="Player Units" type="Node2D" parent="Game Master"]
 
 [node name="Orange Ball" parent="Game Master/Player Units" instance=ExtResource("4_rbux8")]
-position = Vector2(515, -30)
+position = Vector2(349, -31)
+AttackPower = 25
 
 [node name="Enemy Units" type="Node2D" parent="Game Master"]
 
