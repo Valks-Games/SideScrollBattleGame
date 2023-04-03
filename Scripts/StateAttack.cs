@@ -6,6 +6,7 @@ public class StateAttack : State<Entity>
 
     public override void EnterState()
     {
+        Entity.AnimatedSprite.Play("idle");
         Attacks.Spinning(Entity, () => SwitchState(StateType.Cooldown));
     }
 

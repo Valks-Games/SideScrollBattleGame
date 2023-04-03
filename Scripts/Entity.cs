@@ -149,8 +149,6 @@ public partial class Entity : Node2D, IDamageable
                 && parent is IDamageable damageable)
             {
                 DetectedEnemies.Add(damageable);
-                // Assuming every entity will have an animation called "idle"
-                AnimatedSprite.InstantPlay("idle");
                 FoundEnemy = true;
             }
         };
