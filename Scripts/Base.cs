@@ -52,6 +52,22 @@ public partial class Base : Sprite2D, IDamageable
                 .SetTrans(Tween.TransitionType.Quint)
                 .SetEase(Tween.EaseType.Out);
 
+            tween.TweenCallback(Callable.From(() =>
+            {
+                var blackScreen = new ColorRect {
+                    Color = new Color(0, 0, 0, 0)
+                };
+
+                Main.CanvasLayer.AddChild(blackScreen);
+                blackScreen.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+
+                var tween = blackScreen.CreateTween();
+
+                tween.TweenProperty(blackScreen, "color:a", 1, 4)
+                    .SetTrans(Tween.TransitionType.Linear)
+                    .SetDelay(2.0);
+            }));
+
             // Animate the base forever
             HBox.Hide();
             SetPhysicsProcess(true);
