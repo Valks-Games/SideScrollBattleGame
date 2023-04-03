@@ -24,6 +24,8 @@ public partial class Base : Sprite2D, IDamageable
             if (BaseDestroyed)
                 return;
 
+            GameMaster.DestroyAllUnits(Team);
+
             if (Team == Team.Left)
                 LabelMatchResult = new GLabel("Defeat...");
             else
