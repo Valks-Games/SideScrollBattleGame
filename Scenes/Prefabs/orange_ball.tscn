@@ -131,7 +131,6 @@ script = ExtResource("1_55dco")
 MaxHealth = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-rotation = 18.8496
 sprite_frames = SubResource("SpriteFrames_0x72b")
 animation = &"move"
 frame_progress = 0.851459
