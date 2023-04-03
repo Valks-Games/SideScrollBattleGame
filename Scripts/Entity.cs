@@ -11,7 +11,7 @@ public partial class Entity : Node2D, IDamageable
     [Export] public float  DetectionRange { get; set; } = 10;
 
     public bool Destroyed => GodotObject.IsInstanceValid(this);
-    public Dictionary<StateType, State<Entity>> States { get; set; } = new();
+    public Dictionary<StateType, EntityState<Entity>> States { get; set; } = new();
     public AnimatedSprite2D   AnimatedSprite      { get; set; }
     public Area2D             DetectionArea       { get; set; }
     public TextureProgressBar HealthBar           { get; set; }
@@ -67,9 +67,9 @@ public partial class Entity : Node2D, IDamageable
         CreateDetectionArea();
         CreateHealthBar();
 
-        States[StateType.Attack]   = new StateAttack(this);
-        States[StateType.Cooldown] = new StateCooldown(this);
-        States[StateType.Move]     = new StateMove(this);
+        States[StateType.Attack]   = new EntityStateAttack(this);
+        States[StateType.Cooldown] = new EntityStateCooldown(this);
+        States[StateType.Move]     = new EntityStateMove(this);
 
         CurrentState = StateType.Move;
 

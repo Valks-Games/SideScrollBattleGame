@@ -1,10 +1,10 @@
 ﻿namespace SideScrollGame;
 
-public abstract class State<T> where T : Entity
+public abstract class EntityState<T> where T : Entity
 {
     protected T Entity { get; set; }
     
-    public State(T entity) => Entity = entity;
+    public EntityState(T entity) => Entity = entity;
 
     public abstract void EnterState();
     public abstract void ExitState();

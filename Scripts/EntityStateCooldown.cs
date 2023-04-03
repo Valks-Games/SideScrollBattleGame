@@ -1,10 +1,10 @@
 ﻿namespace SideScrollGame;
 
-public class StateCooldown : State<Entity>
+public class EntityStateCooldown : EntityState<Entity>
 {
     private GTimer Timer { get; set; }
 
-    public StateCooldown(Entity entity) : base(entity)
+    public EntityStateCooldown(Entity entity) : base(entity)
     {
         Timer = new GTimer(
             entity, 

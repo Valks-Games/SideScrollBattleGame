@@ -5,9 +5,9 @@ public enum Attack
     Spinning
 }
 
-public class StateAttack : State<Entity>
+public class EntityStateAttack : EntityState<Entity>
 {
-    public StateAttack(Entity entity) : base(entity) { }
+    public EntityStateAttack(Entity entity) : base(entity) { }
 
     public override void EnterState()
     {

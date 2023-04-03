@@ -1,8 +1,8 @@
 ﻿namespace SideScrollGame;
 
-public class StateMove : State<Entity>
+public class EntityStateMove : EntityState<Entity>
 {
-    public StateMove(Entity entity) : base(entity) { }
+    public EntityStateMove(Entity entity) : base(entity) { }
 
     public override void EnterState()
     {
