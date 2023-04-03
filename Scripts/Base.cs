@@ -39,10 +39,8 @@ public partial class Base : Sprite2D, IDamageable
             var originalPos = LabelMatchResult.Position;
 
             // Set position to be offscreen
-            var winWidth = DisplayServer.WindowGetSize().X;
-
             LabelMatchResult.Position = new Vector2(
-                (Team == Team.Left ? 1 : -1) * winWidth / 2, 
+                (Team == Team.Left ? 1 : -1) * GWindow.GetWidth() / 2, 
                 originalPos.Y);
 
             // Tween the offscreen label to its original posiition
