@@ -56,9 +56,20 @@ public partial class Base : Sprite2D, IDamageable
                 var originalPos = LabelMatchResult.Position;
 
                 // move the label position to offscreen
-                LabelMatchResult.Position = new Vector2(-800, originalPos.Y);
+                switch (Team)
+                {
+                    case Team.Left:
+                        // top offscreen
+                        LabelMatchResult.Position = new Vector2(originalPos.X, -800);
+                        break;
+                    
+                    case Team.Right:
+                        // left offscreen
+                        LabelMatchResult.Position = new Vector2(-800, originalPos.Y);
+                        break;
+                }
 
-                // tween the offscreen label to the original label posiition
+                // tween the offscreen label to its original posiition
                 var tween = LabelMatchResult.CreateTween();
                 tween.TweenProperty(LabelMatchResult, "position", originalPos, 1.0f);
                 
