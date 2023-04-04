@@ -47,7 +47,6 @@ public partial class Entity : Node2D, IDamageable
         States[EntityStateType.Move] = new EntityStateMove(this);
 
         CurrentState = EntityStateType.Move;
-        States[CurrentState].EnterState();
 
         AddToGroup(Team.ToString());
 
@@ -79,6 +78,8 @@ public partial class Entity : Node2D, IDamageable
         CreateBodyArea();
         CreateDetectionArea();
         CreateHealthBar();
+
+        States[CurrentState].EnterState();
     }
 
     public override void _PhysicsProcess(double delta)
