@@ -21,10 +21,13 @@ public partial class GameMaster : Node
 
     public override async void _Ready()
     {
-        PlayerUnits = GetNode("Player Units");
-        EnemyUnits  = GetNode("Enemy Units");
+        PlayerUnits = new Node2D { Name = "Player Units" };
+        EnemyUnits  = new Node2D { Name = "Enemy Units" };
         PlayerBase  = GetNode<Node2D>("Player Base");
         EnemyBase   = GetNode<Node2D>("Enemy Base");
+
+        AddChild(PlayerUnits);
+        AddChild(EnemyUnits);
 
         await Task.Factory.StartNew(() => SpawnUnits(), SpawnUnitsCTS.Token);
     }

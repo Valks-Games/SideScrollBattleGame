@@ -29,10 +29,6 @@ script = ExtResource("2_chwf1")
 [node name="Game Master" type="Node2D" parent="."]
 script = ExtResource("2_l2b0k")
 
-[node name="Player Units" type="Node2D" parent="Game Master"]
-
-[node name="Enemy Units" type="Node2D" parent="Game Master"]
-
 [node name="Grass" type="Sprite2D" parent="Game Master"]
 modulate = Color(0.34902, 1, 0, 1)
 z_index = -1
