@@ -1,9 +1,117 @@
-[gd_scene format=3 uid="uid://0pdbkcm88qj3"]
+[gd_scene load_steps=5 format=3 uid="uid://0pdbkcm88qj3"]
 
-[node name="Map" type="Control"]
-layout_mode = 3
-anchors_preset = 15
+[ext_resource type="Script" path="res://Scripts/Levels.cs" id="1_5rdwr"]
+[ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
+[ext_resource type="Texture2D" uid="uid://ptgl7pv2t8a2" path="res://GodotUtils/Sprites/gear.png" id="1_yfh2m"]
+
+[sub_resource type="Curve2D" id="Curve2D_kgeqg"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -45, -45, 0, 0, 142, 27, 0, 0, 0, 0, 142, 112)
+}
+point_count = 3
+
+[node name="Map" type="Node2D"]
+
+[node name="Levels" type="Node2D" parent="."]
+script = ExtResource("1_5rdwr")
+
+[node name="Level 1" type="Sprite2D" parent="Levels"]
+position = Vector2(800, 249)
+texture = ExtResource("1_yfh2m")
+
+[node name="Level 2" type="Sprite2D" parent="Levels"]
+position = Vector2(400, 324)
+texture = ExtResource("1_yfh2m")
+
+[node name="Path2D" type="Path2D" parent="Levels"]
+position = Vector2(451, 227)
+curve = SubResource("Curve2D_kgeqg")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Levels/Path2D"]
+rotates = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Levels/Path2D/PathFollow2D"]
+scale = Vector2(4, 4)
+texture = ExtResource("1_6pvrf")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 16.0
 grow_horizontal = 2
-grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "P1.X"
+
+[node name="P1x" type="HSlider" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "P1.Y"
+
+[node name="P1y" type="HSlider" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "P2.X"
+
+[node name="P2x" type="HSlider" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "P2.Y"
+
+[node name="P2y" type="HSlider" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "TEST"
+
+[node name="Test" type="HSlider" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+
+[connection signal="value_changed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/P1x" to="Levels" method="_on_p_1x_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer2/P1y" to="Levels" method="_on_p_1y_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer3/P2x" to="Levels" method="_on_p_2x_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer4/P2y" to="Levels" method="_on_p_2y_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer5/Test" to="Levels" method="_on_test_value_changed"]
