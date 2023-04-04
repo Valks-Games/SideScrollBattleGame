@@ -1,14 +1,72 @@
-using System.Drawing;
-
 namespace SideScrollGame;
 
 public partial class Levels : Node2D
 {
-    private float P2x { get; set; }
-    private float P2y { get; set; }
-    private float P3x { get; set; }
-    private float P3y { get; set; }
-    private float T { get; set; }
+    private float V1 { get; set; }
+    private float V2 { get; set; }
+    private float V3 { get; set; }
+    private float V4 { get; set; }
+
+    public override void _Ready()
+    {
+        var canvasLayer = GetNode<CanvasLayer>("../CanvasLayer");
+
+        var vbox = new VBoxContainer();
+        vbox.AddThemeConstantOverride("separation", 0);
+        canvasLayer.AddChild(vbox);
+
+        var slider1 = new UISlider(new SliderOptions
+        {
+            Name = "Debug",
+            HSlider = new HSlider {
+                MinValue = -1000,
+                MaxValue = 1000    
+            },
+            HideBackPanel = false
+        });
+        slider1.ValueChanged += v => V1 = v;
+
+        var slider2 = new UISlider(new SliderOptions
+        {
+            Name = "Debug",
+            HSlider = new HSlider
+            {
+                MinValue = -1000,
+                MaxValue = 1000
+            },
+            HideBackPanel = false
+        });
+        slider2.ValueChanged += v => V2 = v;
+
+        var slider3 = new UISlider(new SliderOptions
+        {
+            Name = "Debug",
+            HSlider = new HSlider
+            {
+                MinValue = -1000,
+                MaxValue = 1000
+            },
+            HideBackPanel = false
+        });
+        slider3.ValueChanged += v => V3 = v;
+
+        var slider4 = new UISlider(new SliderOptions
+        {
+            Name = "Debug",
+            HSlider = new HSlider
+            {
+                MinValue = -1000,
+                MaxValue = 1000
+            },
+            HideBackPanel = false
+        });
+        slider4.ValueChanged += v => V4 = v;
+
+        vbox.AddChild(slider1);
+        vbox.AddChild(slider2);
+        vbox.AddChild(slider3);
+        vbox.AddChild(slider4);
+    }
 
     public override void _Process(double delta)
     {
@@ -17,43 +75,17 @@ public partial class Levels : Node2D
 
     public override void _Draw()
     {
-        var center = GWindow.GetCenter();
-        var pointA = center - new Vector2(200, 0);
-        var pointB = center + new Vector2(200, -75);
+        var points = this.GetChildren<Node2D>().Select(x => x.Position).ToArray();
 
-        var c1 = new Vector2(P2x + T, P2y);
-        var c2 = new Vector2(P3x - T, P3y);
+        for (int i = 0; i < points.Count() - 1; i++)
+        {
+            var pointA = points[i];
+            var pointB = points[i + 1];
 
-        BezierCurve.Draw(this, pointA, pointB, c1, c2, Colors.White);
-    }
+            var c1 = new Vector2(-299 + V1, 102 + V2);
+            var c2 = new Vector2( 243 + V3, 198 + V4);
 
-    private void _on_test_value_changed(float v)
-    {
-        T = v;
-        GD.Print(v);
-    }
-
-    private void _on_p_1x_value_changed(float v)
-    {
-        P2x = v;
-        GD.Print(v);
-    }
-
-    private void _on_p_1y_value_changed(float v)
-    {
-        P2y = v;
-        GD.Print(v);
-    }
-
-    private void _on_p_2x_value_changed(float v)
-    {
-        P3x = v;
-        GD.Print(v);
-    }
-
-    private void _on_p_2y_value_changed(float v)
-    {
-        P3y = v;
-        GD.Print(v);
+            BezierCurve.Draw(this, pointA, pointB, c1, c2, Colors.White);
+        }
     }
 }
