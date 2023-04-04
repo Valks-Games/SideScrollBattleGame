@@ -1,16 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://rl003cr36nv6"]
+[gd_scene load_steps=12 format=3 uid="uid://rl003cr36nv6"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_2vvsp"]
 [ext_resource type="Script" path="res://Scripts/CameraController.cs" id="2_chwf1"]
 [ext_resource type="Script" path="res://Scripts/GameMaster.cs" id="2_l2b0k"]
 [ext_resource type="Texture2D" uid="uid://q80kt62wvbpp" path="res://Sprites/icon.svg" id="2_w7cbu"]
-[ext_resource type="Script" path="res://Scripts/Entity/Entity.cs" id="4_3eg3f"]
 [ext_resource type="Texture2D" uid="uid://cah7r4wbb17kc" path="res://Sprites/Parallax/Tlayer1.png" id="4_xxpco"]
-[ext_resource type="SpriteFrames" uid="uid://bm3bwme2oc0nc" path="res://SpriteFrames/orange_ball.tres" id="5_4p4ov"]
 [ext_resource type="PackedScene" uid="uid://8fupxd0vf1d5" path="res://Scenes/Prefabs/base.tscn" id="5_8usp5"]
 [ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="5_y5gcn"]
 [ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="6_1frsa"]
-[ext_resource type="SpriteFrames" uid="uid://lcympryoj5ru" path="res://SpriteFrames/skeleton.tres" id="6_06wfp"]
 [ext_resource type="Texture2D" uid="uid://jgtd8ke2r6nw" path="res://Sprites/Entities/skeleton_icon.png" id="9_j011r"]
 [ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="9_nnec7"]
 
@@ -34,21 +31,7 @@ script = ExtResource("2_l2b0k")
 
 [node name="Player Units" type="Node2D" parent="Game Master"]
 
-[node name="Orange Ball" type="Node2D" parent="Game Master/Player Units"]
-position = Vector2(548, -29)
-scale = Vector2(2, 2)
-script = ExtResource("4_3eg3f")
-AttackPower = 50
-SpriteFrames = ExtResource("5_4p4ov")
-
 [node name="Enemy Units" type="Node2D" parent="Game Master"]
-
-[node name="Skeleton" type="Node2D" parent="Game Master/Enemy Units"]
-position = Vector2(658, -33)
-scale = Vector2(2, 2)
-script = ExtResource("4_3eg3f")
-Team = 1
-SpriteFrames = ExtResource("6_06wfp")
 
 [node name="Grass" type="Sprite2D" parent="Game Master"]
 modulate = Color(0.34902, 1, 0, 1)

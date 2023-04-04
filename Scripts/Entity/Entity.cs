@@ -42,6 +42,13 @@ public partial class Entity : Node2D, IDamageable
 
     public override void _Ready()
     {
+        States[EntityStateType.Attack] = new EntityStateAttack(this);
+        States[EntityStateType.Cooldown] = new EntityStateCooldown(this);
+        States[EntityStateType.Move] = new EntityStateMove(this);
+
+        CurrentState = EntityStateType.Move;
+        States[CurrentState].EnterState();
+
         AddToGroup(Team.ToString());
 
         AnimatedSprite = new AnimatedSprite2D
@@ -72,14 +79,6 @@ public partial class Entity : Node2D, IDamageable
         CreateBodyArea();
         CreateDetectionArea();
         CreateHealthBar();
-
-        States[EntityStateType.Attack]   = new EntityStateAttack(this);
-        States[EntityStateType.Cooldown] = new EntityStateCooldown(this);
-        States[EntityStateType.Move]     = new EntityStateMove(this);
-
-        CurrentState = EntityStateType.Move;
-
-        States[CurrentState].EnterState();
     }
 
     public override void _PhysicsProcess(double delta)
