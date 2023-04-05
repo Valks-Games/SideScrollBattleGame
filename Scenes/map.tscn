@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://0pdbkcm88qj3"]
+[gd_scene load_steps=4 format=3 uid="uid://dm8ddotbrylfk"]
 
 [ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
 [ext_resource type="Script" path="res://Scripts/Test.cs" id="1_tcpbc"]
-[ext_resource type="Texture2D" uid="uid://ptgl7pv2t8a2" path="res://GodotUtils/Sprites/gear.png" id="1_yfh2m"]
+[ext_resource type="PackedScene" uid="uid://dh2447jy7aqev" path="res://Scenes/Prefabs/level_gear.tscn" id="3_lkte1"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_tcpbc")
@@ -13,40 +13,31 @@ texture = ExtResource("1_6pvrf")
 
 [node name="Levels" type="Node2D" parent="."]
 
-[node name="Level 1" type="Sprite2D" parent="Levels"]
-position = Vector2(181, 154)
-texture = ExtResource("1_yfh2m")
+[node name="Level 1" parent="Levels" instance=ExtResource("3_lkte1")]
+position = Vector2(217, 186)
 
-[node name="Level 2" type="Sprite2D" parent="Levels"]
+[node name="Level 2" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(439, 345)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 3" type="Sprite2D" parent="Levels"]
+[node name="Level 3" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(662, 512)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 4" type="Sprite2D" parent="Levels"]
+[node name="Level 4" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(792, 478)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 5" type="Sprite2D" parent="Levels"]
+[node name="Level 5" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(653, 236)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 6" type="Sprite2D" parent="Levels"]
+[node name="Level 6" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(1049, 192)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 7" type="Sprite2D" parent="Levels"]
+[node name="Level 7" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(966, 553)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 8" type="Sprite2D" parent="Levels"]
+[node name="Level 8" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(277, 562)
-texture = ExtResource("1_yfh2m")
 
-[node name="Level 9" type="Sprite2D" parent="Levels"]
+[node name="Level 9" parent="Levels" instance=ExtResource("3_lkte1")]
 position = Vector2(463, 120)
-texture = ExtResource("1_yfh2m")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
