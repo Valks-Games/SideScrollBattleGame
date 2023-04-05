@@ -6,7 +6,8 @@ public partial class Test : Node2D
 
     public override void _Ready()
     {
-        var points = GetNode("Levels").GetChildren<Node2D>().Select(x => x.Position).ToArray();
+        var gearNodes = GetNode("Levels").GetChildren<LevelGear>();
+        var points = gearNodes.Select(x => x.Position).ToArray();
         Path = new GPath(points, Colors.White, 2, 8);
         Path.AddCurves();
 
@@ -17,12 +18,8 @@ public partial class Test : Node2D
 
         AddChild(Path);
 
-        // connect custom signals at the gears
-        var gears = GetNode("Levels").GetChildren<Node2D>();
-        foreach(LevelGear node in gears)
-        {
-            node.LevelPressed += HandleGearLevelPressed;
-        }
+        foreach (var gearNode in gearNodes)
+            gearNode.LevelEntered += (level) => Path.AnimateTo(level - 1);
     }
 
     public override void _Input(InputEvent @event)
@@ -35,10 +32,5 @@ public partial class Test : Node2D
             if (inputEventKey.IsKeyJustPressed(Key.A))
                 Path.AnimateBackwards();
         }
-    }
-
-    public void HandleGearLevelPressed(int level)
-    {
-        Path.AnimateSpecific(level - 1);
     }
 }
