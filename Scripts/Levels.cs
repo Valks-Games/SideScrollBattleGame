@@ -38,12 +38,38 @@ public partial class Levels : Node2D
             var B = LevelIconPositions[i + 1];
 
             var center = (A + B) / 2;
-            var offset = center + ((B - A).Orthogonal().Normalized() * 50 * invert);
+            var offset = ((B - A).Orthogonal().Normalized() * 50 * invert);
+            var newPos = center + offset;
 
             invert *= -1;
 
-            Path2D.Curve.AddPoint(offset,
-                new Vector2(-50, -50), new Vector2(50, 50), 1 + i * 2);
+            if (B.Y >= A.Y)
+            {
+                if (B.X >= A.X)
+                {
+                    Path2D.Curve.AddPoint(newPos,
+                        new Vector2(-50, -50), new Vector2(50, 50), 1 + i * 2);
+                }
+                else
+                {
+                    Path2D.Curve.AddPoint(newPos,
+                        new Vector2(50, -50), new Vector2(-50, 50), 1 + i * 2);
+                }
+            }
+            else
+            {
+                if (B.X <= A.X)
+                {
+                    Path2D.Curve.AddPoint(newPos,
+                        new Vector2(50, 50), new Vector2(-50, -50), 1 + i * 2);
+                }
+                else
+                {
+                    Path2D.Curve.AddPoint(newPos,
+                        new Vector2(-50, 50), new Vector2(50, -50), 1 + i * 2);
+                } 
+            }
+                
         }
 
         // Calculate all the progress values for Tween animations
