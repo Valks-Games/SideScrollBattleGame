@@ -14,30 +14,21 @@ texture = ExtResource("1_6pvrf")
 [node name="Levels" type="Node2D" parent="."]
 
 [node name="Level 1" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(217, 186)
+position = Vector2(110, 304)
 
 [node name="Level 2" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(439, 345)
+position = Vector2(318, 305)
 
 [node name="Level 3" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(662, 512)
+position = Vector2(518, 317)
 
 [node name="Level 4" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(792, 478)
+position = Vector2(714, 321)
 
 [node name="Level 5" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(653, 236)
+position = Vector2(905, 319)
 
 [node name="Level 6" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(1049, 192)
-
-[node name="Level 7" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(966, 553)
-
-[node name="Level 8" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(277, 562)
-
-[node name="Level 9" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(463, 120)
+position = Vector2(1106, 327)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
