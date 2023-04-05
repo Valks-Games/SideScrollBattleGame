@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://0pdbkcm88qj3"]
+
+[ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
+[ext_resource type="Script" path="res://Scripts/Test.cs" id="1_tcpbc"]
+[ext_resource type="PackedScene" uid="uid://cxl5xhnbo27ca" path="res://Scenes/Prefabs/level_gear.tscn" id="3_336me"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_tcpbc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("1_6pvrf")
+
+[node name="Levels" type="Node2D" parent="."]
+
+[node name="Level 1" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(217, 186)
+
+[node name="Level 2" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(439, 345)
+
+[node name="Level 3" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(662, 512)
+
+[node name="Level 4" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(792, 478)
+
+[node name="Level 5" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(653, 236)
+
+[node name="Level 6" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(1049, 192)
+
+[node name="Level 7" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(966, 553)
+
+[node name="Level 8" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(277, 562)
+
+[node name="Level 9" parent="Levels" instance=ExtResource("3_336me")]
+position = Vector2(463, 120)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

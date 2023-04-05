@@ -16,6 +16,13 @@ public partial class Test : Node2D
         Path.AddSprite(sprite);
 
         AddChild(Path);
+
+        // connect custom signals at the gears
+        var gears = GetNode("Levels").GetChildren<Node2D>();
+        foreach(LevelGear node in gears)
+        {
+            node.LevelPressed += HandleGearLevelPressed;
+        }
     }
 
     public override void _Input(InputEvent @event)
@@ -28,5 +35,10 @@ public partial class Test : Node2D
             if (inputEventKey.IsKeyJustPressed(Key.A))
                 Path.AnimateBackwards();
         }
+    }
+
+    public void HandleGearLevelPressed(int level)
+    {
+        Path.AnimateSpecific(level - 1);
     }
 }
