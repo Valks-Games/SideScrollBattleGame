@@ -14,29 +14,33 @@ public partial class Levels : Node2D
 
     public override void _Ready()
     {
+        // Retrieve Path2D and PathFollow2D nodes
         Path2D = GetNode<Path2D>("../Path2D");
         PathFollow2D = Path2D.GetNode<PathFollow2D>("PathFollow2D");
 
-        var slider = new UISlider(new SliderOptions
-        {
-            HSlider = new HSlider
-            {
-                Step = 0.01,
-                MaxValue = 1
-            }
-        });
-        slider.ValueChanged += v => PathFollow2D.ProgressRatio = v;
-
-        GetNode<CanvasLayer>("../CanvasLayer").AddChild(slider);
-
+        // Retrieve all level icon (gear) positions
         LevelIconPositions = this.GetChildren<Node2D>().Select(x => x.Position).ToArray();
 
         var count = LevelIconPositions.Count();
 
         TValues = new float[count];
 
+        // Add a point for each level icon position
         for (int i = 0; i < count; i++)
-            TValues[i] = (float)i / (count - 1);
+            Path2D.Curve.AddPoint(LevelIconPositions[i]);
+
+        // Add aditional point to make the first line be curved
+        var center = (LevelIconPositions[0] + LevelIconPositions[1]) / 2;
+        var offset = center + ((LevelIconPositions[1] - LevelIconPositions[0]).Orthogonal().Normalized() * 50);
+
+        Path2D.Curve.AddPoint(offset,
+            new Vector2(-50, -50), new Vector2(50, 50), 1);
+
+        // Calculate all the progress values for Tween animations
+        for (int i = 0; i < count; i++)
+        {
+            TValues[i] = Path2D.Curve.GetClosestOffset(LevelIconPositions[i]);
+        }
     }
 
     public override void _Input(InputEvent @event)
@@ -49,7 +53,7 @@ public partial class Levels : Node2D
 
                 Tween?.Kill();
                 Tween = PathFollow2D.CreateTween();
-                Tween.TweenProperty(PathFollow2D, "progress_ratio", TValues[TIndex], Duration)
+                Tween.TweenProperty(PathFollow2D, "progress", TValues[TIndex], Duration)
                     .SetTrans(TransType)
                     .SetEase(EaseType);
             }
@@ -60,7 +64,7 @@ public partial class Levels : Node2D
 
                 Tween?.Kill();
                 Tween = PathFollow2D.CreateTween();
-                Tween.TweenProperty(PathFollow2D, "progress_ratio", TValues[TIndex], Duration)
+                Tween.TweenProperty(PathFollow2D, "progress", TValues[TIndex], Duration)
                     .SetTrans(TransType)
                     .SetEase(EaseType);
             }
@@ -69,17 +73,6 @@ public partial class Levels : Node2D
 
     public override void _Draw()
     {
-        for (int i = 0; i < LevelIconPositions.Count() - 1; i++)
-        {
-            var pointA = LevelIconPositions[i];
-            var pointB = LevelIconPositions[i + 1];
-
-            var c1 = new Vector2(-299, 102);
-            var c2 = new Vector2( 243, 198);
-
-            var points = BezierCurve.Draw(this, pointA, pointB, c1, c2, Colors.White);
-            foreach (var point in points)
-                Path2D.Curve.AddPoint(point);
-        }
+        
     }
 }

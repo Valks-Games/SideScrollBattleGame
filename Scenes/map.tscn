@@ -12,15 +12,15 @@
 script = ExtResource("1_5rdwr")
 
 [node name="Level 1" type="Sprite2D" parent="Levels"]
-position = Vector2(127, 128)
+position = Vector2(367, 282)
 texture = ExtResource("1_yfh2m")
 
 [node name="Level 2" type="Sprite2D" parent="Levels"]
-position = Vector2(427, 375)
+position = Vector2(667, 529)
 texture = ExtResource("1_yfh2m")
 
 [node name="Level 3" type="Sprite2D" parent="Levels"]
-position = Vector2(494, 405)
+position = Vector2(734, 559)
 texture = ExtResource("1_yfh2m")
 
 [node name="Path2D" type="Path2D" parent="."]
