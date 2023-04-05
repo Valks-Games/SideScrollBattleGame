@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dm8ddotbrylfk"]
+[gd_scene load_steps=4 format=3 uid="uid://4xju70dsu056"]
 
 [ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
-[ext_resource type="Script" path="res://Scripts/Test.cs" id="1_tcpbc"]
-[ext_resource type="PackedScene" uid="uid://dh2447jy7aqev" path="res://Scenes/Prefabs/level_gear.tscn" id="3_lkte1"]
+[ext_resource type="Script" path="res://Scripts/Map/Map.cs" id="1_lnuej"]
+[ext_resource type="PackedScene" uid="uid://bdejhywkmcl17" path="res://Scenes/Prefabs/level_gear.tscn" id="3_lkte1"]
 
 [node name="Map" type="Node2D"]
-script = ExtResource("1_tcpbc")
+script = ExtResource("1_lnuej")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(4, 4)

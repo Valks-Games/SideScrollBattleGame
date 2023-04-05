@@ -1,12 +1,12 @@
 namespace SideScrollGame;
 
-public partial class Test : Node2D
+public partial class Map : Node2D
 {
     private GPath Path { get; set; }
 
     public override void _Ready()
     {
-        var gearNodes = GetNode("Levels").GetChildren<LevelGear>();
+        var gearNodes = GetNode("Levels").GetChildren<LevelIcon>();
         var points = gearNodes.Select(x => x.Position).ToArray();
         Path = new GPath(points, Colors.White, 2, 8);
         Path.AddCurves();

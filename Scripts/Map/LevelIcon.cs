@@ -1,6 +1,6 @@
 namespace SideScrollGame;
 
-public partial class LevelGear : Sprite2D
+public partial class LevelIcon : Sprite2D
 {
 	[Signal] public delegate void LevelPressedEventHandler(int level);
 

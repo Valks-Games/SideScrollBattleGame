@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://8fupxd0vf1d5"]
+[gd_scene load_steps=4 format=3 uid="uid://b0e7rylvk1sei"]
 
 [ext_resource type="Texture2D" uid="uid://6au08f86p30p" path="res://Sprites/tower_round.svg" id="1_b4pm1"]
-[ext_resource type="Script" path="res://Scripts/Base.cs" id="2_lr7ch"]
+[ext_resource type="Script" path="res://Scripts/Match/Base.cs" id="2_lr7ch"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlcbo"]
 size = Vector2(61.5, 115)
@@ -11,6 +11,7 @@ self_modulate = Color(0.843137, 0.843137, 0.843137, 1)
 position = Vector2(0, -64)
 texture = ExtResource("1_b4pm1")
 script = ExtResource("2_lr7ch")
+MaxHealth = 50.0
 
 [node name="HBox" type="HBoxContainer" parent="."]
 anchors_preset = 5
