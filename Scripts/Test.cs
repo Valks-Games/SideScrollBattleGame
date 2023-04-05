@@ -19,7 +19,7 @@ public partial class Test : Node2D
         AddChild(Path);
 
         foreach (var gearNode in gearNodes)
-            gearNode.LevelEntered += (level) => Path.AnimateTo(level - 1);
+            gearNode.LevelPressed += (level) => Path.AnimateTo(level - 1);
     }
 
     public override void _Input(InputEvent @event)

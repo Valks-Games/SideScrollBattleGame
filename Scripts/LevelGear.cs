@@ -2,7 +2,7 @@ namespace SideScrollGame;
 
 public partial class LevelGear : Sprite2D
 {
-	[Signal] public delegate void LevelEnteredEventHandler(int level);
+	[Signal] public delegate void LevelPressedEventHandler(int level);
 
 	private Area2D Area       { get; set; }
 	private Tween  TweenScale { get; set; }
@@ -21,7 +21,7 @@ public partial class LevelGear : Sprite2D
                 {
                     AnimateScaleTween(1.5f);
                     AnimateColorTween();
-                    EmitSignal(SignalName.LevelEntered, GetLevel());
+                    EmitSignal(SignalName.LevelPressed, GetLevel());
                 }
 
                 if (inputEventMouseBtn.IsLeftClickReleased())
