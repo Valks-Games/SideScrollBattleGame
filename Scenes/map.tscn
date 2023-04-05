@@ -1,16 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://0pdbkcm88qj3"]
+[gd_scene load_steps=5 format=3 uid="uid://0pdbkcm88qj3"]
 
 [ext_resource type="Script" path="res://Scripts/Levels.cs" id="1_5rdwr"]
 [ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
 [ext_resource type="Texture2D" uid="uid://ptgl7pv2t8a2" path="res://GodotUtils/Sprites/gear.png" id="1_yfh2m"]
 
 [sub_resource type="Curve2D" id="Curve2D_kgeqg"]
-
-[sub_resource type="Curve2D" id="Curve2D_04yno"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 181, 154, -50, -50, 50, 50, 339.75, 209.314, 0, 0, 0, 0, 439, 345, -50, -50, 50, 50, 520.529, 468.522, 0, 0, 0, 0, 662, 512, -50, -50, 50, 50, 697.906, 380.126, 0, 0, 0, 0, 814, 308, -50, -50, 50, 50, 725.115, 184.997, 0, 0, 0, 0, 579, 144)
-}
-point_count = 9
 
 [node name="Map" type="Node2D"]
 
@@ -30,11 +24,15 @@ position = Vector2(662, 512)
 texture = ExtResource("1_yfh2m")
 
 [node name="Level 4" type="Sprite2D" parent="Levels"]
-position = Vector2(814, 308)
+position = Vector2(792, 478)
 texture = ExtResource("1_yfh2m")
 
 [node name="Level 5" type="Sprite2D" parent="Levels"]
-position = Vector2(579, 144)
+position = Vector2(653, 236)
+texture = ExtResource("1_yfh2m")
+
+[node name="Level 6" type="Sprite2D" parent="Levels"]
+position = Vector2(453, 517)
 texture = ExtResource("1_yfh2m")
 
 [node name="Path2D" type="Path2D" parent="."]
@@ -48,15 +46,3 @@ scale = Vector2(4, 4)
 texture = ExtResource("1_6pvrf")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Path2D2" type="Path2D" parent="."]
-position = Vector2(1388, 78)
-curve = SubResource("Curve2D_04yno")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D2"]
-position = Vector2(181, 154)
-rotates = false
-
-[node name="Sprite2D" type="Sprite2D" parent="Path2D2/PathFollow2D"]
-scale = Vector2(4, 4)
-texture = ExtResource("1_6pvrf")
