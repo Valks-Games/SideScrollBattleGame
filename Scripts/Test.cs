@@ -5,12 +5,6 @@ namespace SideScrollGame;
 
 public partial class Test : Node
 {
-    private Tween Tween { get; set; }
-    private int TIndex { get; set; }
-    private Tween.TransitionType TransType { get; } = Tween.TransitionType.Sine;
-    private Tween.EaseType EaseType { get; } = Tween.EaseType.Out;
-    private double Duration { get; } = 1.5;
-
     private GPath Path { get; set; }
 
     public override void _Ready()
@@ -30,26 +24,10 @@ public partial class Test : Node
         if (@event is InputEventKey inputEventKey)
         {
             if (inputEventKey.IsKeyJustPressed(Key.D))
-            {
-                TIndex = Mathf.Min(TIndex + 1, Path.TweenValues.Count() - 1);
-
-                Tween?.Kill();
-                Tween = Path.PathFollow.CreateTween();
-                Tween.TweenProperty(Path.PathFollow, "progress", Path.TweenValues[TIndex], Duration)
-                    .SetTrans(TransType)
-                    .SetEase(EaseType);
-            }
+                Path.AnimateNext();
 
             if (inputEventKey.IsKeyJustPressed(Key.A))
-            {
-                TIndex = Mathf.Max(TIndex - 1, 0);
-
-                Tween?.Kill();
-                Tween = Path.PathFollow.CreateTween();
-                Tween.TweenProperty(Path.PathFollow, "progress", Path.TweenValues[TIndex], Duration)
-                    .SetTrans(TransType)
-                    .SetEase(EaseType);
-            }
+                Path.AnimatePrev();
         }
     }
 }
