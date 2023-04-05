@@ -34,7 +34,19 @@ position = Vector2(653, 236)
 texture = ExtResource("1_yfh2m")
 
 [node name="Level 6" type="Sprite2D" parent="Levels"]
-position = Vector2(453, 517)
+position = Vector2(1049, 192)
+texture = ExtResource("1_yfh2m")
+
+[node name="Level 7" type="Sprite2D" parent="Levels"]
+position = Vector2(966, 553)
+texture = ExtResource("1_yfh2m")
+
+[node name="Level 8" type="Sprite2D" parent="Levels"]
+position = Vector2(277, 562)
+texture = ExtResource("1_yfh2m")
+
+[node name="Level 9" type="Sprite2D" parent="Levels"]
+position = Vector2(463, 120)
 texture = ExtResource("1_yfh2m")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
