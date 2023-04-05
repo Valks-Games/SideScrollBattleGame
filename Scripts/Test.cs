@@ -7,7 +7,7 @@ public partial class Test : Node2D
     public override void _Ready()
     {
         var points = GetNode("Levels").GetChildren<Node2D>().Select(x => x.Position).ToArray();
-        Path = new GPath(points, Colors.White);
+        Path = new GPath(points, Colors.White, 2, 8);
         Path.AddCurves();
 
         var sprite = GetNode<Sprite2D>("Sprite2D");
