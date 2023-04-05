@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://Sprites/Entities/orange_ball_icon.png" id="1_40go4"]
+
+[sub_resource type="Curve2D" id="Curve2D_kgeqg"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 181, 154, -50, -50, 50, 50, 339.75, 209.314, 0, 0, 0, 0, 439, 345, -50, -50, 50, 50, 520.529, 468.522, 0, 0, 0, 0, 662, 512, -50, -50, 50, 50, 697.906, 380.126, 0, 0, 0, 0, 814, 308, -50, -50, 50, 50, 725.115, 184.997, 0, 0, 0, 0, 579, 144)
+}
+point_count = 9
+
+[node name="Path2D" type="Path2D"]
+curve = SubResource("Curve2D_kgeqg")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(181, 154)
+rotates = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
+scale = Vector2(4, 4)
+texture = ExtResource("1_40go4")

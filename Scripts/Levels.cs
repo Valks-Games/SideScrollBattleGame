@@ -29,12 +29,22 @@ public partial class Levels : Node2D
         for (int i = 0; i < count; i++)
             Path2D.Curve.AddPoint(LevelIconPositions[i]);
 
-        // Add aditional point to make the first line be curved
-        var center = (LevelIconPositions[0] + LevelIconPositions[1]) / 2;
-        var offset = center + ((LevelIconPositions[1] - LevelIconPositions[0]).Orthogonal().Normalized() * 50);
+        // Add aditional points to make each line be curved
+        var invert = 1;
 
-        Path2D.Curve.AddPoint(offset,
-            new Vector2(-50, -50), new Vector2(50, 50), 1);
+        for (int i = 0; i < count - 1; i++)
+        {
+            var A = LevelIconPositions[i];
+            var B = LevelIconPositions[i + 1];
+
+            var center = (A + B) / 2;
+            var offset = center + ((B - A).Orthogonal().Normalized() * 50 * invert);
+
+            invert *= -1;
+
+            Path2D.Curve.AddPoint(offset,
+                new Vector2(-50, -50), new Vector2(50, 50), 1 + i * 2);
+        }
 
         // Calculate all the progress values for Tween animations
         for (int i = 0; i < count; i++)
