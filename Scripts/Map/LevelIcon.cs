@@ -30,6 +30,13 @@ public partial class LevelIcon : Sprite2D
                 }
             }    
         };
+        Area.AreaEntered += (otherArea) =>
+        {
+            if (otherArea.Name == "PlayerMapIconArea")
+            {
+                GD.Print("map icon entered");
+            }
+        };
 	}
 
     private void AnimateScaleTween(float scale)
