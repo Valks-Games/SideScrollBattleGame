@@ -65,10 +65,10 @@ public partial class LevelIcon : Sprite2D
 	{
 		TweenColor?.Kill();
 		TweenColor = CreateTween();
-		TweenColor.TweenProperty(this, "modulate", Colors.Green, 0.5f)
+		TweenColor.TweenProperty(this, "self_modulate", Colors.Green, 0.5f)
 			.SetTrans(Tween.TransitionType.Quint)
 			.SetEase(Tween.EaseType.Out);
-        TweenColor.TweenProperty(this, "modulate", Colors.White, 5f)
+        TweenColor.TweenProperty(this, "self_modulate", Colors.White, 5f)
             .SetTrans(Tween.TransitionType.Quint)
             .SetEase(Tween.EaseType.Out);
     }
