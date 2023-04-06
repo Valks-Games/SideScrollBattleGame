@@ -67,7 +67,7 @@ public partial class Base : Sprite2D, IDamageable
 
                 tween.TweenCallback(Callable.From(() =>
                 {
-                    Global.SwitchScene(Scene.Map);
+                    SceneManager.SwitchScene(Scene.Map);
                 }));
             }));
 

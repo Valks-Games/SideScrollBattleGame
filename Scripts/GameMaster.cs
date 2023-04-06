@@ -35,16 +35,16 @@ public partial class GameMaster : Node
     private async Task SpawnUnits()
     {
         // player units
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
-            await Task.Delay(500, SpawnUnitsCTS.Token);
+            await Task.Delay(1, SpawnUnitsCTS.Token);
             Units.Create(Unit.OrangeBall, Team.Left);
         }
 
         // enemy units
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 30; i++)
         {
-            await Task.Delay(500, SpawnUnitsCTS.Token);
+            await Task.Delay(100, SpawnUnitsCTS.Token);
             Units.Create(Unit.Skeleton, Team.Right);
         }
     }

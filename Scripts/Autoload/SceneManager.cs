@@ -1,11 +1,11 @@
 namespace SideScrollGame;
 
 // About Scene Switching: https://docs.godotengine.org/en/latest/tutorials/scripting/singletons_autoload.html
-public partial class Global : Node
+public partial class SceneManager : Node
 {
-    private static Global    Instance     { get; set; }
-    private static Node      CurrentScene { get; set; }
-    private static SceneTree Tree         { get; set; }
+    private static SceneManager Instance     { get; set; }
+    private static Node         CurrentScene { get; set; }
+    private static SceneTree    Tree         { get; set; }
 
     public override void _Ready()
     {

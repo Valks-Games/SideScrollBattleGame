@@ -57,6 +57,9 @@ public static class Units
         Scale = Vector2.One * 2,
         SpriteFrames = GD.Load<SpriteFrames>("res://SpriteFrames/skeleton.tres"),
         AttackType = Attack.Sword,
+        AttackSpeed = 10,
+        MoveSpeed = 100,
+        AttackPower = 9999
     };
 }
 
