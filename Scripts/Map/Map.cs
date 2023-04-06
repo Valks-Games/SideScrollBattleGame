@@ -3,11 +3,12 @@ namespace SideScrollGame;
 public partial class Map : Node2D
 {
     private GPath Path { get; set; }
+    private LevelIcon[] LevelIcons { get; set; }
 
     public override void _Ready()
     {
-        var gearNodes = GetNode("Levels").GetChildren<LevelIcon>();
-        var points = gearNodes.Select(x => x.Position).ToArray();
+        LevelIcons = GetNode("Levels").GetChildren<LevelIcon>();
+        var points = LevelIcons.Select(x => x.Position).ToArray();
         Path = new GPath(points, Colors.White, 2, 8);
         Path.AddCurves();
 
@@ -18,7 +19,7 @@ public partial class Map : Node2D
 
         AddChild(Path);
 
-        foreach (var gearNode in gearNodes)
+        foreach (var gearNode in LevelIcons)
             gearNode.LevelPressed += (level) => Path.AnimateTo(level - 1);
     }
 
@@ -27,10 +28,16 @@ public partial class Map : Node2D
         if (@event is InputEventKey inputEventKey)
         {
             if (inputEventKey.IsKeyJustPressed(Key.D))
-                Path.AnimateForwards();
+            {
+                var index = Path.AnimateForwards();
+                LevelIcons[index].AnimateColorTween();
+            }
 
             if (inputEventKey.IsKeyJustPressed(Key.A))
-                Path.AnimateBackwards();
+            {
+                var index = Path.AnimateBackwards();
+                LevelIcons[index].AnimateColorTween();
+            }
         }
     }
 }

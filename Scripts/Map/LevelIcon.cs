@@ -41,7 +41,7 @@ public partial class LevelIcon : Sprite2D
 			.SetEase(Tween.EaseType.Out);
 	}
 
-    private void AnimateColorTween()
+    public void AnimateColorTween()
 	{
 		TweenColor?.Kill();
 		TweenColor = CreateTween();
