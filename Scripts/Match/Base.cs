@@ -63,7 +63,7 @@ public partial class Base : Sprite2D, IDamageable
 
                 tween.TweenProperty(blackScreen, "color:a", 1, 4)
                     .SetTrans(Tween.TransitionType.Linear)
-                    .SetDelay(2.0);
+                    .SetDelay(1.0);
 
                 tween.TweenCallback(Callable.From(() =>
                 {

@@ -39,6 +39,36 @@ public partial class Global : Node
 
         // Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
         Tree.CurrentScene = CurrentScene;
+
+        FadeFromBlack(1);
+    }
+
+    private void FadeFromBlack(double duration)
+    {
+        // Add canvas layer to scene if does not exist
+        var canvasLayer = CurrentScene.GetNodeOrNull<CanvasLayer>("CanvasLayer");
+
+        if (canvasLayer == null)
+        {
+            canvasLayer = new CanvasLayer();
+            CurrentScene.AddChild(canvasLayer);
+        }
+
+        // Setup color rect
+        var colorRect = new ColorRect
+        {
+            Color = Colors.Black,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+
+        // Make the color rect cover the entire screen
+        colorRect.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        canvasLayer.AddChild(colorRect);
+
+        // Animate color rect
+        var tween = colorRect.CreateTween();
+        tween.TweenProperty(colorRect, "color", new Color(0, 0, 0, 0), duration);
+        tween.TweenCallback(Callable.From(() => colorRect.QueueFree()));
     }
 }
 
