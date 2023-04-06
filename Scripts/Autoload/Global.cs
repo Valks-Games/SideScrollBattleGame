@@ -15,7 +15,7 @@ public partial class Global : Node
         CurrentScene = root.GetChild(root.GetChildCount() - 1);
     }
 
-    public void SwitchScene(Scene scene)
+    public static void SwitchScene(Scene scene)
     {
         // Wait for engine to be ready to switch scene
         Instance.CallDeferred(nameof(DeferredSwitchScene), Variant.From(scene));
