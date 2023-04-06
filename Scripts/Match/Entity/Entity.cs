@@ -11,7 +11,7 @@ public partial class Entity : Node2D, IDamageable
     [Export] public float        DetectionRange { get; set; } = 10;
     [Export] public SpriteFrames SpriteFrames   { get; set; }
 
-    public bool Destroyed => GodotObject.IsInstanceValid(this);
+    public bool Destroyed => !GodotObject.IsInstanceValid(this);
     public Dictionary<EntityStateType, EntityState<Entity>> States { get; set; } = new();
     public AnimatedSprite2D   AnimatedSprite      { get; set; }
     public Area2D             DetectionArea       { get; set; }
@@ -116,7 +116,7 @@ public partial class Entity : Node2D, IDamageable
     {
         for (int i = 0; i < DetectedEnemies.Count; i++)
         {
-            if (!DetectedEnemies[i].Destroyed)
+            if (DetectedEnemies[i].Destroyed)
             {
                 DetectedEnemies.RemoveAt(i);
                 continue;
