@@ -11,7 +11,6 @@ public partial class Entity : Node2D, IDamageable
     [Export] public float        DetectionRange { get; set; } = 10;
     [Export] public SpriteFrames SpriteFrames   { get; set; }
 
-    public bool Destroyed => !GodotObject.IsInstanceValid(this);
     public Dictionary<EntityStateType, EntityState<Entity>> States { get; set; } = new();
     public AnimatedSprite2D   AnimatedSprite      { get; set; }
     public Area2D             DetectionArea       { get; set; }
@@ -21,8 +20,6 @@ public partial class Entity : Node2D, IDamageable
     public Team               OtherTeam           { get; set; }
     public Tween              AttackTween         { get; set; }
     public bool               Attacking           { get; set; }
-
-    private List<IDamageable> DetectedEnemies { get; set; } = new();
 
     public double CurHealth 
     { 
@@ -98,30 +95,23 @@ public partial class Entity : Node2D, IDamageable
 
     public int GetEnemyCount()
     {
-        ValidateDetectedEnemies();
-        return DetectedEnemies.Count;
+        var count = 0;
+
+        foreach (var area in DetectionArea.GetOverlappingAreas())
+            if (area.GetParent() is IDamageable entity && entity.Team == OtherTeam)
+                count++;
+
+        return count;
     }
 
     public void Attack()
     {
-        ValidateDetectedEnemies();
-        foreach (var entity in DetectedEnemies)
-        {
-            entity.CurHealth -= AttackPower;
-            break;
-        }
-    }
-
-    private void ValidateDetectedEnemies()
-    {
-        for (int i = 0; i < DetectedEnemies.Count; i++)
-        {
-            if (DetectedEnemies[i].Destroyed)
+        foreach (var area in DetectionArea.GetOverlappingAreas())
+            if (area.GetParent() is IDamageable entity && entity.Team == OtherTeam)
             {
-                DetectedEnemies.RemoveAt(i);
-                continue;
+                entity.CurHealth -= AttackPower;
+                break; // Single Attack
             }
-        }
     }
 
     private void CreateBodyArea()
@@ -157,23 +147,10 @@ public partial class Entity : Node2D, IDamageable
 
         DetectionArea.AreaEntered += (otherArea) =>
         {
-            var parent = otherArea.GetParent();
-
-            if (parent.IsInGroup(OtherTeam.ToString()) 
-                && parent is IDamageable damageable)
+            if (otherArea.GetParent() is IDamageable entity && entity.Team == OtherTeam)
             {
-                DetectedEnemies.Add(damageable);
-
                 if (!Attacking)
                     States[CurrentState].SwitchState(EntityStateType.Attack);
-            }
-        };
-
-        DetectionArea.AreaExited += (otherArea) =>
-        {
-            if (otherArea.IsInGroup(OtherTeam.ToString()))
-            {
-                DetectedEnemies.Remove(otherArea.GetParent<Entity>());
             }
         };
 

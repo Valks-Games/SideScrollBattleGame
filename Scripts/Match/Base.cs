@@ -5,8 +5,6 @@ public partial class Base : Sprite2D, IDamageable
     [Export] public Team Team { get; set; }
     [Export] public double MaxHealth { get; set; }
 
-    public bool Destroyed => !GodotObject.IsInstanceValid(this);
-
     public double CurHealth
     {
         get => double.Parse(LabelCurHealth.Text);

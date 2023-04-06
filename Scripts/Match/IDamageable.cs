@@ -2,6 +2,6 @@
 
 public interface IDamageable
 {
-    public bool   Destroyed { get; }
+    public Team   Team      { get; }
     public double CurHealth { get; set; }
 }
