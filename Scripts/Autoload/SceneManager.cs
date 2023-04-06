@@ -77,12 +77,12 @@ public partial class SceneManager : Node
             finished?.Invoke();
         }));
     }
-}
 
-public enum TransType
-{
-    Black,
-    Transparent
+    private enum TransType
+    {
+        Black,
+        Transparent
+    }
 }
 
 public enum Scene
