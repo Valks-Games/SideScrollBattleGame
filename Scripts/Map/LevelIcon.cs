@@ -1,20 +1,22 @@
 namespace SideScrollGame;
 
-public partial class LevelIcon : Sprite2D
+public partial class LevelIcon : Node2D
 {
 	[Signal] public delegate void LevelPressedEventHandler(int level);
 
-	private Area2D  Area       { get; set; }
-	private Tween   TweenScale { get; set; }
-	private Tween   TweenColor { get; set; }
-    private Control Info       { get; set; }
+	private Area2D    Area       { get; set; }
+	private Sprite2D  Icon       { get; set; }
+	private Tween     TweenScale { get; set; }
+	private Tween     TweenColor { get; set; }
+	private Control   Info       { get; set; }
 
 	public override void _Ready()
 	{
         Info = GetNode<Control>("Info");
         Info.Hide();
 
-        Area = GetNode<Area2D>("Area2D");
+		Icon = GetNode<Sprite2D>("Level Gear");
+		Area = Icon.GetNode<Area2D>("Area2D");
 		Area.MouseEntered += () => AnimateScaleTween(2);
 		Area.MouseExited  += () => AnimateScaleTween(1);
         Area.InputEvent   += (viewport, inputEvent, shapeId) => 
@@ -56,7 +58,7 @@ public partial class LevelIcon : Sprite2D
 	{
 		TweenScale?.Kill();
 		TweenScale = CreateTween();
-		TweenScale.TweenProperty(this, "scale", Vector2.One * scale, 0.5f)
+		TweenScale.TweenProperty(Icon, "scale", Vector2.One * scale, 0.5f)
 			.SetTrans(Tween.TransitionType.Quint)
 			.SetEase(Tween.EaseType.Out);
 	}
@@ -65,10 +67,10 @@ public partial class LevelIcon : Sprite2D
 	{
 		TweenColor?.Kill();
 		TweenColor = CreateTween();
-		TweenColor.TweenProperty(this, "self_modulate", Colors.Green, 0.5f)
+		TweenColor.TweenProperty(Icon, "self_modulate", Colors.Green, 0.5f)
 			.SetTrans(Tween.TransitionType.Quint)
 			.SetEase(Tween.EaseType.Out);
-        TweenColor.TweenProperty(this, "self_modulate", Colors.White, 5f)
+        TweenColor.TweenProperty(Icon, "self_modulate", Colors.White, 5f)
             .SetTrans(Tween.TransitionType.Quint)
             .SetEase(Tween.EaseType.Out);
     }
