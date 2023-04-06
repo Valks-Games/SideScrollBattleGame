@@ -9,12 +9,14 @@ public partial class LevelIcon : Node2D
 	private Tween     TweenScale { get; set; }
 	private Tween     TweenColor { get; set; }
 	private Control   Info       { get; set; }
+    private Label     LabelLevel { get; set; }
 
 	public override void _Ready()
 	{
         Info = GetNode<Control>("Info");
         Info.Hide();
 
+        LabelLevel = Info.GetNode<Label>("VBox/Label");
 		Icon = GetNode<Sprite2D>("Level Gear");
 		Area = Icon.GetNode<Area2D>("Area2D");
 		Area.MouseEntered += () => AnimateScaleTween(2);
@@ -41,6 +43,7 @@ public partial class LevelIcon : Node2D
         {
             if (otherArea.Name == "PlayerMapIconArea")
             {
+                LabelLevel.Text = "Level " + GetLevel();
                 Info.Show();
             }
         };
