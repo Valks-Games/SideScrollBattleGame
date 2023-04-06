@@ -4,13 +4,17 @@ public partial class LevelIcon : Sprite2D
 {
 	[Signal] public delegate void LevelPressedEventHandler(int level);
 
-	private Area2D Area       { get; set; }
-	private Tween  TweenScale { get; set; }
-	private Tween  TweenColor { get; set; }
+	private Area2D  Area       { get; set; }
+	private Tween   TweenScale { get; set; }
+	private Tween   TweenColor { get; set; }
+    private Control Info       { get; set; }
 
 	public override void _Ready()
 	{
-		Area = GetNode<Area2D>("Area2D");
+        Info = GetNode<Control>("Info");
+        Info.Hide();
+
+        Area = GetNode<Area2D>("Area2D");
 		Area.MouseEntered += () => AnimateScaleTween(2);
 		Area.MouseExited  += () => AnimateScaleTween(1);
         Area.InputEvent   += (viewport, inputEvent, shapeId) => 
@@ -30,11 +34,20 @@ public partial class LevelIcon : Sprite2D
                 }
             }    
         };
+
         Area.AreaEntered += (otherArea) =>
         {
             if (otherArea.Name == "PlayerMapIconArea")
             {
-                GD.Print("map icon entered");
+                Info.Show();
+            }
+        };
+
+        Area.AreaExited += (otherArea) =>
+        {
+            if (otherArea.Name == "PlayerMapIconArea")
+            {
+                Info.Hide();
             }
         };
 	}

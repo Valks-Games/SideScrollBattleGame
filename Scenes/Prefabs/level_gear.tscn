@@ -14,3 +14,29 @@ script = ExtResource("2_eeghf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_hjxys")
+
+[node name="Info" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -101.0
+offset_right = 24.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Info"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Info/VBox"]
+layout_mode = 2
+text = "Level 1"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Info/VBox"]
+layout_mode = 2
+text = "Start"
