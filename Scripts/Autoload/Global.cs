@@ -44,6 +44,5 @@ public partial class Global : Node
 
 public enum Scene
 {
-    Main,
     Map
 }
