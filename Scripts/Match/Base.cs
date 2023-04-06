@@ -5,6 +5,8 @@ public partial class Base : Sprite2D, IDamageable
     [Export] public Team Team { get; set; }
     [Export] public double MaxHealth { get; set; }
 
+    [Signal] public delegate void DestroyedEventHandler();
+
     public double CurHealth
     {
         get => double.Parse(LabelCurHealth.Text);
@@ -22,54 +24,7 @@ public partial class Base : Sprite2D, IDamageable
             if (BaseDestroyed)
                 return;
 
-            GameMaster.DestroyAllUnits(Team);
-
-            if (Team == Team.Left)
-                LabelMatchResult = new GLabel("Defeat...");
-            else
-                LabelMatchResult = new GLabel("Victory!");
-
-            LabelMatchResult.SetFontSize(120);
-
-            // Add the label to the center of the screen
-            Main.CanvasLayer.AddChild(LabelMatchResult);
-            LabelMatchResult.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.Center);
-
-            // Keep track of center position
-            var originalPos = LabelMatchResult.Position;
-
-            // Set position to be offscreen
-            LabelMatchResult.Position = new Vector2(
-                (Team == Team.Left ? 1 : -1) * GWindow.GetWidth() / 2, 
-                originalPos.Y);
-
-            // Tween the offscreen label to its original posiition
-            // Tween Transitions Cheat Sheet: https://www.reddit.com/r/godot/comments/dgh9vd/transitiontype_cheat_sheet_tween_interpolation_oc/
-            var tween = LabelMatchResult.CreateTween();
-            tween.TweenProperty(LabelMatchResult, "position", originalPos, 1.0f)
-                .SetTrans(Tween.TransitionType.Quint)
-                .SetEase(Tween.EaseType.Out);
-
-            tween.TweenCallback(Callable.From(() =>
-            {
-                var blackScreen = new ColorRect {
-                    Color = new Color(0, 0, 0, 0)
-                };
-
-                Main.CanvasLayer.AddChild(blackScreen);
-                blackScreen.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-
-                var tween = blackScreen.CreateTween();
-
-                tween.TweenProperty(blackScreen, "color:a", 1, 4)
-                    .SetTrans(Tween.TransitionType.Linear)
-                    .SetDelay(1.0);
-
-                tween.TweenCallback(Callable.From(() =>
-                {
-                    SceneManager.SwitchScene(Scene.Map);
-                }));
-            }));
+            EmitSignal(SignalName.Destroyed);
 
             // Animate the base forever
             HBox.Hide();
@@ -82,7 +37,6 @@ public partial class Base : Sprite2D, IDamageable
     private HBoxContainer HBox              { get; set; }
     private Label         LabelMaxHealth    { get; set; }
     private Label         LabelCurHealth    { get; set; }
-    private GLabel        LabelMatchResult  { get; set; }
     private int           AnimateTime       { get; } = 300;
     private int           AnimateAmplitudeX { get; } = 1;
     private int           AnimateAmplitudeY { get; } = 1;
