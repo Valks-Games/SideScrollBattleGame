@@ -91,7 +91,11 @@ public partial class Base : Sprite2D, IDamageable
     public override void _Ready()
     {
         SetPhysicsProcess(false);
-        AnimateTimer = new GTimer(this, () => SetPhysicsProcess(false), AnimateTime);
+        AnimateTimer = new GTimer(this, () =>
+        {
+            if (!BaseDestroyed)
+                SetPhysicsProcess(false);
+        }, AnimateTime);
         AddToGroup(Team.ToString());
 
         HBox = GetNode<HBoxContainer>("HBox");
