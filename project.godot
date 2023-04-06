@@ -17,7 +17,7 @@ config/icon="res://Sprites/icon.svg"
 
 [autoload]
 
-SceneManager="*res://Scripts/Autoload/SceneManager.cs"
+SceneManager="*res://GodotUtils/Scripts/Autoload/SceneManager.cs"
 
 [display]
 

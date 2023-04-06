@@ -74,7 +74,7 @@ public partial class GameMaster : Node
             .SetTrans(Tween.TransitionType.Quint)
             .SetEase(Tween.EaseType.Out);
 
-        tween.TweenCallback(Callable.From(() => SceneManager.SwitchScene(Scene.Map)));
+        tween.TweenCallback(Callable.From(() => SceneManager.SwitchScene("map")));
     }
 
     private async Task SpawnUnits()
