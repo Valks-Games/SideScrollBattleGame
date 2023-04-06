@@ -28,14 +28,14 @@ public partial class GameMaster : Node
 
         PlayerBase.Destroyed += () =>
         {
-            DestroyAllUnits(Team.Right);
-            SpawnMatchResultLabel(Team.Right);
+            DestroyAllUnits(Team.Left);
+            SpawnMatchResultLabel(Team.Left);
         };
 
         EnemyBase.Destroyed += () =>
         {
-            DestroyAllUnits(Team.Left);
-            SpawnMatchResultLabel(Team.Left);
+            DestroyAllUnits(Team.Right);
+            SpawnMatchResultLabel(Team.Right);
         };
 
         AddChild(PlayerUnits);
@@ -74,27 +74,7 @@ public partial class GameMaster : Node
             .SetTrans(Tween.TransitionType.Quint)
             .SetEase(Tween.EaseType.Out);
 
-        tween.TweenCallback(Callable.From(() =>
-        {
-            var blackScreen = new ColorRect
-            {
-                Color = new Color(0, 0, 0, 0)
-            };
-
-            Main.CanvasLayer.AddChild(blackScreen);
-            blackScreen.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-
-            var tween = blackScreen.CreateTween();
-
-            tween.TweenProperty(blackScreen, "color:a", 1, 4)
-                .SetTrans(Tween.TransitionType.Linear)
-                .SetDelay(1.0);
-
-            tween.TweenCallback(Callable.From(() =>
-            {
-                SceneManager.SwitchScene(Scene.Map);
-            }));
-        }));
+        tween.TweenCallback(Callable.From(() => SceneManager.SwitchScene(Scene.Map)));
     }
 
     private async Task SpawnUnits()

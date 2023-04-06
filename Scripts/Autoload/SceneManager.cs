@@ -17,8 +17,11 @@ public partial class SceneManager : Node
 
     public static void SwitchScene(Scene scene)
     {
-        // Wait for engine to be ready to switch scene
-        Instance.CallDeferred(nameof(DeferredSwitchScene), Variant.From(scene));
+        Instance.FadeTo(TransType.Black, 2, () =>
+        {
+            // Wait for engine to be ready to switch scene
+            Instance.CallDeferred(nameof(DeferredSwitchScene), Variant.From(scene));
+        });
     }
 
     private void DeferredSwitchScene(Variant variantScene)
@@ -40,10 +43,10 @@ public partial class SceneManager : Node
         // Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
         Tree.CurrentScene = CurrentScene;
 
-        FadeFromBlack(1);
+        FadeTo(TransType.Transparent, 1);
     }
 
-    private void FadeFromBlack(double duration)
+    private void FadeTo(TransType transType, double duration, Action finished = null)
     {
         // Add canvas layer to scene if does not exist
         var canvasLayer = CurrentScene.GetNodeOrNull<CanvasLayer>("CanvasLayer");
@@ -57,7 +60,7 @@ public partial class SceneManager : Node
         // Setup color rect
         var colorRect = new ColorRect
         {
-            Color = Colors.Black,
+            Color = new Color(0, 0, 0, transType == TransType.Black ? 0 : 1),
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
 
@@ -67,9 +70,19 @@ public partial class SceneManager : Node
 
         // Animate color rect
         var tween = colorRect.CreateTween();
-        tween.TweenProperty(colorRect, "color", new Color(0, 0, 0, 0), duration);
-        tween.TweenCallback(Callable.From(() => colorRect.QueueFree()));
+        tween.TweenProperty(colorRect, "color", new Color(0, 0, 0, transType == TransType.Black ? 1 : 0), duration);
+        tween.TweenCallback(Callable.From(() =>
+        {
+            colorRect.QueueFree();
+            finished?.Invoke();
+        }));
     }
+}
+
+public enum TransType
+{
+    Black,
+    Transparent
 }
 
 public enum Scene
