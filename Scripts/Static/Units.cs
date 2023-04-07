@@ -30,14 +30,14 @@ public static class Units
 
         if (entity.Team == Team.Left)
         {
-            basePosition = GameMaster.PlayerBase.Position;
-            unitsParent = GameMaster.PlayerUnits;
+            basePosition = Level.PlayerBase.Position;
+            unitsParent = Level.PlayerUnits;
             offset = spawnOffsetFromBase;
         }
         else
         {
-            basePosition = GameMaster.EnemyBase.Position;
-            unitsParent = GameMaster.EnemyUnits;
+            basePosition = Level.EnemyBase.Position;
+            unitsParent = Level.EnemyUnits;
             offset = -spawnOffsetFromBase;
         }
 
@@ -58,7 +58,7 @@ public static class Units
         SpriteFrames = GD.Load<SpriteFrames>("res://SpriteFrames/skeleton.tres"),
         AttackType = Attack.Sword,
         AttackSpeed = 10,
-        MoveSpeed = 100,
+        MoveSpeed = 1,
         AttackPower = 9999
     };
 }
