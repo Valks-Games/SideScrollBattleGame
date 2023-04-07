@@ -2,6 +2,8 @@ namespace SideScrollGame;
 
 public partial class LevelIcon : Node2D
 {
+    [Export] public LevelSettings LevelSettings { get; set; }
+
 	[Signal] public delegate void LevelPressedEventHandler(int level);
 
 	private Area2D    Area       { get; set; }
@@ -10,9 +12,13 @@ public partial class LevelIcon : Node2D
 	private Tween     TweenColor { get; set; }
 	private Control   Info       { get; set; }
     private Label     LabelLevel { get; set; }
+    private int       Level      { get; set; }
 
 	public override void _Ready()
 	{
+        // Get level from name
+        Level = Regex.Replace(Name.ToString(), @"[^\d]", "").ToInt();
+
         Info = GetNode<Control>("Info");
         Info.Hide();
 
@@ -29,7 +35,7 @@ public partial class LevelIcon : Node2D
                 {
                     AnimateScaleTween(1.5f);
                     AnimateColorTween();
-                    EmitSignal(SignalName.LevelPressed, GetLevel());
+                    EmitSignal(SignalName.LevelPressed, Level);
                 }
 
                 if (inputEventMouseBtn.IsLeftClickReleased())
@@ -43,7 +49,7 @@ public partial class LevelIcon : Node2D
         {
             if (otherArea.Name == "PlayerMapIconArea")
             {
-                LabelLevel.Text = "Level " + GetLevel();
+                LabelLevel.Text = "Level " + Level;
                 Info.Show();
             }
         };
@@ -78,6 +84,15 @@ public partial class LevelIcon : Node2D
             .SetEase(Tween.EaseType.Out);
     }
 
-	private int GetLevel() => // Extract level from name
-        Regex.Replace(Name.ToString(), @"[^\d]", "").ToInt();
+    private bool BtnPressed { get; set; }
+
+    private void _on_level_start_pressed()
+    {
+        if (BtnPressed)
+            return;
+
+        BtnPressed = true;
+        Global.LevelSettings = LevelSettings;
+        SceneManager.SwitchScene("level");
+    }
 }
