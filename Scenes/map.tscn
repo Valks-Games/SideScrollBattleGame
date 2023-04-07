@@ -1,11 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://4xju70dsu056"]
+[gd_scene load_steps=10 format=3 uid="uid://b8u724dgtnt3q"]
 
 [ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
 [ext_resource type="Script" path="res://Scripts/Map/Map.cs" id="1_lnuej"]
-[ext_resource type="PackedScene" uid="uid://bdejhywkmcl17" path="res://Scenes/Prefabs/level_gear.tscn" id="3_lkte1"]
+[ext_resource type="PackedScene" uid="uid://b62mutubenry8" path="res://Scenes/Prefabs/level_gear.tscn" id="3_lkte1"]
+[ext_resource type="Script" path="res://Resources/LevelSettings.cs" id="4_s73it"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bqi0n"]
 radius = 8.25379
+
+[sub_resource type="Resource" id="Resource_jnsfc"]
+script = ExtResource("4_s73it")
+Width = 500
+EnemyBaseHealth = 50
+
+[sub_resource type="Resource" id="Resource_3lh8k"]
+script = ExtResource("4_s73it")
+Width = 750
+EnemyBaseHealth = 100
+
+[sub_resource type="Resource" id="Resource_8ipbe"]
+script = ExtResource("4_s73it")
+Width = 1000
+EnemyBaseHealth = 250
+
+[sub_resource type="Resource" id="Resource_futys"]
+script = ExtResource("4_s73it")
+Width = 500
+EnemyBaseHealth = 1000
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_lnuej")
@@ -22,21 +43,29 @@ shape = SubResource("CircleShape2D_bqi0n")
 [node name="Levels" type="Node2D" parent="."]
 
 [node name="Level 1" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(110, 304)
+position = Vector2(119, 129)
+LevelSettings = SubResource("Resource_jnsfc")
 
 [node name="Level 2" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(294, 299)
+position = Vector2(239, 439)
+LevelSettings = SubResource("Resource_3lh8k")
 
 [node name="Level 3" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(471, 308)
+position = Vector2(540, 244)
+LevelSettings = SubResource("Resource_8ipbe")
 
 [node name="Level 4" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(660, 310)
-
-[node name="Level 5" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(819, 308)
-
-[node name="Level 6" parent="Levels" instance=ExtResource("3_lkte1")]
-position = Vector2(994, 309)
+position = Vector2(946, 420)
+LevelSettings = SubResource("Resource_futys")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.807843, 0.819608, 0.572549, 1)

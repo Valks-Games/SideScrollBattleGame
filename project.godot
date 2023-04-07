@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="SideScrollBattleGame"
-run/main_scene="res://Scenes/Levels/1.tscn"
+run/main_scene="res://Scenes/map.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://Sprites/icon.svg"
 
 [autoload]
 
+Global="*res://Scripts/Autoload/Global.cs"
 SceneManager="*res://GodotUtils/Scripts/Autoload/SceneManager.cs"
+PlayerStats="*res://Scripts/Autoload/PlayerStats.cs"
 
 [display]
 

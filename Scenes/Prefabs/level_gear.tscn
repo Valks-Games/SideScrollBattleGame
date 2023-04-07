@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdejhywkmcl17"]
+[gd_scene load_steps=4 format=3 uid="uid://b62mutubenry8"]
 
 [ext_resource type="Texture2D" uid="uid://ptgl7pv2t8a2" path="res://GodotUtils/Sprites/gear.png" id="1_qges3"]
 [ext_resource type="Script" path="res://Scripts/Map/LevelIcon.cs" id="2_eeghf"]
@@ -39,6 +39,8 @@ layout_mode = 2
 text = "Level 1"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="Info/VBox"]
+[node name="LevelStart" type="Button" parent="Info/VBox"]
 layout_mode = 2
 text = "Start"
+
+[connection signal="pressed" from="Info/VBox/LevelStart" to="." method="_on_level_start_pressed"]

@@ -1,74 +1,63 @@
-[gd_scene load_steps=13 format=3 uid="uid://bt81jmxher20y"]
+[gd_scene load_steps=11 format=3 uid="uid://cfw4psxtf7gvp"]
 
-[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_2vvsp"]
-[ext_resource type="Script" path="res://Scripts/Match/CameraController.cs" id="2_chwf1"]
-[ext_resource type="Script" path="res://Scripts/GameMaster.cs" id="2_l2b0k"]
-[ext_resource type="Texture2D" uid="uid://q80kt62wvbpp" path="res://Sprites/icon.svg" id="2_w7cbu"]
-[ext_resource type="Texture2D" uid="uid://cah7r4wbb17kc" path="res://Sprites/Parallax/Tlayer1.png" id="4_xxpco"]
-[ext_resource type="PackedScene" uid="uid://b0e7rylvk1sei" path="res://Scenes/Prefabs/base.tscn" id="5_8usp5"]
-[ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="5_y5gcn"]
-[ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="6_1frsa"]
-[ext_resource type="Texture2D" uid="uid://jgtd8ke2r6nw" path="res://Sprites/Entities/skeleton_icon.png" id="9_j011r"]
-[ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="9_nnec7"]
-[ext_resource type="Script" path="res://Scripts/UI/UICurrency.cs" id="9_ynnxp"]
+[ext_resource type="Script" path="res://Scripts/Level/Level.cs" id="1_b4ksl"]
+[ext_resource type="Script" path="res://Scripts/Level/CameraController.cs" id="2_ad6h3"]
+[ext_resource type="Texture2D" uid="uid://q80kt62wvbpp" path="res://Sprites/icon.svg" id="4_i3j8x"]
+[ext_resource type="Texture2D" uid="uid://cah7r4wbb17kc" path="res://Sprites/Parallax/Tlayer1.png" id="6_k7rlc"]
+[ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="7_uo8cc"]
+[ext_resource type="Texture2D" uid="uid://coeqbekf8g3io" path="res://Sprites/Parallax/Tlayer3.png" id="8_pm7by"]
+[ext_resource type="Script" path="res://Scripts/UI/UICurrency.cs" id="9_7vggr"]
+[ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="10_s43vy"]
+[ext_resource type="Texture2D" uid="uid://jgtd8ke2r6nw" path="res://Sprites/Entities/skeleton_icon.png" id="11_bxta6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btq23"]
 bg_color = Color(0, 0.6, 0.54902, 0.286275)
 
-[node name="Main" type="Node2D"]
-script = ExtResource("1_2vvsp")
+[node name="Level" type="Node2D"]
+script = ExtResource("1_b4ksl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(600, -75)
+position = Vector2(0, -75)
 zoom = Vector2(2, 2)
-limit_left = -100
-limit_right = 1100
+limit_left = -500
+limit_right = 500
 limit_bottom = 300
 editor_draw_limits = true
-script = ExtResource("2_chwf1")
+script = ExtResource("2_ad6h3")
 
-[node name="Game Master" type="Node2D" parent="."]
-script = ExtResource("2_l2b0k")
-
-[node name="Grass" type="Sprite2D" parent="Game Master"]
+[node name="Grass" type="Sprite2D" parent="."]
 modulate = Color(0.34902, 1, 0, 1)
 z_index = -1
-position = Vector2(500, 85.5)
+position = Vector2(0, 85.5)
 scale = Vector2(20, 2.33594)
-texture = ExtResource("2_w7cbu")
-
-[node name="Player Base" parent="Game Master" instance=ExtResource("5_8usp5")]
-
-[node name="Enemy Base" parent="Game Master" instance=ExtResource("5_8usp5")]
-self_modulate = Color(0.286275, 0.286275, 0.286275, 1)
-position = Vector2(1000, -64)
+texture = ExtResource("4_i3j8x")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
-position = Vector2(800, -75)
+position = Vector2(0, -75)
 motion_scale = Vector2(0.8, 1)
 motion_mirroring = Vector2(1920, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer"]
-texture = ExtResource("4_xxpco")
+texture = ExtResource("6_k7rlc")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
-position = Vector2(800, -75)
+position = Vector2(0, -75)
 motion_scale = Vector2(0.9, 1)
 motion_mirroring = Vector2(1920, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer2"]
-texture = ExtResource("5_y5gcn")
+texture = ExtResource("7_uo8cc")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
-position = Vector2(800, -75)
+position = Vector2(0, -75)
 motion_mirroring = Vector2(1920, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer3"]
-texture = ExtResource("6_1frsa")
+texture = ExtResource("8_pm7by")
 region_rect = Rect2(0, 0, 1200, 160)
 
 [node name="Bottom" type="PanelContainer" parent="CanvasLayer"]
@@ -90,7 +79,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_right = 25
-script = ExtResource("9_ynnxp")
+script = ExtResource("9_7vggr")
 
 [node name="Gold" type="Label" parent="CanvasLayer/Bottom/HBox/PanelContainer/Margin"]
 custom_minimum_size = Vector2(100, 0)
@@ -113,7 +102,7 @@ theme_override_constants/separation = 0
 [node name="Button" type="Button" parent="CanvasLayer/Bottom/HBox/Units/PanelContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-icon = ExtResource("9_nnec7")
+icon = ExtResource("10_s43vy")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -142,7 +131,7 @@ theme_override_constants/separation = 0
 [node name="Button" type="Button" parent="CanvasLayer/Bottom/HBox/Units/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-icon = ExtResource("9_j011r")
+icon = ExtResource("11_bxta6")
 flat = true
 icon_alignment = 1
 expand_icon = true
