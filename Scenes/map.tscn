@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8u724dgtnt3q"]
+[gd_scene load_steps=13 format=3 uid="uid://b8u724dgtnt3q"]
 
 [ext_resource type="Texture2D" uid="uid://dcytbacxjnhj5" path="res://Sprites/Entities/orange_ball_icon.png" id="1_6pvrf"]
 [ext_resource type="Script" path="res://Scripts/Map/Map.cs" id="1_lnuej"]
@@ -28,10 +28,23 @@ script = ExtResource("4_s73it")
 Width = 500
 EnemyBaseHealth = 1000
 
+[sub_resource type="Gradient" id="Gradient_g0n23"]
+colors = PackedColorArray(0.839844, 0.79767, 0.493398, 1, 1, 0.946338, 0.700872, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3g76h"]
+fractal_octaves = 7
+fractal_gain = 0.7
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sjpxl"]
+normalize = false
+color_ramp = SubResource("Gradient_g0n23")
+noise = SubResource("FastNoiseLite_3g76h")
+
 [node name="Map" type="Node2D"]
 script = ExtResource("1_lnuej")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2
 scale = Vector2(4, 4)
 texture = ExtResource("1_6pvrf")
 
@@ -61,11 +74,10 @@ LevelSettings = SubResource("Resource_futys")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-color = Color(0.807843, 0.819608, 0.572549, 1)
+texture = SubResource("NoiseTexture2D_sjpxl")

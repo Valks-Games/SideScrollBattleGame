@@ -10,6 +10,7 @@ radius = 18.0
 script = ExtResource("2_eeghf")
 
 [node name="Level Gear" type="Sprite2D" parent="."]
+z_index = 1
 texture = ExtResource("1_qges3")
 
 [node name="Area2D" type="Area2D" parent="Level Gear"]
@@ -19,6 +20,7 @@ shape = SubResource("CircleShape2D_hjxys")
 
 [node name="Info" type="PanelContainer" parent="."]
 visible = false
+z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
