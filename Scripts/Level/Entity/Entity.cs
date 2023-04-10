@@ -12,6 +12,7 @@ public partial class Entity : Node2D, IDamageable
     [Export] public SpriteFrames SpriteFrames   { get; set; }
 
     public Dictionary<EntityStateType, EntityState<Entity>> States { get; set; } = new();
+    public EntityAnimationAttack AnimationAttack { get; set; }
     public AnimatedSprite2D   AnimatedSprite      { get; set; }
     public Area2D             DetectionArea       { get; set; }
     public TextureProgressBar HealthBar           { get; set; }
@@ -76,6 +77,7 @@ public partial class Entity : Node2D, IDamageable
         CreateDetectionArea();
         CreateHealthBar();
 
+        AnimationAttack = new EntityAnimationAttack(this);
         States[CurrentState].EnterState();
     }
 
@@ -166,86 +168,6 @@ public partial class Entity : Node2D, IDamageable
         HealthBar.Position = new Vector2(-HealthBar.Size.X / 2, -SpriteSize.Y / 2 - 3);
         HealthBar.Hide();
         AddChild(HealthBar);
-    }
-
-    /// <summary>
-    /// Roll while staying still, then roll super fast forward
-    /// </summary>
-    public void SpinningAttack()
-    {
-        AttackTween = CreateTween();
-        var rot = Mathf.Pi * 2;
-
-        AttackTween.TweenProperty(AnimatedSprite, "rotation", rot, 0.5);
-
-        rot += Mathf.Pi * 2 * 9;
-
-        AttackTween.TweenProperty(AnimatedSprite, "rotation", rot, 0.5);
-        AttackTween.Parallel().TweenProperty(
-            AnimatedSprite, "position:x", DetectionRange, 0.5);
-
-        AttackTween.TweenCallback(Callable.From(() =>
-        {
-            Attack();
-        }));
-
-        AttackTween.TweenProperty(AnimatedSprite,
-            "position", new Vector2(9, -2), 0.1);
-        AttackTween.TweenProperty(AnimatedSprite,
-            "position", new Vector2(8, 0), 0.3);
-
-        rot -= Mathf.Pi * 2 * 2;
-
-        AttackTween.TweenProperty(AnimatedSprite, "rotation", rot, 0.8)
-            .SetDelay(0.5);
-        AttackTween.Parallel().TweenProperty(AnimatedSprite,
-            "position", new Vector2(0, 0), 0.8)
-            .SetDelay(0.5);
-
-        AttackTween.TweenCallback(Callable.From(() =>
-        {
-            AnimatedSprite.Rotation = 0;
-            States[CurrentState].SwitchState(EntityStateType.Cooldown);
-        }));
-    }
-
-    /// <summary>
-    /// Jump forward then rotate towards the enemy a bit
-    /// </summary>
-    public void SwordAttack()
-    {
-        AttackTween = CreateTween();
-        var rot = Mathf.Pi * 0.05;
-
-        AttackTween.TweenProperty(AnimatedSprite, "rotation", rot, 0.25);
-
-        AttackTween.TweenProperty(
-            AnimatedSprite, "position:y", -5, 0.125);
-        AttackTween.Parallel().TweenProperty(
-            AnimatedSprite, "position:x", 10, 0.25);
-
-        AttackTween.TweenCallback(Callable.From(() =>
-        {
-            Attack();
-        }));
-
-        AttackTween.TweenProperty(AnimatedSprite,
-            "position:y", 5, 0.5)
-            .SetDelay(0.125);
-        AttackTween.Parallel().TweenProperty(AnimatedSprite,
-            "position:x", -10, 0.5)
-            .SetDelay(0.25);
-
-        rot -= Mathf.Pi * 0.05;
-
-        AttackTween.Parallel().TweenProperty(AnimatedSprite, "rotation", rot, 0.5)
-            .SetDelay(0.25);
-
-        AttackTween.TweenCallback(Callable.From(() =>
-        {
-            AnimatedSprite.Rotation = 0;
-            States[CurrentState].SwitchState(EntityStateType.Cooldown);
-        }));
     }
 }
 
