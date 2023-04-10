@@ -20,7 +20,7 @@ public partial class Map : Node2D
         AddChild(Path);
 
         foreach (var gearNode in LevelIcons)
-            gearNode.LevelPressed += (level) => Path.AnimateTo(level - 1);
+            gearNode.LevelPressed += level => Path.AnimateTo(level - 1);
     }
 
     public override void _Input(InputEvent @event)
@@ -30,13 +30,13 @@ public partial class Map : Node2D
             if (inputEventKey.IsKeyJustPressed(Key.D))
             {
                 var index = Path.AnimateForwards();
-                LevelIcons[index].AnimateColorTween();
+                LevelIcons[index].AnimateColor();
             }
 
             if (inputEventKey.IsKeyJustPressed(Key.A))
             {
                 var index = Path.AnimateBackwards();
-                LevelIcons[index].AnimateColorTween();
+                LevelIcons[index].AnimateColor();
             }
         }
     }

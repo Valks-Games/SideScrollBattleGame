@@ -25,22 +25,22 @@ public partial class LevelIcon : Node2D
         LabelLevel = Info.GetNode<Label>("VBox/Label");
 		Icon = GetNode<Sprite2D>("Level Gear");
 		Area = Icon.GetNode<Area2D>("Area2D");
-		Area.MouseEntered += () => AnimateScaleTween(2);
-		Area.MouseExited  += () => AnimateScaleTween(1);
+		Area.MouseEntered += () => AnimateScale(2);
+		Area.MouseExited  += () => AnimateScale(1);
         Area.InputEvent   += (viewport, inputEvent, shapeId) => 
         {
             if (inputEvent is InputEventMouseButton inputEventMouseBtn)
             {
                 if (inputEventMouseBtn.IsLeftClickPressed())
                 {
-                    AnimateScaleTween(1.5f);
-                    AnimateColorTween();
+                    AnimateScale(1.5f);
+                    AnimateColor();
                     EmitSignal(SignalName.LevelPressed, Level);
                 }
 
                 if (inputEventMouseBtn.IsLeftClickReleased())
                 {
-                    AnimateScaleTween(2);
+                    AnimateScale(2);
                 }
             }    
         };
@@ -63,7 +63,7 @@ public partial class LevelIcon : Node2D
         };
 	}
 
-    private void AnimateScaleTween(float scale)
+    private void AnimateScale(float scale)
 	{
 		TweenScale?.Kill();
 		TweenScale = CreateTween();
@@ -72,7 +72,7 @@ public partial class LevelIcon : Node2D
 			.SetEase(Tween.EaseType.Out);
 	}
 
-    public void AnimateColorTween()
+    public void AnimateColor()
 	{
 		TweenColor?.Kill();
 		TweenColor = CreateTween();

@@ -19,9 +19,3 @@ public static class Units
         AttackPower = 9999
     };
 }
-
-public enum Unit
-{
-    OrangeBall,
-    Skeleton
-}
