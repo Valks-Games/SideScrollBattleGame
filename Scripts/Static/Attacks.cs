@@ -5,7 +5,7 @@ public static class Attacks
     /// <summary>
     /// Roll while staying still, then roll super fast forward
     /// </summary>
-    public static void Spinning(Entity entity, Action callback) 
+    public static void Spinning(Entity entity) 
     {
         var tween = entity.AttackTween;
         var sprite = entity.AnimatedSprite;
@@ -42,11 +42,11 @@ public static class Attacks
         tween.TweenCallback(Callable.From(() =>
         {
             sprite.Rotation = 0;
-            callback();
+            entity.States[entity.CurrentState].SwitchState(EntityStateType.Cooldown);
         }));
     }
 
-    public static void Sword(Entity entity, Action callback) 
+    public static void Sword(Entity entity) 
     {
         var tween = entity.AttackTween;
         var sprite = entity.AnimatedSprite;
@@ -81,7 +81,7 @@ public static class Attacks
         tween.TweenCallback(Callable.From(() =>
         {
             sprite.Rotation = 0;
-            callback();
+            entity.States[entity.CurrentState].SwitchState(EntityStateType.Cooldown);
         }));
     }
 }
