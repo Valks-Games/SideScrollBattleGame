@@ -102,14 +102,14 @@ public partial class Level : Node
         for (int i = 0; i < 1; i++)
         {
             await Task.Delay(1, SpawnUnitsCTS.Token);
-            Units.Create(Unit.OrangeBall, Team.Left);
+            PlayerBase.SpawnUnit(Units.OrangeBall);
         }
 
         // enemy units
         for (int i = 0; i < 30; i++)
         {
             await Task.Delay(100, SpawnUnitsCTS.Token);
-            Units.Create(Unit.Skeleton, Team.Right);
+            EnemyBase.SpawnUnit(Units.Skeleton);
         }
     }
 }
