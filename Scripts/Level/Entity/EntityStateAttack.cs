@@ -18,10 +18,10 @@ public class EntityStateAttack : EntityState<Entity>
         switch (Entity.AttackType)
         {
             case Attack.Spinning:
-                Attacks.Spinning(Entity);
+                Entity.SpinningAttack();
                 break;
             case Attack.Sword:
-                Attacks.Sword(Entity);
+                Entity.SwordAttack();
                 break;
         }
     }
