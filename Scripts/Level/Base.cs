@@ -77,24 +77,10 @@ public partial class Base : Sprite2D, IDamageable
         var maxRandomY = 25;
         var randomY = GD.RandRange(0, maxRandomY);
 
-        Vector2 basePosition;
-        Node unitsParent;
-        int offset;
+        var offset = entity.Team == Team.Left ? 
+            spawnOffsetFromBase : -spawnOffsetFromBase;
 
-        if (entity.Team == Team.Left)
-        {
-            basePosition = Level.PlayerBase.Position;
-            unitsParent = Level.PlayerUnits;
-            offset = spawnOffsetFromBase;
-        }
-        else
-        {
-            basePosition = Level.EnemyBase.Position;
-            unitsParent = Level.EnemyUnits;
-            offset = -spawnOffsetFromBase;
-        }
-
-        entity.Position = basePosition + new Vector2(offset, randomY);
-        unitsParent.AddChild(entity);
+        entity.Position = new Vector2(offset, randomY);
+        AddChild(entity);
     }
 }
