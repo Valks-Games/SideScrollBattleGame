@@ -1,5 +1,6 @@
 ﻿global using Godot;
 global using GodotUtils;
+global using GodotUtils.World2D.Platformer;
 global using System;
 global using System.Collections.Generic;
 global using System.Collections.Concurrent;

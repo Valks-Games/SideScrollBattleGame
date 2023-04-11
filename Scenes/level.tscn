@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cfw4psxtf7gvp"]
 
 [ext_resource type="Script" path="res://Scripts/Level/Level.cs" id="1_b4ksl"]
-[ext_resource type="Script" path="res://Scripts/Level/CameraController.cs" id="2_ad6h3"]
+[ext_resource type="Script" path="res://GodotUtils/Scripts/World2D/Platformer/CameraController.cs" id="2_bmhoq"]
 [ext_resource type="Texture2D" uid="uid://q80kt62wvbpp" path="res://Sprites/icon.svg" id="4_i3j8x"]
 [ext_resource type="Texture2D" uid="uid://cah7r4wbb17kc" path="res://Sprites/Parallax/Tlayer1.png" id="6_k7rlc"]
 [ext_resource type="Texture2D" uid="uid://ck1pdb7ygfra7" path="res://Sprites/Parallax/Tlayer2.png" id="7_uo8cc"]
@@ -23,7 +23,7 @@ limit_left = -500
 limit_right = 500
 limit_bottom = 300
 editor_draw_limits = true
-script = ExtResource("2_ad6h3")
+script = ExtResource("2_bmhoq")
 
 [node name="Grass" type="Sprite2D" parent="."]
 modulate = Color(0.34902, 1, 0, 1)
