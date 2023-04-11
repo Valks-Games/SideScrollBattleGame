@@ -83,7 +83,7 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
 
         AnimationAttack = new EntityAnimationAttack(this);
 
-        // Enter current state
+        // Enter current state (should be done after everything is done being defined)
         States[CurrentState].EnterState();
     }
 
