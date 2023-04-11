@@ -12,7 +12,7 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
     [Export] public SpriteFrames SpriteFrames   { get; set; }
 
     // Implement IStateMachine
-    public Dictionary<object, State<Entity>> States { get; set; } = new();
+    public Dictionary<object, State<Entity>> States { get; } = new();
     public object CurrentState { get; set; }
 
     public EntityAnimationAttack AnimationAttack { get; set; }
