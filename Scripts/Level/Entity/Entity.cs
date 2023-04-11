@@ -1,6 +1,6 @@
 ﻿namespace SideScrollGame;
 
-public partial class Entity : Node2D, IDamageable
+public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
 {
     [Export] public Team         Team           { get; set; } = Team.Left;
     [Export] public double       MaxHealth      { get; set; } = 100;
@@ -11,16 +11,18 @@ public partial class Entity : Node2D, IDamageable
     [Export] public float        DetectionRange { get; set; } = 10;
     [Export] public SpriteFrames SpriteFrames   { get; set; }
 
-    public Dictionary<EntityStateType, EntityState<Entity>> States { get; set; } = new();
+    // Implement IStateMachine
+    public Dictionary<object, State<Entity>> States { get; set; } = new();
+    public object CurrentState { get; set; }
+
     public EntityAnimationAttack AnimationAttack { get; set; }
-    public AnimatedSprite2D   AnimatedSprite      { get; set; }
-    public Area2D             DetectionArea       { get; set; }
-    public TextureProgressBar HealthBar           { get; set; }
-    public Vector2            SpriteSize          { get; set; }
-    public EntityStateType    CurrentState        { get; set; }
-    public Team               OtherTeam           { get; set; }
-    public Tween              AttackTween         { get; set; }
-    public bool               Attacking           { get; set; }
+    public AnimatedSprite2D      AnimatedSprite  { get; set; }
+    public Area2D                DetectionArea   { get; set; }
+    public TextureProgressBar    HealthBar       { get; set; }
+    public Vector2               SpriteSize      { get; set; }
+    public Team                  OtherTeam       { get; set; }
+    public Tween                 AttackTween     { get; set; }
+    public bool                  Attacking       { get; set; }
 
     public double CurHealth 
     { 
@@ -40,10 +42,12 @@ public partial class Entity : Node2D, IDamageable
 
     public override void _Ready()
     {
-        States[EntityStateType.Attack] = new EntityStateAttack(this);
+        // Populate states
+        States[EntityStateType.Attack]   = new EntityStateAttack(this);
         States[EntityStateType.Cooldown] = new EntityStateCooldown(this);
-        States[EntityStateType.Move] = new EntityStateMove(this);
+        States[EntityStateType.Move]     = new EntityStateMove(this);
 
+        // Set current state
         CurrentState = EntityStateType.Move;
 
         AddToGroup(Team.ToString());
@@ -78,6 +82,8 @@ public partial class Entity : Node2D, IDamageable
         CreateHealthBar();
 
         AnimationAttack = new EntityAnimationAttack(this);
+
+        // Enter current state
         States[CurrentState].EnterState();
     }
 
@@ -169,6 +175,13 @@ public partial class Entity : Node2D, IDamageable
         HealthBar.Hide();
         AddChild(HealthBar);
     }
+}
+
+public enum EntityStateType
+{
+    Attack,
+    Cooldown,
+    Move
 }
 
 public enum Team

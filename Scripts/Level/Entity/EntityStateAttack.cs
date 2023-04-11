@@ -6,7 +6,7 @@ public enum Attack
     Sword
 }
 
-public class EntityStateAttack : EntityState<Entity>
+public class EntityStateAttack : State<Entity>
 {
     public EntityStateAttack(Entity entity) : base(entity) { }
 
