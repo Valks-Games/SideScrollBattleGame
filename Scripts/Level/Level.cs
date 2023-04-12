@@ -88,12 +88,13 @@ public partial class Level : Node
 
         // Tween the offscreen label to its original posiition
         // Tween Transitions Cheat Sheet: https://www.reddit.com/r/godot/comments/dgh9vd/transitiontype_cheat_sheet_tween_interpolation_oc/
-        var tween = LabelMatchResult.CreateTween();
-        tween.TweenProperty(LabelMatchResult, "position", originalPos, 1.0f)
+        var tween = new GTween(LabelMatchResult);
+        tween.Create();
+        tween.Animate("position", originalPos, 1.0f)
             .SetTrans(Tween.TransitionType.Quint)
             .SetEase(Tween.EaseType.Out);
 
-        tween.TweenCallback(Callable.From(() => SceneManager.SwitchScene("map")));
+        tween.Callback(() => SceneManager.SwitchScene("map"));
     }
 
     private async Task SpawnUnits()

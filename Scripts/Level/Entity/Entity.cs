@@ -22,7 +22,6 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
     public TextureProgressBar    HealthBar           { get; set; }
     public Vector2               SpriteSize          { get; set; }
     public Team                  OtherTeam           { get; set; }
-    public Tween                 AttackTween         { get; set; }
     public bool                  Attacking           { get; set; }
 
     public double CurHealth 
@@ -32,7 +31,7 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
         {
             if (value <= 0)
             {
-                AttackTween?.Kill();
+                AnimationAttack.Tween.Kill();
                 QueueFree();
                 return;
             }

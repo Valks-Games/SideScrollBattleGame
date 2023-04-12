@@ -8,8 +8,8 @@ public partial class LevelIcon : Node2D
 
 	private Area2D    Area       { get; set; }
 	private Sprite2D  Icon       { get; set; }
-	private Tween     TweenScale { get; set; }
-	private Tween     TweenColor { get; set; }
+	private GTween    TweenScale { get; set; }
+	private GTween    TweenColor { get; set; }
 	private Control   Info       { get; set; }
     private Label     LabelLevel { get; set; }
     private int       Level      { get; set; }
@@ -24,7 +24,11 @@ public partial class LevelIcon : Node2D
 
         LabelLevel = Info.GetNode<Label>("VBox/Label");
 		Icon = GetNode<Sprite2D>("Level Gear");
-		Area = Icon.GetNode<Area2D>("Area2D");
+
+        TweenScale = new GTween(Icon);
+        TweenColor = new GTween(Icon);
+
+        Area = Icon.GetNode<Area2D>("Area2D");
 		Area.MouseEntered += () => AnimateScale(2);
 		Area.MouseExited  += () => AnimateScale(1);
         Area.InputEvent   += (viewport, inputEvent, shapeId) => 
@@ -65,21 +69,19 @@ public partial class LevelIcon : Node2D
 
     private void AnimateScale(float scale)
 	{
-		TweenScale?.Kill();
-		TweenScale = CreateTween();
-		TweenScale.TweenProperty(Icon, "scale", Vector2.One * scale, 0.5f)
+		TweenScale.Create();
+		TweenScale.Animate("scale", Vector2.One * scale, 0.5f)
 			.SetTrans(Tween.TransitionType.Quint)
 			.SetEase(Tween.EaseType.Out);
 	}
 
     public void AnimateColor()
 	{
-		TweenColor?.Kill();
-		TweenColor = CreateTween();
-		TweenColor.TweenProperty(Icon, "self_modulate", Colors.Green, 0.5f)
+		TweenColor.Create();
+		TweenColor.Animate("self_modulate", Colors.Green, 0.5f)
 			.SetTrans(Tween.TransitionType.Quint)
 			.SetEase(Tween.EaseType.Out);
-        TweenColor.TweenProperty(Icon, "self_modulate", Colors.White, 5f)
+        TweenColor.Animate("self_modulate", Colors.White, 5f)
             .SetTrans(Tween.TransitionType.Quint)
             .SetEase(Tween.EaseType.Out);
     }
