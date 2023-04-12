@@ -41,7 +41,7 @@ public class EntityAnimationAttack
         AnimateCallback(() =>
         {
             AnimatedSprite.Rotation = 0;
-            Entity.States[Entity.CurrentState].SwitchState(EntityStateType.Cooldown);
+            Entity.CurrentState.SwitchState(Entity.EntityStateCooldown);
         });
     }
 
@@ -70,7 +70,7 @@ public class EntityAnimationAttack
         AnimateCallback(() =>
         {
             AnimatedSprite.Rotation = 0;
-            Entity.States[Entity.CurrentState].SwitchState(EntityStateType.Cooldown);
+            Entity.CurrentState.SwitchState(Entity.EntityStateCooldown);
         });
     }
 

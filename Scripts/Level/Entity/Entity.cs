@@ -11,18 +11,19 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
     [Export] public float        DetectionRange { get; set; } = 10;
     [Export] public SpriteFrames SpriteFrames   { get; set; }
 
-    // Implement IStateMachine
-    public Dictionary<object, State<Entity>> States { get; } = new();
-    public object CurrentState { get; set; }
+    public State<Entity>         CurrentState        { get; set; }
+    public EntityStateCooldown   EntityStateCooldown { get; set; }
+    public EntityStateAttack     EntityStateAttack   { get; set; }
+    public EntityStateMove       EntityStateMove     { get; set; }
 
-    public EntityAnimationAttack AnimationAttack { get; set; }
-    public AnimatedSprite2D      AnimatedSprite  { get; set; }
-    public Area2D                DetectionArea   { get; set; }
-    public TextureProgressBar    HealthBar       { get; set; }
-    public Vector2               SpriteSize      { get; set; }
-    public Team                  OtherTeam       { get; set; }
-    public Tween                 AttackTween     { get; set; }
-    public bool                  Attacking       { get; set; }
+    public EntityAnimationAttack AnimationAttack     { get; set; }
+    public AnimatedSprite2D      AnimatedSprite      { get; set; }
+    public Area2D                DetectionArea       { get; set; }
+    public TextureProgressBar    HealthBar           { get; set; }
+    public Vector2               SpriteSize          { get; set; }
+    public Team                  OtherTeam           { get; set; }
+    public Tween                 AttackTween         { get; set; }
+    public bool                  Attacking           { get; set; }
 
     public double CurHealth 
     { 
@@ -42,13 +43,12 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
 
     public override void _Ready()
     {
-        // Populate states
-        States[EntityStateType.Attack]   = new EntityStateAttack(this);
-        States[EntityStateType.Cooldown] = new EntityStateCooldown(this);
-        States[EntityStateType.Move]     = new EntityStateMove(this);
+        EntityStateAttack   = new(this);
+        EntityStateCooldown = new(this);
+        EntityStateMove     = new(this);
 
         // Set current state
-        CurrentState = EntityStateType.Move;
+        CurrentState = EntityStateMove;
 
         AddToGroup(Team.ToString());
 
@@ -84,12 +84,12 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
         AnimationAttack = new EntityAnimationAttack(this);
 
         // Enter current state (should be done after everything is done being defined)
-        States[CurrentState].EnterState();
+        CurrentState.EnterState();
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        States[CurrentState].Update();
+        CurrentState.Update();
     }
 
     public override void _Input(InputEvent @event)
@@ -158,7 +158,7 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
             if (otherArea.GetParent() is IDamageable entity && entity.Team == OtherTeam)
             {
                 if (!Attacking)
-                    States[CurrentState].SwitchState(EntityStateType.Attack);
+                    CurrentState.SwitchState(EntityStateAttack);
             }
         };
 
