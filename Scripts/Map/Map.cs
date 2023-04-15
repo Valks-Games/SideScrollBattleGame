@@ -21,6 +21,8 @@ public partial class Map : Node2D
 
         foreach (var gearNode in LevelIcons)
             gearNode.LevelPressed += level => Path.AnimateTo(level - 1);
+
+        Path.SetLevelProgress(Global.MapLevel);
     }
 
     public override void _Input(InputEvent @event)
@@ -30,12 +32,14 @@ public partial class Map : Node2D
             if (inputEventKey.IsKeyJustPressed(Key.D))
             {
                 var index = Path.AnimateForwards();
+                Global.MapLevel = index;
                 LevelIcons[index].AnimateColor();
             }
 
             if (inputEventKey.IsKeyJustPressed(Key.A))
             {
                 var index = Path.AnimateBackwards();
+                Global.MapLevel = index;
                 LevelIcons[index].AnimateColor();
             }
         }

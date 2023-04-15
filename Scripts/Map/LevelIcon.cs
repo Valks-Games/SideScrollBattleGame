@@ -1,3 +1,5 @@
+using System;
+
 namespace SideScrollGame;
 
 public partial class LevelIcon : Node2D
@@ -12,12 +14,11 @@ public partial class LevelIcon : Node2D
 	private GTween    TweenColor { get; set; }
 	private Control   Info       { get; set; }
     private Label     LabelLevel { get; set; }
-    private int       Level      { get; set; }
 
 	public override void _Ready()
 	{
         // Get level from name
-        Level = Regex.Replace(Name.ToString(), @"[^\d]", "").ToInt();
+        LevelSettings.Level = Regex.Replace(Name.ToString(), @"[^\d]", "").ToInt();
 
         Info = GetNode<Control>("Info");
         Info.Hide();
@@ -37,9 +38,10 @@ public partial class LevelIcon : Node2D
             {
                 if (inputEventMouseBtn.IsLeftClickPressed())
                 {
+                    Global.MapLevel = LevelSettings.Level;
                     AnimateScale(1.5f);
                     AnimateColor();
-                    EmitSignal(SignalName.LevelPressed, Level);
+                    EmitSignal(SignalName.LevelPressed, LevelSettings.Level);
                 }
 
                 if (inputEventMouseBtn.IsLeftClickReleased())
@@ -53,7 +55,7 @@ public partial class LevelIcon : Node2D
         {
             if (otherArea.Name == "PlayerMapIconArea")
             {
-                LabelLevel.Text = "Level " + Level;
+                LabelLevel.Text = "Level " + LevelSettings.Level;
                 Info.Show();
             }
         };
