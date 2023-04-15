@@ -9,7 +9,7 @@ public partial class Map : Node2D
     {
         LevelIcons = GetNode("Levels").GetChildren<LevelIcon>();
         var points = LevelIcons.Select(x => x.Position).ToArray();
-        Path = new GPath(points, Colors.White, 2, 8);
+        Path = new GPath(points, Colors.Black, 2, 8);
         Path.AddCurves();
 
         var sprite = GetNode<Sprite2D>("Sprite2D");
