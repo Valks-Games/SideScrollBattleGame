@@ -16,6 +16,6 @@ public static class Units
         AttackType = Attack.Sword,
         AttackSpeed = 10,
         MoveSpeed = 1,
-        AttackPower = 9999
+        AttackPower = 5
     };
 }

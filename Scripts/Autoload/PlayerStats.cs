@@ -2,5 +2,5 @@
 
 public partial class PlayerStats : Node
 {
-    public static int BaseHealth { get; set; } = 50;
+    public static int BaseHealth { get; set; } = 100;
 }

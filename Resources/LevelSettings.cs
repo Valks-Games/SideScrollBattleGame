@@ -14,6 +14,8 @@ public partial class LevelSettings : Resource
         set => _enemyBaseHealth = Mathf.Max(value, 1);
     }
 
+    public int Level { get; set; }
+
     private int _width;
     private int _enemyBaseHealth;
 }

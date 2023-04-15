@@ -23,6 +23,7 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
     public Vector2               SpriteSize          { get; set; }
     public Team                  OtherTeam           { get; set; }
     public bool                  Attacking           { get; set; }
+    public Color                 Color               { get; set; }
 
     public double CurHealth 
     { 
@@ -55,6 +56,10 @@ public partial class Entity : Node2D, IDamageable, IStateMachine<Entity>
         {
             SpriteFrames = SpriteFrames
         };
+
+        if (Color != default(Color))
+            AnimatedSprite.SelfModulate = Color;
+
         AddChild(AnimatedSprite);
 
         if (Team == Team.Left)

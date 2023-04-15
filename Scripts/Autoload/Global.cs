@@ -17,6 +17,9 @@ public partial class Global : Node
 {
     public static LevelSettings LevelSettings { get; set; }
 
+    // the current level player is standing at on the map
+    public static int MapLevel { get; set; } = 1;
+
     public override void _PhysicsProcess(double delta)
     {
         Logger.Update();

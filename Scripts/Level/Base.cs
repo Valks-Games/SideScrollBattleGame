@@ -73,7 +73,7 @@ public partial class Base : Sprite2D, IDamageable
     {
         entity.Team = Team;
 
-        var spawnOffsetFromBase = 90;
+        var spawnOffsetFromBase = 40;
         var maxRandomY = 25;
         var randomY = GD.RandRange(0, maxRandomY);
 
