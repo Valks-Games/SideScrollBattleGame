@@ -18,3 +18,7 @@ Please have a look at the [Projects Coding Style](https://github.com/Valks-Games
 I highly recommend you install the [GitHub Desktop App](https://desktop.github.com/). This will almost completely eliminate the need to do Git CLI commands through the command line.
 
 If you are interested in contributing or have any questions please talk to `va#9904` over Discord.
+
+<a href="https://github.com/Valks-Games/SideScrollBattleGame/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Valks-Games/SideScrollBattleGame" />
+</a>
