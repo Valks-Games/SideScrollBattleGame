@@ -1,8 +1,6 @@
 # Side Scroll Game
 A side scroll game that is taking inspiration from "The Battle Cats" game.
 
-https://user-images.githubusercontent.com/6277739/229210589-5d68ec9e-629d-435f-bcd0-d1881ab3a5ab.mp4
-
 https://user-images.githubusercontent.com/6277739/230230962-5be85090-b6fb-48bd-bd10-8926ce09a231.mp4
 
 ## Setup
