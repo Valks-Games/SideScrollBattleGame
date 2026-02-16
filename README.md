@@ -1,3 +1,6 @@
+> [!NOTE]
+> This project has been archived because it is out of sync with [CSharpGodotTools/Template](https://github.com/CSharpGodotTools/Template). Template has had some improvements since then so sync issues should not be a problem in the future.
+
 # Side Scroll Game
 A side scroll game that is taking inspiration from "The Battle Cats" game.
 
@@ -14,8 +17,6 @@ git clone --recursive https://github.com/valkyrienyanko/SideScrollBattleGame
 Please have a look at the [Projects Coding Style](https://github.com/Valks-Games/sankari/wiki/Code-Style).
 
 I highly recommend you install the [GitHub Desktop App](https://desktop.github.com/). This will almost completely eliminate the need to do Git CLI commands through the command line.
-
-If you are interested in contributing or have any questions please talk to `va#9904` over Discord.
 
 <a href="https://github.com/Valks-Games/SideScrollBattleGame/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Valks-Games/SideScrollBattleGame" />
